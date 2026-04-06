@@ -154,7 +154,7 @@ export const BottomTerminalDock: React.FC<BottomTerminalDockProps> = ({ isOpen, 
           onPointerDown={handlePointerDown}
           role="separator"
           aria-orientation="horizontal"
-          aria-label="Resize terminal panel"
+          aria-label={t('Resize terminal panel')}
         />
       )}
 
@@ -164,8 +164,8 @@ export const BottomTerminalDock: React.FC<BottomTerminalDockProps> = ({ isOpen, 
             type="button"
             onClick={toggleFullscreen}
             className="inline-flex h-8 w-8 items-center justify-center rounded-md text-[var(--surface-muted-foreground)] transition-colors hover:bg-[var(--interactive-hover)] hover:text-[var(--surface-foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-            title={isFullscreen ? 'Restore terminal panel height' : 'Expand terminal panel'}
-            aria-label={isFullscreen ? 'Restore terminal panel height' : 'Expand terminal panel'}
+            title={isFullscreen ? t('Restore terminal panel height') : t('Expand terminal panel')}
+            aria-label={isFullscreen ? t('Restore terminal panel height') : t('Expand terminal panel')}
           >
             {isFullscreen ? <RiFullscreenExitLine className="h-5 w-5" /> : <RiFullscreenLine className="h-5 w-5" />}
           </button>
@@ -173,8 +173,8 @@ export const BottomTerminalDock: React.FC<BottomTerminalDockProps> = ({ isOpen, 
             type="button"
             onClick={() => setBottomTerminalOpen(false)}
             className="inline-flex h-8 w-8 items-center justify-center rounded-md text-[var(--surface-muted-foreground)] transition-colors hover:bg-[var(--interactive-hover)] hover:text-[var(--surface-foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-            title="Close terminal panel"
-            aria-label="Close terminal panel"
+            title={t('Close terminal panel')}
+            aria-label={t('Close terminal panel')}
           >
             <RiCloseLine className="h-6 w-6" />
           </button>

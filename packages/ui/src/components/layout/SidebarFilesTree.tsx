@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiCloseLine,
   RiDeleteBinLine,
@@ -154,6 +155,7 @@ const FileRow: React.FC<FileRowProps> = ({
   onRevealPath,
   onOpenDialog,
 }) => {
+  const { t } = useTranslation();
   const isDir = node.type === 'directory';
   const { canRename, canCreateFile, canCreateFolder, canDelete, canReveal } = permissions;
 
@@ -229,24 +231,24 @@ const FileRow: React.FC<FileRowProps> = ({
             <DropdownMenuContent align="end" side="bottom" onCloseAutoFocus={() => setContextMenuPath(null)}>
               {canRename && (
                 <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onOpenDialog('rename', node); }}>
-                  <RiEditLine className="mr-2 h-4 w-4" /> Rename
+                  <RiEditLine className="mr-2 h-4 w-4" /> {t('Rename')}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onClick={(e) => {
                 e.stopPropagation();
                 void copyTextToClipboard(node.path).then((result) => {
                   if (result.ok) {
-                    toast.success('Path copied');
+                    toast.success(t('Path copied'));
                     return;
                   }
-                  toast.error('Copy failed');
+                  toast.error(t('Copy failed'));
                 });
               }}>
-                <RiFileCopyLine className="mr-2 h-4 w-4" /> Copy Path
+                <RiFileCopyLine className="mr-2 h-4 w-4" /> {t('Copy Path')}
               </DropdownMenuItem>
               {canReveal && (
                 <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onRevealPath(node.path); }}>
-                  <RiFolderReceivedLine className="mr-2 h-4 w-4" /> Reveal in Finder
+                  <RiFolderReceivedLine className="mr-2 h-4 w-4" /> {t('Reveal in Finder')}
                 </DropdownMenuItem>
               )}
               {isDir && (canCreateFile || canCreateFolder) && (
@@ -254,12 +256,12 @@ const FileRow: React.FC<FileRowProps> = ({
                   <DropdownMenuSeparator />
                   {canCreateFile && (
                     <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onOpenDialog('createFile', node); }}>
-                      <RiFileAddLine className="mr-2 h-4 w-4" /> New File
+                      <RiFileAddLine className="mr-2 h-4 w-4" /> {t('New File')}
                     </DropdownMenuItem>
                   )}
                   {canCreateFolder && (
                     <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onOpenDialog('createFolder', node); }}>
-                      <RiFolderAddLine className="mr-2 h-4 w-4" /> New Folder
+                      <RiFolderAddLine className="mr-2 h-4 w-4" /> {t('New Folder')}
                     </DropdownMenuItem>
                   )}
                 </>
@@ -271,7 +273,7 @@ const FileRow: React.FC<FileRowProps> = ({
                     onClick={(e) => { e.stopPropagation(); onOpenDialog('delete', node); }}
                     className="text-destructive focus:text-destructive"
                   >
-                    <RiDeleteBinLine className="mr-2 h-4 w-4" /> Delete
+                    <RiDeleteBinLine className="mr-2 h-4 w-4" /> {t('Delete')}
                   </DropdownMenuItem>
                 </>
               )}
@@ -286,6 +288,7 @@ const FileRow: React.FC<FileRowProps> = ({
 // --- Main component ---
 
 export const SidebarFilesTree: React.FC = () => {
+  const { t } = useTranslation();
   const { files, runtime } = useRuntimeAPIs();
   const currentDirectory = useEffectiveDirectory() ?? '';
   const root = normalizePath(currentDirectory.trim());
@@ -339,7 +342,7 @@ export const SidebarFilesTree: React.FC = () => {
   const handleRevealPath = React.useCallback((targetPath: string) => {
     if (!files.revealPath) return;
     void files.revealPath(targetPath).catch(() => {
-      toast.error('Failed to reveal path');
+      toast.error(t('Failed to reveal path'));
     });
   }, [files]);
 
@@ -603,12 +606,12 @@ export const SidebarFilesTree: React.FC = () => {
 
     if (activeDialog === 'createFile') {
       if (!dialogInputValue.trim()) {
-        toast.error('Filename is required');
+        toast.error(t('Filename is required'));
         done();
         return;
       }
       if (!files.writeFile) {
-        toast.error('Write not supported');
+        toast.error(t('Write not supported'));
         done();
         return;
       }
@@ -620,19 +623,19 @@ export const SidebarFilesTree: React.FC = () => {
       await files.writeFile(newPath, '')
         .then(async (result) => {
           if (result.success) {
-            toast.success('File created');
+            toast.success(t('File created'));
             await refreshDirectory(parentPath);
           }
           closeDialog();
         })
-        .catch(() => toast.error('Operation failed'))
+        .catch(() => toast.error(t('Operation failed')))
         .finally(done);
       return;
     }
 
     if (activeDialog === 'createFolder') {
       if (!dialogInputValue.trim()) {
-        toast.error('Folder name is required');
+        toast.error(t('Folder name is required'));
         done();
         return;
       }
@@ -644,24 +647,24 @@ export const SidebarFilesTree: React.FC = () => {
       await files.createDirectory(newPath)
         .then(async (result) => {
           if (result.success) {
-            toast.success('Folder created');
+            toast.success(t('Folder created'));
             await refreshDirectory(parentPath);
           }
           closeDialog();
         })
-        .catch(() => toast.error('Operation failed'))
+        .catch(() => toast.error(t('Operation failed')))
         .finally(done);
       return;
     }
 
     if (activeDialog === 'rename') {
       if (!dialogInputValue.trim()) {
-        toast.error('Name is required');
+        toast.error(t('Name is required'));
         done();
         return;
       }
       if (!files.rename) {
-        toast.error('Rename not supported');
+        toast.error(t('Rename not supported'));
         done();
         return;
       }
@@ -685,7 +688,7 @@ export const SidebarFilesTree: React.FC = () => {
           }
           closeDialog();
         })
-        .catch(() => toast.error('Operation failed'))
+        .catch(() => toast.error(t('Operation failed')))
         .finally(done);
       return;
     }
@@ -713,7 +716,7 @@ export const SidebarFilesTree: React.FC = () => {
           }
           closeDialog();
         })
-        .catch(() => toast.error('Operation failed'))
+        .catch(() => toast.error(t('Operation failed')))
         .finally(done);
       return;
     }
