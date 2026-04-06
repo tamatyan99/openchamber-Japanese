@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiInformationLine, RiRestartLine } from '@remixicon/react';
 import { useUIStore } from '@/stores/useUIStore';
 import { useConfigStore } from '@/stores/useConfigStore';
@@ -32,6 +33,7 @@ const DEFAULT_SUMMARY_LENGTH = 100;
 const DEFAULT_MAX_LAST_MESSAGE_LENGTH = 250;
 
 export const NotificationSettings: React.FC = () => {
+  const { t } = useTranslation();
   const { isMobile } = useDeviceInfo();
   const isDesktop = React.useMemo(() => isDesktopShell(), []);
   const isVSCode = React.useMemo(() => isVSCodeRuntime(), []);
@@ -214,13 +216,13 @@ export const NotificationSettings: React.FC = () => {
         if (permission === 'granted') {
           setNativeNotificationsEnabled(true);
         } else {
-          toast.error('Notification permission denied', {
-            description: 'Please enable notifications in your browser settings.',
+          toast.error(t('Notification permission denied'), {
+            description: t('Please enable notifications in your browser settings.'),
           });
         }
       } catch (error) {
         console.error('Failed to request notification permission:', error);
-        toast.error('Failed to request notification permission');
+        toast.error(t('Failed to request notification permission'));
       }
     } else if (checked && notificationPermission === 'granted') {
       setNativeNotificationsEnabled(true);
@@ -388,13 +390,13 @@ export const NotificationSettings: React.FC = () => {
 
   const handleEnableBackgroundNotifications = async () => {
     if (!pushSupported) {
-      toast.error('Push notifications not supported');
+      toast.error(t('Push notifications not supported'));
       return;
     }
 
     const apis = getRegisteredRuntimeAPIs();
     if (!apis?.push) {
-      toast.error('Push API not available');
+      toast.error(t('Push API not available'));
       return;
     }
 
@@ -404,23 +406,23 @@ export const NotificationSettings: React.FC = () => {
         const permission = await Notification.requestPermission();
         setNotificationPermission(permission);
         if (permission !== 'granted') {
-          toast.error('Notification permission denied', {
-            description: 'Enable notifications in your browser settings.',
+          toast.error(t('Notification permission denied'), {
+            description: t('Enable notifications in your browser settings.'),
           });
           return;
         }
       }
 
       if (typeof Notification !== 'undefined' && Notification.permission !== 'granted') {
-        toast.error('Notification permission denied', {
-          description: 'Enable notifications in your browser settings.',
+        toast.error(t('Notification permission denied'), {
+          description: t('Enable notifications in your browser settings.'),
         });
         return;
       }
 
       const key = await apis.push.getVapidPublicKey();
       if (!key?.publicKey) {
-        toast.error('Failed to load push key');
+        toast.error(t('Failed to load push key'));
         return;
       }
 
@@ -462,16 +464,16 @@ export const NotificationSettings: React.FC = () => {
       );
 
       if (!ok?.ok) {
-        toast.error('Failed to enable background notifications');
+        toast.error(t('Failed to enable background notifications'));
         return;
       }
 
       setPushSubscribed(true);
-      toast.success('Background notifications enabled');
+      toast.success(t('Background notifications enabled'));
     } catch (error) {
       console.error('[Push] Enable failed:', error);
       const formatted = formatUnknownError(error);
-      toast.error('Failed to enable background notifications', {
+      toast.error(t('Failed to enable background notifications'), {
         description: formatted.summary,
       });
     } finally {
@@ -487,7 +489,7 @@ export const NotificationSettings: React.FC = () => {
 
     const apis = getRegisteredRuntimeAPIs();
     if (!apis?.push) {
-      toast.error('Push API not available');
+      toast.error(t('Push API not available'));
       return;
     }
 
@@ -504,7 +506,7 @@ export const NotificationSettings: React.FC = () => {
       await subscription.unsubscribe();
       await apis.push.unsubscribe({ endpoint });
       setPushSubscribed(false);
-      toast.success('Background notifications disabled');
+      toast.success(t('Background notifications disabled'));
     } finally {
       setPushBusy(false);
     }
@@ -517,7 +519,7 @@ export const NotificationSettings: React.FC = () => {
         <div className="mb-8">
           <div className="mb-1 px-1">
               <h3 className="typography-ui-header font-medium text-foreground">
-                Notification Delivery
+                {t('Notification Delivery')}
               </h3>
           </div>
 
@@ -544,7 +546,7 @@ export const NotificationSettings: React.FC = () => {
                 }}
                 ariaLabel="Enable notifications"
               />
-              <span className="typography-ui-label text-foreground">Enable Notifications</span>
+              <span className="typography-ui-label text-foreground">{t('Enable Notifications')}</span>
             </div>
 
             {nativeNotificationsEnabled && canShowNotifications && (

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import QRCode from 'qrcode';
 import {
   RiAddLine,
@@ -257,6 +258,7 @@ const createPresetId = (): string => {
 };
 
 export const TunnelSettings: React.FC = () => {
+  const { t } = useTranslation();
   const [state, setState] = React.useState<TunnelState>('checking');
   const [tunnelInfo, setTunnelInfo] = React.useState<TunnelInfo | null>(null);
   const [activeTunnelMode, setActiveTunnelMode] = React.useState<TunnelMode | null>(null);

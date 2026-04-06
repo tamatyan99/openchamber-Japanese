@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -110,6 +111,7 @@ export function GitHubPrPickerDialog({
     author?: { login: string; avatarUrl?: string };
   }) => void;
 }) {
+  const { t } = useTranslation();
   const { github } = useRuntimeAPIs();
   const githubAuthStatus = useGitHubAuthStore((state) => state.status);
   const githubAuthChecked = useGitHubAuthStore((state) => state.hasChecked);
@@ -134,7 +136,7 @@ export function GitHubPrPickerDialog({
   const refresh = React.useCallback(async () => {
     if (!projectDirectory) {
       setResult(null);
-      setError('No active project');
+      setError(t('No active project'));
       return;
     }
     if (githubAuthChecked && githubAuthStatus?.connected === false) {
@@ -147,7 +149,7 @@ export function GitHubPrPickerDialog({
     }
     if (!github?.prsList) {
       setResult(null);
-      setError('GitHub runtime API unavailable');
+      setError(t('GitHub runtime API unavailable'));
       return;
     }
 
@@ -185,7 +187,7 @@ export function GitHubPrPickerDialog({
       setHasMore(Boolean(next.hasMore));
     } catch (e) {
       const message = e instanceof Error ? e.message : String(e);
-      toast.error('Failed to load more pull requests', { description: message });
+      toast.error(t('Failed to load more pull requests'), { description: message });
     } finally {
       setIsLoadingMore(false);
     }
@@ -238,11 +240,11 @@ export function GitHubPrPickerDialog({
 
   const attachPr = React.useCallback(async (prNumber: number) => {
     if (!projectDirectory) {
-      toast.error('No active project');
+      toast.error(t('No active project'));
       return;
     }
     if (!github?.prContext) {
-      toast.error('GitHub runtime API unavailable');
+      toast.error(t('GitHub runtime API unavailable'));
       return;
     }
     if (loadingPrNumber) return;

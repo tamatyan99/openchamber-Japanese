@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { RiInformationLine, RiRestartLine } from '@remixicon/react';
 import { toast } from '@/components/ui';
@@ -18,6 +19,7 @@ const RETENTION_ACTION_OPTIONS = [
 ] as const;
 
 export const SessionRetentionSettings: React.FC = () => {
+  const { t } = useTranslation();
   const autoDeleteEnabled = useUIStore((state) => state.autoDeleteEnabled);
   const autoDeleteAfterDays = useUIStore((state) => state.autoDeleteAfterDays);
   const sessionRetentionAction = useUIStore((state) => state.sessionRetentionAction);

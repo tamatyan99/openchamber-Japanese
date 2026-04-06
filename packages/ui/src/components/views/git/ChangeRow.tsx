@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiCheckboxLine,
   RiCheckboxBlankLine,
@@ -62,6 +63,7 @@ export const ChangeRow = React.memo<ChangeRowProps>(function ChangeRow({
   stats,
   rowPaddingClassName,
 }) {
+  const { t } = useTranslation();
   const descriptor = useMemo(() => describeChange(file), [file]);
   const indicatorLabel = descriptor.description;
   const insertions = stats?.insertions ?? 0;
@@ -110,7 +112,7 @@ export const ChangeRow = React.memo<ChangeRowProps>(function ChangeRow({
           type="button"
           onClick={handleToggleClick}
           aria-pressed={checked}
-          aria-label={`Select ${file.path}`}
+          aria-label={t('Select {{path}}', { path: file.path })}
           className="flex size-5 shrink-0 items-center justify-center rounded text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
           {checked ? (
@@ -167,7 +169,7 @@ export const ChangeRow = React.memo<ChangeRowProps>(function ChangeRow({
               onClick={handleRevertClick}
               disabled={isReverting}
               className="flex size-5 shrink-0 items-center justify-center rounded text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label={`Revert changes for ${file.path}`}
+              aria-label={t('Revert changes for {{path}}', { path: file.path })}
             >
               {isReverting ? (
                 <RiLoader4Line className="size-3.5 animate-spin" />
@@ -176,7 +178,7 @@ export const ChangeRow = React.memo<ChangeRowProps>(function ChangeRow({
               )}
             </button>
           </TooltipTrigger>
-          <TooltipContent sideOffset={8}>Revert changes</TooltipContent>
+          <TooltipContent sideOffset={8}>{t('Revert changes')}</TooltipContent>
         </Tooltip>
     </div>
   );

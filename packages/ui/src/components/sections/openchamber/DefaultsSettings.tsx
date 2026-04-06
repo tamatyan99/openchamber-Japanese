@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ModelSelector } from '@/components/sections/agents/ModelSelector';
 import { AgentSelector } from '@/components/sections/commands/AgentSelector';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -23,6 +24,7 @@ const getDisplayModel = (
 };
 
 export const DefaultsSettings: React.FC = () => {
+  const { t } = useTranslation();
   const setProvider = useConfigStore((state) => state.setProvider);
   const setModel = useConfigStore((state) => state.setModel);
   const setAgent = useConfigStore((state) => state.setAgent);

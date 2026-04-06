@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiGitMergeLine,
   RiGitBranchLine,
@@ -66,6 +67,7 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
   onOperationComplete,
   mode = 'dialog',
 }) => {
+  const { t } = useTranslation();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [operation, setOperation] = React.useState<OperationType>('merge');
   const [selectedBranch, setSelectedBranch] = React.useState<string | null>(null);
@@ -199,13 +201,13 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
         mode === 'dialog' ? (
           <DialogFooter>
             <Button variant="default" size="sm" onClick={handleClose}>
-              {hasError ? 'Close' : 'Done'}
+              {hasError ? t('Close') : t('Done')}
             </Button>
           </DialogFooter>
         ) : (
           <div className="flex justify-end">
             <Button variant="default" size="sm" onClick={handleClose}>
-              {hasError ? 'Close' : 'Done'}
+              {hasError ? t('Close') : t('Done')}
             </Button>
           </div>
         )
@@ -217,7 +219,7 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
     <div className="space-y-4">
       {/* Operation Selection */}
       <div className="space-y-3">
-        <p className="typography-meta text-muted-foreground">Operation</p>
+        <p className="typography-meta text-muted-foreground">{t('Operation')}</p>
         <div className="grid grid-cols-2 gap-3">
           <button
             type="button"

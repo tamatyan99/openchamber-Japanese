@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -45,6 +46,7 @@ const keyboardEventToCombo = (event: React.KeyboardEvent<HTMLInputElement>): Sho
 };
 
 export const KeyboardShortcutsSettings: React.FC = () => {
+  const { t } = useTranslation();
   const shortcutOverrides = useUIStore((state) => state.shortcutOverrides);
   const setShortcutOverride = useUIStore((state) => state.setShortcutOverride);
   const clearShortcutOverride = useUIStore((state) => state.clearShortcutOverride);

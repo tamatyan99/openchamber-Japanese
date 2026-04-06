@@ -27,6 +27,8 @@ import {
     setDirectoryShowHidden,
     useDirectoryShowHidden,
 } from '@/lib/directoryShowHidden';
+import { useTranslation } from 'react-i18next';
+import { useLanguage, LANGUAGE_OPTIONS } from '@/i18n/useLanguage';
 
 interface Option<T extends string> {
     id: T;
@@ -151,6 +153,8 @@ interface OpenChamberVisualSettingsProps {
 }
 
 export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps> = ({ visibleSettings }) => {
+    const { t } = useTranslation();
+    const { currentLanguage, setLanguage } = useLanguage();
     const { isMobile } = useDeviceInfo();
     const { browserTab } = usePwaDetection();
     const directoryShowHidden = useDirectoryShowHidden();
@@ -434,7 +438,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
 
                             <div className="pb-1.5">
                                 <div className="flex min-w-0 flex-col gap-1.5">
-                                    <span className="typography-ui-header font-medium text-foreground">Color Mode</span>
+                                    <span className="typography-ui-header font-medium text-foreground">{t('Color Mode')}</span>
                                     <div className="flex flex-wrap items-center gap-1">
                                         {THEME_MODE_OPTIONS.map((option) => (
                                             <Button
@@ -456,9 +460,25 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                 </div>
                             </div>
 
+                            <div className="mt-2 flex items-center gap-2 py-1.5">
+                                <span className="typography-ui-label text-foreground shrink-0">{t('Language')}</span>
+                                <Select value={currentLanguage} onValueChange={(val) => setLanguage(val as 'en' | 'ja')}>
+                                    <SelectTrigger aria-label={t('Select language')} className="w-fit">
+                                        <SelectValue placeholder={t('Select language')} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {LANGUAGE_OPTIONS.map((option) => (
+                                            <SelectItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
                             <div className="mt-2 grid grid-cols-1 gap-2 py-1.5 md:grid-cols-[14rem_auto] md:gap-x-8 md:gap-y-2">
                                 <div className="flex min-w-0 items-center gap-2">
-                                    <span className="typography-ui-label text-foreground shrink-0">Light Theme</span>
+                                    <span className="typography-ui-label text-foreground shrink-0">{t('Light Theme')}</span>
                                     <Select value={selectedLightTheme?.metadata.id ?? ''} onValueChange={setLightThemePreference}>
                                         <SelectTrigger aria-label="Select light theme" className="w-fit">
                                             <SelectValue placeholder="Select theme" />
@@ -473,7 +493,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                     </Select>
                                 </div>
                                 <div className="flex min-w-0 items-center gap-2">
-                                    <span className="typography-ui-label text-foreground shrink-0">Dark Theme</span>
+                                    <span className="typography-ui-label text-foreground shrink-0">{t('Dark Theme')}</span>
                                     <Select value={selectedDarkTheme?.metadata.id ?? ''} onValueChange={setDarkThemePreference}>
                                         <SelectTrigger aria-label="Select dark theme" className="w-fit">
                                             <SelectValue placeholder="Select theme" />
@@ -508,7 +528,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                     }}
                                     className="inline-flex items-center typography-ui-label font-normal text-foreground underline decoration-[1px] underline-offset-2 hover:text-foreground/80 disabled:cursor-not-allowed disabled:text-muted-foreground/60"
                                 >
-                                    {themesReloading ? 'Reloading themes...' : 'Reload themes'}
+                                    {themesReloading ? t('Reloading themes...') : t('Reload themes')}
                                 </button>
                                 <Tooltip delayDuration={700}>
                                     <TooltipTrigger asChild>
@@ -521,7 +541,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                         </button>
                                     </TooltipTrigger>
                                     <TooltipContent sideOffset={8}>
-                                        Import custom themes from ~/.config/openchamber/themes/
+                                        {t('Import custom themes from ~/.config/openchamber/themes/')}
                                     </TooltipContent>
                                 </Tooltip>
                             </div>
@@ -535,10 +555,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                     />
                                     <div className="flex min-w-0 flex-col">
                                         <span className="typography-ui-label text-foreground">
-                                            Window vibrancy
+                                            {t('Window vibrancy')}
                                         </span>
                                         <span className="typography-meta text-muted-foreground">
-                                            Translucent window background. Disabling may reduce energy usage. Existing windows update immediately, but full transparency changes apply to new windows or after restart.
+                                            {t('Translucent window background. Disabling may reduce energy usage.')}
                                         </span>
                                     </div>
                                 </div>
@@ -547,8 +567,8 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                             {showPwaInstallNameSetting && (
                                 <div className="py-1.5 space-y-1.5">
                                     <div className="flex min-w-0 flex-col">
-                                        <span className="typography-ui-label text-foreground">Install App Name</span>
-                                        <span className="typography-meta text-muted-foreground">Used by PWA installation process.</span>
+                                        <span className="typography-ui-label text-foreground">{t('Install App Name')}</span>
+                                        <span className="typography-meta text-muted-foreground">{t('Used by PWA installation process.')}</span>
                                     </div>
                                     <div className="flex w-full max-w-[28rem] items-center gap-2">
                                         <Input

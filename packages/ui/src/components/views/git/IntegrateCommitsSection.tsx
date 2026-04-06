@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiArrowDownSLine, RiLoader4Line, RiSplitCellsHorizontal, RiSparklingLine } from '@remixicon/react';
 import {
   DropdownMenu,

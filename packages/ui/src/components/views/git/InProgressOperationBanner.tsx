@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiGitMergeLine,
   RiGitBranchLine,
@@ -29,6 +30,7 @@ export const InProgressOperationBanner: React.FC<InProgressOperationBannerProps>
   hasUnresolvedConflicts = false,
   isLoading = false,
 }) => {
+  const { t } = useTranslation();
   const [processingAction, setProcessingAction] = React.useState<'continue' | 'abort' | null>(null);
 
   // Only show banner if we have actual in-progress operation data
@@ -82,7 +84,7 @@ export const InProgressOperationBanner: React.FC<InProgressOperationBannerProps>
           <OperationIcon className="size-4 text-[var(--status-warning)] shrink-0" />
           <div className="min-w-0">
             <p className="typography-label text-[var(--status-warning)]">
-              {operationLabel} in Progress
+              {t('{{operationLabel}} in Progress', { operationLabel })}
             </p>
             {description && (
               <p className="typography-micro text-muted-foreground truncate">
@@ -102,7 +104,7 @@ export const InProgressOperationBanner: React.FC<InProgressOperationBannerProps>
               className="gap-1.5"
             >
               <RiSparklingLine className="size-4" />
-              Resolve with AI
+              {t('Resolve with AI')}
             </Button>
           )}
 
@@ -119,7 +121,7 @@ export const InProgressOperationBanner: React.FC<InProgressOperationBannerProps>
               ) : (
                 <RiCloseLine className="size-4" />
               )}
-              Abort
+              {t('Abort')}
             </Button>
           )}
 
@@ -136,7 +138,7 @@ export const InProgressOperationBanner: React.FC<InProgressOperationBannerProps>
               ) : (
                 <RiCheckLine className="size-4" />
               )}
-              Continue
+              {t('Continue')}
             </Button>
           )}
         </div>
@@ -144,7 +146,7 @@ export const InProgressOperationBanner: React.FC<InProgressOperationBannerProps>
 
       {hasUnresolvedConflicts && (
         <p className="typography-micro text-[var(--status-warning)] mt-2">
-          Conflicts must be resolved before continuing. Use &quot;Resolve with AI&quot; or resolve manually, then stage changes and click Continue.
+          {t('Conflicts must be resolved before continuing. Use "Resolve with AI" or resolve manually, then stage changes and click Continue.')}
         </p>
       )}
     </div>

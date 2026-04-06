@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useBrowserVoice } from '@/hooks/useBrowserVoice';
 import { useConfigStore } from '@/stores/useConfigStore';
 import { useDeviceInfo } from '@/lib/device';
@@ -48,6 +49,7 @@ const OPENAI_VOICE_OPTIONS = [
 ];
 
 export const VoiceSettings: React.FC = () => {
+    const { t } = useTranslation();
     const { isMobile } = useDeviceInfo();
     const {
         isSupported,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiFolderLine, RiRefreshLine } from '@remixicon/react';
 import { cn } from '@/lib/utils';
 import { opencodeClient, type FilesystemEntry } from '@/lib/opencode/client';
@@ -25,6 +26,7 @@ export const DirectoryAutocomplete = React.forwardRef<DirectoryAutocompleteHandl
   onClose,
   showHidden,
 }, ref) => {
+  const { t } = useTranslation();
   const [suggestions, setSuggestions] = React.useState<FilesystemEntry[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -305,7 +307,7 @@ export const DirectoryAutocomplete = React.forwardRef<DirectoryAutocompleteHandl
         </div>
       )}
       <div className="px-3 py-1.5 border-t typography-meta text-muted-foreground bg-sidebar/50">
-        Tab cycle • ↑↓ navigate • Enter select
+        {t('Tab cycle • ↑↓ navigate • Enter select')}
       </div>
     </div>
   );

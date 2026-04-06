@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { RiCheckboxBlankLine, RiCheckboxLine } from '@remixicon/react';
 import { Button } from '@/components/ui/button';
@@ -50,6 +51,7 @@ export const ChangesSection: React.FC<ChangesSectionProps> = ({
   maxListHeightClassName,
   onVisiblePathsChange,
 }) => {
+  const { t } = useTranslation();
   const scrollRef = React.useRef<HTMLDivElement | null>(null);
   const selectedCount = selectedPaths.size;
   const totalCount = changeEntries.length;
@@ -109,14 +111,14 @@ export const ChangesSection: React.FC<ChangesSectionProps> = ({
       <section className={containerClassName}>
         <header className={headerClassName}>
           <div className="flex min-w-0 items-center gap-2">
-            <h3 className="typography-ui-header font-semibold text-foreground">Changes</h3>
+            <h3 className="typography-ui-header font-semibold text-foreground">{t('Changes')}</h3>
             {totalCount > 0 ? (
               <button
                 type="button"
                 onClick={areAllSelected ? onClearSelection : onSelectAll}
                 disabled={isRevertingAll}
                 aria-checked={isPartiallySelected ? 'mixed' : hasAnySelected}
-                aria-label={areAllSelected ? 'Clear file selection' : 'Select all files'}
+                aria-label={areAllSelected ? t('Clear file selection') : t('Select all files')}
                 className={cn(
                   'inline-flex h-6 items-center gap-1 rounded px-1.5 text-muted-foreground',
                   'hover:bg-interactive-hover/55 hover:text-foreground',
@@ -141,7 +143,7 @@ export const ChangesSection: React.FC<ChangesSectionProps> = ({
                 onClick={() => setConfirmRevertAllOpen(true)}
                 disabled={isRevertingAll}
               >
-                Revert all
+                {t('Revert all')}
               </Button>
             ) : null}
           </div>
@@ -188,7 +190,7 @@ export const ChangesSection: React.FC<ChangesSectionProps> = ({
                 })}
               </div>
             ) : (
-              <div role="list" aria-label="Changed files">
+              <div role="list" aria-label={t('Changed files')}>
                 {changeEntries.map((file, index) => (
                   <div
                     key={file.path}
@@ -219,17 +221,17 @@ export const ChangesSection: React.FC<ChangesSectionProps> = ({
       <Dialog open={confirmRevertAllOpen} onOpenChange={(open) => { if (!isRevertingAll) setConfirmRevertAllOpen(open); }}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Revert all changes?</DialogTitle>
+            <DialogTitle>{t('Revert all changes?')}</DialogTitle>
             <DialogDescription>
-              This will discard local changes for {totalCount} file{totalCount === 1 ? '' : 's'} in the list.
+              {t('This will discard local changes for {{count}} file in the list.', { count: totalCount })}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" size="sm" onClick={() => setConfirmRevertAllOpen(false)} disabled={isRevertingAll}>
-              Cancel
+              {t('Cancel')}
             </Button>
             <Button variant="destructive" size="sm" onClick={() => void handleConfirmRevertAll()} disabled={isRevertingAll}>
-              {isRevertingAll ? 'Reverting...' : 'Revert all'}
+              {isRevertingAll ? t('Reverting...') : t('Revert all')}
             </Button>
           </DialogFooter>
         </DialogContent>

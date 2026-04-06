@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiAddLine,
   RiArrowDownSLine,
@@ -67,6 +68,7 @@ interface ProjectActionsSectionProps {
 }
 
 export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ projectRef }) => {
+  const { t } = useTranslation();
   const isDesktopShellApp = React.useMemo(() => isDesktopShell(), []);
   const desktopSshInstances = useDesktopSshStore((state) => state.instances);
   const loadDesktopSsh = useDesktopSshStore((state) => state.load);
@@ -126,7 +128,7 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
       return entry.name.trim().length === 0 || entry.command.trim().length === 0;
     });
     if (hasIncomplete) {
-      return 'Fill action name and command before saving.';
+      return t('Fill action name and command before saving.');
     }
     return null;
   }, [actions]);

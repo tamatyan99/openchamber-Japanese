@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Checkbox } from '@/components/ui/checkbox';
 import { updateDesktopSettings } from '@/lib/persistence';
 import { useConfigStore } from '@/stores/useConfigStore';
@@ -6,6 +7,7 @@ import { getRegisteredRuntimeAPIs } from '@/contexts/runtimeAPIRegistry';
 import { setFilesViewShowGitignored, useFilesViewShowGitignored } from '@/lib/filesViewShowGitignored';
 
 export const GitSettings: React.FC = () => {
+  const { t } = useTranslation();
   const settingsGitmojiEnabled = useConfigStore((state) => state.settingsGitmojiEnabled);
   const setSettingsGitmojiEnabled = useConfigStore((state) => state.setSettingsGitmojiEnabled);
   const showGitignored = useFilesViewShowGitignored();

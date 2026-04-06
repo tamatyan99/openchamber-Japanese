@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -8,6 +9,7 @@ import { updateDesktopSettings } from '@/lib/persistence';
 import { reloadOpenCodeConfiguration } from '@/stores/useAgentsStore';
 
 export const OpenCodeCliSettings: React.FC = () => {
+  const { t } = useTranslation();
   const [value, setValue] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
   const [isSaving, setIsSaving] = React.useState(false);

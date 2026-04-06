@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -243,6 +244,7 @@ export function DesktopHostSwitcherDialog({
   embedded = false,
   onHostSwitched,
 }: DesktopHostSwitcherDialogProps) {
+  const { t } = useTranslation();
   const setSettingsDialogOpen = useUIStore((state) => state.setSettingsDialogOpen);
   const setSettingsPage = useUIStore((state) => state.setSettingsPage);
 
@@ -306,7 +308,7 @@ export function DesktopHostSwitcherDialog({
       setConfigHosts(remote);
       setDefaultHostId(nextDefaultHostId);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save');
+      setError(err instanceof Error ? err.message : t('Failed to save'));
     } finally {
       setIsSaving(false);
     }
@@ -337,7 +339,7 @@ export function DesktopHostSwitcherDialog({
       setSshHostIds(nextSshHostIds);
       setSshStatusesById(sshStatusMap);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load');
+      setError(err instanceof Error ? err.message : t('Failed to load'));
       setConfigHosts([]);
       setDefaultHostId(null);
       setSshHostIds({});
@@ -551,7 +553,7 @@ export function DesktopHostSwitcherDialog({
 
     const url = normalizeHostUrl(editUrl);
     if (!url) {
-      setError('Invalid URL (must be http/https)');
+      setError(t('Invalid URL (must be http/https)'));
       return;
     }
 
@@ -564,7 +566,7 @@ export function DesktopHostSwitcherDialog({
   const addHost = React.useCallback(async () => {
     const url = normalizeHostUrl(newUrl);
     if (!url) {
-      setError('Invalid URL (must be http/https)');
+      setError(t('Invalid URL (must be http/https)'));
       return;
     }
     const label = (newLabel || redactSensitiveUrl(url)).trim();
@@ -596,7 +598,7 @@ export function DesktopHostSwitcherDialog({
     if (!origin) return;
     const target = toNavigationUrl(origin);
     desktopOpenNewWindowAtUrl(target).catch((err: unknown) => {
-      toast.error('Failed to open new window', {
+      toast.error(t('Failed to open new window'), {
         description: err instanceof Error ? err.message : String(err),
       });
     });
@@ -699,7 +701,7 @@ export function DesktopHostSwitcherDialog({
               )}
               onClick={() => void probeAll(allHosts)}
               disabled={!tauriAvailable || isLoading || isProbing}
-              aria-label="Refresh instances"
+              aria-label={t('Refresh instances')}
             >
               <RiRefreshLine className={cn('h-4 w-4', isProbing && 'animate-spin')} />
             </button>
@@ -712,7 +714,7 @@ export function DesktopHostSwitcherDialog({
             Instance
           </DialogTitle>
           <DialogDescription>
-            Switch between Local and remote OpenChamber servers
+            {t('Switch between Local and remote OpenChamber servers')}
           </DialogDescription>
         </DialogHeader>
       )}
@@ -720,9 +722,9 @@ export function DesktopHostSwitcherDialog({
       {!embedded && (
         <div className="flex items-center justify-between gap-2 flex-shrink-0">
           <div className="flex items-center gap-2 min-w-0">
-            <span className="typography-meta text-muted-foreground">Current:</span>
+            <span className="typography-meta text-muted-foreground">{t('Current:')}</span>
             <span className="typography-ui-label text-foreground truncate">{redactSensitiveUrl(current.label)}</span>
-            <span className="typography-meta text-muted-foreground">Current default:</span>
+            <span className="typography-meta text-muted-foreground">{t('Current default:')}</span>
             <span className="typography-ui-label text-foreground truncate">{redactSensitiveUrl(currentDefaultLabel)}</span>
           </div>
           <div className="flex items-center gap-1">
@@ -734,7 +736,7 @@ export function DesktopHostSwitcherDialog({
               disabled={!tauriAvailable || isLoading || isProbing}
             >
               <RiRefreshLine className={cn('h-4 w-4', isProbing && 'animate-spin')} />
-              Refresh
+              {t('Refresh')}
             </Button>
           </div>
         </div>
@@ -742,10 +744,10 @@ export function DesktopHostSwitcherDialog({
 
         {tauriAvailable && (
           <div className="flex-shrink-0 flex items-center justify-between gap-2 px-2.5 py-1.5">
-            <span className="typography-micro text-muted-foreground">Need SSH instances?<br />Manage them in Settings.</span>
+            <span className="typography-micro text-muted-foreground">{t('Need SSH instances?')}<br />{t('Manage them in Settings.')}</span>
             <Button type="button" variant="ghost" size="sm" onClick={openRemoteInstancesSettings}>
               <RiSettings3Line className="h-4 w-4" />
-              Remote SSH
+              {t('Remote SSH')}
             </Button>
           </div>
         )}
@@ -753,7 +755,7 @@ export function DesktopHostSwitcherDialog({
         {!tauriAvailable && (
           <div className="flex-shrink-0 rounded-lg border border-border/50 bg-muted/20 p-3">
             <div className="typography-meta text-muted-foreground">
-              Instance switcher is limited on this page. Use Local to recover.
+              {t('Instance switcher is limited on this page. Use Local to recover.')}
             </div>
           </div>
         )}
@@ -761,7 +763,7 @@ export function DesktopHostSwitcherDialog({
         <div className="flex-1 min-h-0 overflow-y-auto">
           <div className="space-y-1">
             {isLoading ? (
-              <div className="px-2 py-2 text-muted-foreground text-sm">Loading…</div>
+              <div className="px-2 py-2 text-muted-foreground text-sm">{t('Loading…')}</div>
             ) : (
               allHosts.map((host) => {
                 const isLocal = host.id === LOCAL_HOST_ID;
@@ -792,7 +794,7 @@ export function DesktopHostSwitcherDialog({
                       )}
                       onClick={() => void handleSwitch(host)}
                       disabled={switchingHostId === host.id}
-                      aria-label={`Switch to ${displayLabel}`}
+                      aria-label={t('Switch to {{label}}', { label: displayLabel })}
                     >
                       <span className={cn('h-2 w-2 rounded-full flex-shrink-0', statusDotClass(statusKind))} />
                       <div className="flex-1 min-w-0">
@@ -806,7 +808,7 @@ export function DesktopHostSwitcherDialog({
                             </span>
                           )}
                           {isActive && (
-                            <span className="typography-micro text-muted-foreground">Current</span>
+                            <span className="typography-micro text-muted-foreground">{t('Current')}</span>
                           )}
                           <span className="inline-flex items-center gap-1 typography-micro text-muted-foreground">
                             {statusIcon(statusKind)}
@@ -829,7 +831,7 @@ export function DesktopHostSwitcherDialog({
                             <button
                               type="button"
                               className="h-8 w-8 rounded-md inline-flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-interactive-hover transition-colors"
-                              aria-label="Instance actions"
+                              aria-label={t('Instance actions')}
                               disabled={isSaving}
                               onClick={(e) => e.stopPropagation()}
                             >
@@ -845,7 +847,7 @@ export function DesktopHostSwitcherDialog({
                               disabled={isSaving}
                             >
                               <RiPencilLine className="h-4 w-4 mr-1" />
-                              Edit
+                              {t('Edit')}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                               onClick={(e) => {
@@ -856,7 +858,7 @@ export function DesktopHostSwitcherDialog({
                               disabled={isSaving}
                             >
                               <RiDeleteBinLine className="h-4 w-4 mr-1" />
-                              Delete
+                              {t('Delete')}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -883,7 +885,7 @@ export function DesktopHostSwitcherDialog({
                             }}
                           >
                             {switchingHostId === host.id ? <RiLoader4Line className="h-3.5 w-3.5 animate-spin" /> : <RiPlug2Line className="h-3.5 w-3.5" />}
-                            Connect
+                            {t('Connect')}
                           </Button>
                         ) : (
                           <div
@@ -904,14 +906,14 @@ export function DesktopHostSwitcherDialog({
                                 : 'text-muted-foreground/60 hover:text-primary/80',
                             )}
                             onClick={() => void setDefault(host.id)}
-                            aria-label={isDefault ? 'Default instance' : 'Set as default'}
+                            aria-label={isDefault ? t('Default instance') : t('Set as default')}
                             disabled={isSaving}
                           >
                             {isDefault ? <RiStarFill className="h-4 w-4" /> : <RiStarLine className="h-4 w-4" />}
                           </button>
                         </TooltipTrigger>
                         <TooltipContent sideOffset={6}>
-                          {isDefault ? 'Default' : 'Set as default'}
+                          {isDefault ? t('Default') : t('Set as default')}
                         </TooltipContent>
                       </Tooltip>
 
@@ -930,13 +932,13 @@ export function DesktopHostSwitcherDialog({
                               openInNewWindow(host);
                             }}
                             disabled={statusKind === 'unreachable'}
-                            aria-label="Open in new window"
+                            aria-label={t('Open in new window')}
                           >
                             <RiWindowLine className="h-4 w-4" />
                           </button>
                         </TooltipTrigger>
                         <TooltipContent sideOffset={6}>
-                          {statusKind === 'unreachable' ? 'Instance unreachable' : 'Open in new window'}
+                          {statusKind === 'unreachable' ? t('Instance unreachable') : t('Open in new window')}
                         </TooltipContent>
                       </Tooltip>
                     </div>
@@ -950,14 +952,14 @@ export function DesktopHostSwitcherDialog({
         {tauriAvailable && editingId && editingId !== LOCAL_HOST_ID && (
           <div className="flex-shrink-0 rounded-lg border border-border/50 bg-muted/20 p-3">
             <div className="flex items-center justify-between gap-2">
-              <div className="typography-ui-label font-medium text-foreground">Edit instance</div>
+              <div className="typography-ui-label font-medium text-foreground">{t('Edit instance')}</div>
               <div className="flex items-center gap-2">
                 <Button type="button" variant="outline" size="sm" onClick={cancelEdit} disabled={isSaving}>
-                  Cancel
+                  {t('Cancel')}
                 </Button>
                 <Button type="button" size="sm" onClick={() => void commitEdit()} disabled={isSaving}>
                   {isSaving ? <RiLoader4Line className="h-4 w-4 animate-spin" /> : null}
-                  Save
+                  {t('Save')}
                 </Button>
               </div>
             </div>
@@ -965,7 +967,7 @@ export function DesktopHostSwitcherDialog({
               <Input
                 value={editLabel}
                 onChange={(e) => setEditLabel(e.target.value)}
-                placeholder="Label"
+                placeholder={t('Label')}
                 disabled={isSaving}
               />
               <Input
@@ -987,7 +989,7 @@ export function DesktopHostSwitcherDialog({
               disabled={!tauriAvailable || isSaving}
             >
               <RiAddLine className="h-4 w-4" />
-              <span className="typography-ui-label">Add instance</span>
+              <span className="typography-ui-label">{t('Add instance')}</span>
             </button>
           </div>
         ) : (
@@ -998,7 +1000,7 @@ export function DesktopHostSwitcherDialog({
               : 'rounded-md border border-[var(--interactive-border)] bg-[var(--surface-elevated)] p-2.5'
           )}>
             <div className="flex items-center justify-between gap-2">
-              <div className="typography-ui-label font-medium text-foreground">Add instance</div>
+              <div className="typography-ui-label font-medium text-foreground">{t('Add instance')}</div>
               <div className="flex items-center gap-2">
                 {embedded && (
                   <Button
@@ -1008,7 +1010,7 @@ export function DesktopHostSwitcherDialog({
                     onClick={() => setIsAddFormOpen(false)}
                     disabled={isSaving}
                   >
-                    Cancel
+                    {t('Cancel')}
                   </Button>
                 )}
                 <Button
@@ -1018,7 +1020,7 @@ export function DesktopHostSwitcherDialog({
                   disabled={!tauriAvailable || isSaving || !newUrl.trim()}
                 >
                   {isSaving ? <RiLoader4Line className="h-4 w-4 animate-spin" /> : null}
-                  Add
+                  {t('Add')}
                 </Button>
               </div>
             </div>
@@ -1026,7 +1028,7 @@ export function DesktopHostSwitcherDialog({
               <Input
                 value={newLabel}
                 onChange={(e) => setNewLabel(e.target.value)}
-                placeholder="Label (optional)"
+                placeholder={t('Label (optional)')}
                 disabled={!tauriAvailable || isSaving}
               />
               <Input
@@ -1064,7 +1066,7 @@ export function DesktopHostSwitcherDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <RiLoader4Line className={cn('h-4 w-4', !sshSwitchModal.error && 'animate-spin')} />
-            Connecting to {sshSwitchModal.hostLabel || 'SSH instance'}
+            {t('Connecting to {{label}}', { label: sshSwitchModal.hostLabel || t('SSH instance') })}
           </DialogTitle>
           <DialogDescription>
             {sshSwitchModal.error
@@ -1080,7 +1082,7 @@ export function DesktopHostSwitcherDialog({
               variant="outline"
               onClick={switchToLocal}
             >
-              Switch to Local
+              {t('Switch to Local')}
             </Button>
             <Button
               type="button"
@@ -1088,7 +1090,7 @@ export function DesktopHostSwitcherDialog({
               onClick={retrySshSwitch}
               disabled={!sshSwitchModal.hostId}
             >
-              Retry
+              {t('Retry')}
             </Button>
           </div>
         ) : null}
@@ -1124,6 +1126,7 @@ type DesktopHostSwitcherButtonProps = {
 };
 
 export function DesktopHostSwitcherButton({ headerIconButtonClass }: DesktopHostSwitcherButtonProps) {
+  const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const [label, setLabel] = React.useState('Local');
   const [status, setStatus] = React.useState<HostProbeResult['status'] | null>(null);
@@ -1287,7 +1290,7 @@ export function DesktopHostSwitcherButton({ headerIconButtonClass }: DesktopHost
           <button
             type="button"
             onClick={() => setOpen(true)}
-            aria-label="Switch instance"
+            aria-label={t('Switch instance')}
             data-oc-host-switcher
             className={cn(headerIconButtonClass, 'relative w-auto px-3')}
           >
@@ -1300,12 +1303,12 @@ export function DesktopHostSwitcherButton({ headerIconButtonClass }: DesktopHost
                 'pointer-events-none absolute top-1.5 right-1.5 h-1.5 w-1.5 rounded-full',
                 statusDotClass(status)
               )}
-              aria-label="Instance status"
+              aria-label={t('Instance status')}
             />
           </button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Instance</p>
+          <p>{t('Instance')}</p>
         </TooltipContent>
       </Tooltip>
       <DesktopHostSwitcherDialog open={open} onOpenChange={setOpen} />
@@ -1328,11 +1331,11 @@ export function DesktopHostSwitcherButton({ headerIconButtonClass }: DesktopHost
       >
         <DialogContent className="w-[min(30rem,calc(100vw-2rem))] max-w-none">
           <DialogHeader>
-            <DialogTitle>Default SSH instance unavailable</DialogTitle>
+            <DialogTitle>{t('Default SSH instance unavailable')}</DialogTitle>
             <DialogDescription>
               {startupSshModal.connecting
-                ? `Connecting to ${startupSshModal.hostLabel || 'SSH instance'}...`
-                : startupSshModal.error || 'Failed to connect the default SSH instance.'}
+                ? t('Connecting to {{label}}...', { label: startupSshModal.hostLabel || t('SSH instance') })
+                : startupSshModal.error || t('Failed to connect the default SSH instance.')}
             </DialogDescription>
           </DialogHeader>
           <div className="flex justify-end gap-2">
@@ -1343,7 +1346,7 @@ export function DesktopHostSwitcherButton({ headerIconButtonClass }: DesktopHost
               onClick={() => void switchStartupToLocal()}
               disabled={startupSshModal.connecting}
             >
-              Switch to Local
+              {t('Switch to Local')}
             </Button>
             <Button
               type="button"
@@ -1352,7 +1355,7 @@ export function DesktopHostSwitcherButton({ headerIconButtonClass }: DesktopHost
               disabled={startupSshModal.connecting || !startupSshModal.hostId}
             >
               {startupSshModal.connecting ? <RiLoader4Line className="h-4 w-4 animate-spin" /> : null}
-              Retry
+              {t('Retry')}
             </Button>
           </div>
         </DialogContent>
@@ -1362,6 +1365,7 @@ export function DesktopHostSwitcherButton({ headerIconButtonClass }: DesktopHost
 }
 
 export function DesktopHostSwitcherInline() {
+  const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
 
   if (!isDesktopShell()) {
@@ -1379,7 +1383,7 @@ export function DesktopHostSwitcherInline() {
         onClick={() => setOpen(true)}
       >
         <RiServerLine className="h-4 w-4" />
-        Switch instance
+        {t('Switch instance')}
       </Button>
       <DesktopHostSwitcherDialog open={open} onOpenChange={setOpen} />
     </>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiGitBranchLine,
   RiArrowDownSLine,
@@ -66,6 +67,7 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
   disabled = false,
   tooltipDelayMs = 1000,
 }) => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = React.useState(false);
   const [search, setSearch] = React.useState('');
   const [showCreate, setShowCreate] = React.useState(false);
@@ -175,21 +177,21 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
             >
               <RiGitBranchLine className="size-4 text-primary" />
               <span className="min-w-0 truncate font-medium text-left">
-                {currentBranch || 'Detached HEAD'}
+                {currentBranch || t('Detached HEAD')}
               </span>
               <RiArrowDownSLine className="size-4 opacity-60" />
             </Button>
           </DropdownMenuTrigger>
         </TooltipTrigger>
         <TooltipContent sideOffset={8}>
-          Current branch
+          {t('Current branch')}
         </TooltipContent>
       </Tooltip>
 
       <DropdownMenuContent align="start" className="w-72 p-0 max-h-[60vh] flex flex-col">
         <Command className="h-full min-h-0">
           <CommandInput
-            placeholder="Search branches..."
+            placeholder={t('Search branches...')}
             value={search}
             onValueChange={setSearch}
           />
@@ -197,7 +199,7 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
             scrollbarClassName="overlay-scrollbar--flush overlay-scrollbar--dense overlay-scrollbar--zero"
             disableHorizontal
           >
-            <CommandEmpty>No branches found.</CommandEmpty>
+            <CommandEmpty>{t('No branches found.')}</CommandEmpty>
 
             <CommandGroup>
               {showRemoteSelect ? (
@@ -241,13 +243,13 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
               ) : !showCreate ? (
                 <CommandItem onSelect={handleShowCreate}>
                   <RiAddLine className="size-4" />
-                  <span>Create new branch...</span>
+                  <span>{t('Create new branch...')}</span>
                 </CommandItem>
               ) : (
                 <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg">
                   <input
                     ref={createInputRef}
-                    placeholder="New branch name"
+                    placeholder={t('New branch name')}
                     value={newBranchName}
                     onChange={(e) => setNewBranchName(e.target.value)}
                     onKeyDown={(e) => {
@@ -287,7 +289,7 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
 
             <CommandSeparator />
 
-            <CommandGroup heading="Local branches">
+            <CommandGroup heading={t('Local branches')}>
               {filteredLocal.map((branch) => (
                 <CommandItem
                   key={`local-${branch}`}
@@ -299,20 +301,19 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
                     </span>
                     {(branchInfo?.[branch]?.ahead || branchInfo?.[branch]?.behind) && (
                       <span className="typography-micro text-muted-foreground">
-                        {branchInfo[branch].ahead || 0} ahead ·{' '}
-                        {branchInfo[branch].behind || 0} behind
+                        {t('{{ahead}} ahead · {{behind}} behind', { ahead: branchInfo[branch].ahead || 0, behind: branchInfo[branch].behind || 0 })}
                       </span>
                     )}
                   </span>
                   {currentBranch === branch && (
-                    <span className="typography-micro text-primary">Current</span>
+                    <span className="typography-micro text-primary">{t('Current')}</span>
                   )}
                 </CommandItem>
               ))}
               {filteredLocal.length === 0 && (
                 <CommandItem disabled className="justify-center">
                   <span className="typography-meta text-muted-foreground">
-                    No local branches
+                    {t('No local branches')}
                   </span>
                 </CommandItem>
               )}
@@ -320,7 +321,7 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
 
             <CommandSeparator />
 
-            <CommandGroup heading="Remote branches">
+            <CommandGroup heading={t('Remote branches')}>
               {filteredRemote.map((branch) => (
                 <CommandItem
                   key={`remote-${branch}`}
@@ -332,7 +333,7 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
               {filteredRemote.length === 0 && (
                 <CommandItem disabled className="justify-center">
                   <span className="typography-meta text-muted-foreground">
-                    No remote branches
+                    {t('No remote branches')}
                   </span>
                 </CommandItem>
               )}
