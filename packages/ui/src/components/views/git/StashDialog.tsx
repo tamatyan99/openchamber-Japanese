@@ -60,26 +60,25 @@ export const StashDialog: React.FC<StashDialogProps> = ({
         <DialogHeader>
           <div className="flex items-center gap-2">
             <RiAlertLine className="size-5 text-[var(--status-warning)]" />
-            <DialogTitle>Uncommitted Changes</DialogTitle>
+            <DialogTitle>{t('Uncommitted Changes')}</DialogTitle>
           </div>
           <DialogDescription>
-            You have uncommitted changes that would be overwritten by this {operation}.
-            Would you like to stash them temporarily?
+            {t('You have uncommitted changes that would be overwritten by this {{operation}}. Would you like to stash them temporarily?', { operation })}
           </DialogDescription>
         </DialogHeader>
 
         <div className="py-2">
           <p className="typography-meta text-muted-foreground mb-3">
-            This will:
+            {t('This will:')}
           </p>
           <ol className="list-decimal list-inside space-y-1 typography-meta text-foreground">
-            <li>Stash your uncommitted changes</li>
+            <li>{t('Stash your uncommitted changes')}</li>
             <li>
-              {operation === 'merge' ? 'Merge' : 'Rebase'}{' '}
-              {operation === 'merge' ? 'with' : 'onto'}{' '}
+              {operation === 'merge' ? t('Merge') : t('Rebase')}{' '}
+              {operation === 'merge' ? t('with') : t('onto')}{' '}
               <span className="font-mono text-primary">{targetBranch}</span>
             </li>
-            {restoreAfter && <li>Restore your stashed changes</li>}
+            {restoreAfter && <li>{t('Restore your stashed changes')}</li>}
           </ol>
         </div>
 
@@ -88,13 +87,13 @@ export const StashDialog: React.FC<StashDialogProps> = ({
             checked={restoreAfter}
             onChange={setRestoreAfter}
             disabled={isProcessing}
-            ariaLabel="Restore changes after operation"
+            ariaLabel={t('Restore changes after operation')}
           />
           <span
             className="typography-ui-label text-foreground cursor-pointer select-none"
             onClick={() => !isProcessing && setRestoreAfter(!restoreAfter)}
           >
-            Restore changes after the {operation}
+            {t('Restore changes after the {{operation}}', { operation })}
           </span>
         </div>
 
@@ -105,7 +104,7 @@ export const StashDialog: React.FC<StashDialogProps> = ({
             onClick={handleCancel}
             disabled={isProcessing}
           >
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button
             variant="default"
@@ -117,10 +116,10 @@ export const StashDialog: React.FC<StashDialogProps> = ({
             {isProcessing ? (
               <>
                 <RiLoader4Line className="size-4 animate-spin" />
-                Processing...
+                {t('Processing...')}
               </>
             ) : (
-              `Stash & ${operationLabel}`
+              t('Stash & {{operationLabel}}', { operationLabel })
             )}
           </Button>
         </DialogFooter>

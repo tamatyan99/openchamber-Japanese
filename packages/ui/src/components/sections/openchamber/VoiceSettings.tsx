@@ -336,7 +336,7 @@ export const VoiceSettings: React.FC = () => {
             <div className="mb-8">
                 <div className="mb-1 px-1">
                     <h3 className="typography-ui-header font-medium text-foreground">
-                        Voice Setup
+                        {t('Voice Setup')}
                     </h3>
                 </div>
 
@@ -351,7 +351,7 @@ export const VoiceSettings: React.FC = () => {
                         onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setVoiceModeEnabled(!voiceModeEnabled); } }}
                     >
                         <Checkbox checked={voiceModeEnabled} onChange={setVoiceModeEnabled} ariaLabel="Enable voice mode" />
-                        <span className="typography-ui-label text-foreground">Enable Voice Mode</span>
+                        <span className="typography-ui-label text-foreground">{t('Enable Voice Mode')}</span>
                     </div>
 
                     {voiceModeEnabled && (
@@ -359,7 +359,7 @@ export const VoiceSettings: React.FC = () => {
                             <div className="pb-1.5 pt-0.5">
                                 <div className="flex min-w-0 flex-col gap-1.5">
                                     <div className="flex items-center gap-1.5">
-                                        <span className="typography-ui-label text-foreground">Provider</span>
+                                        <span className="typography-ui-label text-foreground">{t('Provider')}</span>
                                         <Tooltip delayDuration={1000}>
                                             <TooltipTrigger asChild>
                                                 <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />

@@ -255,6 +255,7 @@ const normalizeForSave = (instance: DesktopSshInstance): DesktopSshInstance => {
 };
 
 export const RemoteInstancesPage: React.FC = () => {
+  const { t } = useTranslation();
   const instances = useDesktopSshStore((state) => state.instances);
   const statusesById = useDesktopSshStore((state) => state.statusesById);
   const importCandidates = useDesktopSshStore((state) => state.importCandidates);
@@ -385,9 +386,9 @@ export const RemoteInstancesPage: React.FC = () => {
 
     try {
       await upsertInstance(normalized);
-      toast.success('SSH instance saved');
+      toast.success(t('SSH instance saved'));
     } catch (error) {
-      toast.error('Failed to save SSH instance', {
+      toast.error(t('Failed to save SSH instance'), {
         description: error instanceof Error ? error.message : String(error),
       });
     }
@@ -399,10 +400,10 @@ export const RemoteInstancesPage: React.FC = () => {
       try {
         await createFromCommand(id, `ssh ${destination}`, host);
         setSelectedId(id);
-        toast.success('SSH instance created');
+        toast.success(t('SSH instance created'));
         return true;
       } catch (error) {
-        toast.error('Failed to create SSH instance', {
+        toast.error(t('Failed to create SSH instance'), {
           description: error instanceof Error ? error.message : String(error),
         });
         return false;
@@ -438,7 +439,7 @@ export const RemoteInstancesPage: React.FC = () => {
       return;
     }
     if (!destination) {
-      toast.error('Destination is required');
+      toast.error(t('Destination is required'));
       return;
     }
 
@@ -479,7 +480,7 @@ export const RemoteInstancesPage: React.FC = () => {
 
       await upsertInstance(nextInstance);
       await connect(nextInstance.id);
-      toast.success('Retried with a random local port');
+      toast.success(t('Retried with a random local port'));
     }
   }, [connect, selectedInstance, upsertInstance]);
 
@@ -539,15 +540,15 @@ export const RemoteInstancesPage: React.FC = () => {
 
   const handleCopyAllLogs = React.useCallback(() => {
     if (!logLinesText.trim()) {
-      toast.error('No logs to copy');
+      toast.error(t('No logs to copy'));
       return;
     }
     void copyTextToClipboard(logLinesText).then((result) => {
       if (result.ok) {
-        toast.success('Logs copied');
+        toast.success(t('Logs copied'));
       }
     });
-  }, [logLinesText]);
+  }, [logLinesText, t]);
 
   const handleClearLogs = React.useCallback(async () => {
     if (!draft) {
@@ -556,9 +557,9 @@ export const RemoteInstancesPage: React.FC = () => {
     try {
       await desktopSshLogsClear(draft.id);
       setLogDialogLines([]);
-      toast.success('Logs cleared');
+      toast.success(t('Logs cleared'));
     } catch (error) {
-      toast.error('Failed to clear logs', {
+      toast.error(t('Failed to clear logs'), {
         description: error instanceof Error ? error.message : String(error),
       });
     }
@@ -566,13 +567,13 @@ export const RemoteInstancesPage: React.FC = () => {
 
   const handleOpenCurrentInstance = React.useCallback(async () => {
     if (!status?.localUrl) {
-      toast.error('Instance URL is not available yet');
+      toast.error(t('Instance URL is not available yet'));
       return;
     }
 
     const target = status.localUrl.trim();
     if (!target) {
-      toast.error('Instance URL is not available yet');
+      toast.error(t('Instance URL is not available yet'));
       return;
     }
 
@@ -588,8 +589,8 @@ export const RemoteInstancesPage: React.FC = () => {
     const operation = canDisconnect ? disconnect(draft.id) : connectWithPortRecovery();
     void operation
       .catch((error) => {
-        const actionLabel = canDisconnect ? (isReady ? 'disconnect' : 'cancel connection') : 'connect';
-        toast.error(`Failed to ${actionLabel}`, {
+        const actionLabel = canDisconnect ? (isReady ? t('disconnect') : t('cancel connection')) : t('connect');
+        toast.error(t('Failed to {{actionLabel}}', { actionLabel }), {
           description: error instanceof Error ? error.message : String(error),
         });
       })
@@ -614,7 +615,7 @@ export const RemoteInstancesPage: React.FC = () => {
 
     void operation
       .catch((error) => {
-        toast.error('Retry failed', {
+        toast.error(t('Retry failed'), {
           description: error instanceof Error ? error.message : String(error),
         });
       })
@@ -624,12 +625,12 @@ export const RemoteInstancesPage: React.FC = () => {
   }, [connectWithPortRecovery, disconnect, draft, isConnecting, isReconnecting, retry]);
 
   const retryButtonLabel = isConnecting
-    ? 'Connecting...'
+    ? t('Connecting...')
     : isReconnecting
       ? reconnectAppearsStuck
-        ? 'Reconnect now'
-        : 'Reconnecting...'
-      : 'Retry';
+        ? t('Reconnect now')
+        : t('Reconnecting...')
+      : t('Retry');
 
   const canRetry =
     !isPrimaryActionPending &&
@@ -637,7 +638,7 @@ export const RemoteInstancesPage: React.FC = () => {
     (statusPhase === 'error' || statusPhase === 'idle' || !statusPhase || (isReconnecting && reconnectAppearsStuck)) &&
     !isConnecting;
 
-  const primaryButtonLabel = isReady ? 'Disconnect' : canDisconnect ? 'Cancel' : 'Connect';
+  const primaryButtonLabel = isReady ? t('Disconnect') : canDisconnect ? t('Cancel') : t('Connect');
 
   if (!draft) {
     return (

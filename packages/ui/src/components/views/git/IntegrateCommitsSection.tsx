@@ -57,6 +57,7 @@ export const IntegrateCommitsSection: React.FC<{
   refreshKey,
   onRefresh,
 }) => {
+  const { t } = useTranslation();
   const currentSessionId = useSessionUIStore((s) => s.currentSessionId);
   const setActiveMainTab = useUIStore((s) => s.setActiveMainTab);
   const [branchDropdownOpen, setBranchDropdownOpen] = React.useState(false);
@@ -352,7 +353,7 @@ Important:
       <div className={headerClassName}>
         <div className="flex items-center gap-2 min-w-0">
           <RiSplitCellsHorizontal className="size-4 text-muted-foreground" />
-          <h3 className="typography-ui-header font-semibold text-foreground truncate">Re-integrate commits</h3>
+          <h3 className="typography-ui-header font-semibold text-foreground truncate">{t('Re-integrate commits')}</h3>
           {ui.kind === 'ready' && ui.plan.commits.length > 0 ? (
             <span className="typography-meta text-muted-foreground truncate">{ui.plan.commits.length} to move</span>
           ) : null}
@@ -367,7 +368,7 @@ Important:
       <div className={bodyClassName}>
         <div className="flex flex-wrap items-center gap-2">
           <div className="min-w-0">
-            <div className="typography-ui-label text-foreground">Move commits</div>
+            <div className="typography-ui-label text-foreground">{t('Move commits')}</div>
               <div className="typography-micro text-muted-foreground truncate">
                 {sourceBranch} → {targetBranch}
               </div>
@@ -378,7 +379,7 @@ Important:
             <DropdownMenu open={branchDropdownOpen} onOpenChange={setBranchDropdownOpen}>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-1.5">
-                  Target
+                  {t('Target')}
                   <span className="max-w-[160px] truncate font-mono text-xs text-muted-foreground">{targetBranch}</span>
                   <RiArrowDownSLine className="size-4 opacity-60" />
                 </Button>
@@ -388,14 +389,14 @@ Important:
                 className="w-72 p-0 max-h-(--radix-dropdown-menu-content-available-height) flex flex-col overflow-hidden"
               >
                 <Command className="h-full min-h-0">
-                  <CommandInput ref={searchInputRef} placeholder="Search branches..." />
+                  <CommandInput ref={searchInputRef} placeholder={t('Search branches...')} />
                   <CommandList
                     className="h-full min-h-0"
                     scrollbarClassName="overlay-scrollbar--flush overlay-scrollbar--dense overlay-scrollbar--zero"
                     disableHorizontal
                   >
-                    <CommandEmpty>No branches found.</CommandEmpty>
-                    <CommandGroup heading="Local branches">
+                    <CommandEmpty>{t('No branches found.')}</CommandEmpty>
+                    <CommandGroup heading={t('Local branches')}>
                       {localBranches.map((branch) => (
                         <CommandItem
                           key={branch}

@@ -356,7 +356,7 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       if (file.size > MAX_FILE_SIZE) {
-        toast.error(`File "${file.name}" is too large (max 10MB)`);
+        toast.error(t('File "{{name}}" is too large (max 10MB)', { name: file.name }));
         continue;
       }
 
@@ -380,12 +380,12 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
         attachedCount++;
       } catch (error) {
         console.error('File attach failed', error);
-        toast.error(`Failed to attach "${file.name}"`);
+        toast.error(t('Failed to attach "{{name}}"', { name: file.name }));
       }
     }
 
     if (attachedCount > 0) {
-      toast.success(`Attached ${attachedCount} file${attachedCount > 1 ? 's' : ''}`);
+      toast.success(t('Attached {{count}} file', { count: attachedCount }));
     }
 
     if (fileInputRef.current) {
@@ -471,7 +471,7 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
           )}
           style={{ borderColor: 'var(--interactive-border)' }}
         >
-          <h1 className="typography-ui-label font-medium">New Multi-Run</h1>
+          <h1 className="typography-ui-label font-medium">{t('New Multi-Run')}</h1>
           {onCancel && (
             <div className="absolute right-0 flex items-center pr-3">
               <Tooltip delayDuration={500}>
@@ -479,14 +479,14 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
                   <button
                     type="button"
                     onClick={onCancel}
-                    aria-label="Close (Esc)"
+                    aria-label={t('Close (Esc)')}
                     className="inline-flex h-9 w-9 items-center justify-center p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary app-region-no-drag"
                   >
                     <RiCloseLine className="h-5 w-5" />
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Close (Esc)</p>
+                  <p>{t('Close (Esc)')}</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -503,7 +503,7 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-3">
               {/* Project */}
               <div className="flex flex-col gap-1">
-                <FieldLabel htmlFor="multirun-project" required>Project</FieldLabel>
+                <FieldLabel htmlFor="multirun-project" required>{t('Project')}</FieldLabel>
                 {projects.length > 0 ? (
                   <Select
                     value={selectedProjectId ?? undefined}
@@ -513,7 +513,7 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
                       {selectedProject ? (
                         <SelectValue>{renderProjectLabel(selectedProject)}</SelectValue>
                       ) : (
-                        <SelectValue placeholder="Select project" />
+                        <SelectValue placeholder={t('Select project')} />
                       )}
                     </SelectTrigger>
                     <SelectContent fitContent>
@@ -525,7 +525,7 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
                     </SelectContent>
                   </Select>
                 ) : (
-                  <p className="typography-micro text-muted-foreground py-2">Add a project first.</p>
+                  <p className="typography-micro text-muted-foreground py-2">{t('Add a project first.')}</p>
                 )}
               </div>
 
@@ -534,15 +534,15 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
                 <FieldLabel
                   htmlFor="group-name"
                   required
-                  info={<InfoTip>Used for worktree directory and branch names</InfoTip>}
+                  info={<InfoTip>{t('Used for worktree directory and branch names')}</InfoTip>}
                 >
-                  Group name
+                  {t('Group name')}
                 </FieldLabel>
                 <Input
                   id="group-name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="feature-auth, bugfix-login"
+                  placeholder={t('feature-auth, bugfix-login')}
                   className="typography-meta w-full"
                   required
                 />
@@ -552,9 +552,9 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
               <div className="flex flex-col gap-1">
                 <FieldLabel
                   htmlFor="multirun-worktree-base-branch"
-                  info={<InfoTip>New branch created from this base per model</InfoTip>}
+                  info={<InfoTip>{t('New branch created from this base per model')}</InfoTip>}
                 >
-                  Base branch
+                  {t('Base branch')}
                 </FieldLabel>
                 <BranchSelector
                   directory={selectedProjectDirectory}
@@ -568,9 +568,9 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
               <div className="flex flex-col gap-1">
                 <FieldLabel
                   htmlFor="multirun-agent"
-                  info={<InfoTip>Agent used for all runs. Defaults to your configured agent.</InfoTip>}
+                  info={<InfoTip>{t('Agent used for all runs. Defaults to your configured agent.')}</InfoTip>}
                 >
-                  Agent
+                  {t('Agent')}
                 </FieldLabel>
                 <AgentSelector
                   value={selectedAgent}
@@ -585,7 +585,7 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
               <CollapsibleTrigger className="w-full flex items-center gap-2 py-1.5 px-2 -mx-2 rounded-lg hover:bg-[var(--interactive-hover)]/50 transition-colors group">
                 <RiTerminalLine className="h-3.5 w-3.5 text-muted-foreground/70" />
                 <span className="typography-meta font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                  Setup commands
+                  {t('Setup commands')}
                 </span>
                 {configuredSetupCount > 0 && (
                   <span
