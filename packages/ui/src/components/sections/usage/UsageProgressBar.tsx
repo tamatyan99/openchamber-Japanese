@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { cn } from '@/lib/utils';
 import { clampPercent, resolveUsageTone } from '@/lib/quota';
 
@@ -19,6 +20,7 @@ export const UsageProgressBar: React.FC<UsageProgressBarProps> = ({
   className,
   expectedMarkerPercent,
 }) => {
+  const { t } = useTranslation();
   const clamped = clampPercent(percent) ?? 0;
   const tone = resolveUsageTone(tonePercent ?? percent);
   const markerClamped = expectedMarkerPercent != null
@@ -45,7 +47,7 @@ export const UsageProgressBar: React.FC<UsageProgressBarProps> = ({
         <div
           className="absolute top-0 h-full w-0.5 bg-foreground"
           style={{ left: `${markerClamped}%` }}
-          title={`Expected usage if spread evenly: ${Math.round(markerClamped)}% of quota`}
+          title={t('Expected usage if spread evenly: {{percent}}% of quota', { percent: Math.round(markerClamped) })}
           aria-hidden="true"
         />
       )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Session } from '@opencode-ai/sdk/v2';
 import {
   RiAddLine,
@@ -96,6 +97,7 @@ type Props = {
 };
 
 export function SessionGroupSection(props: Props): React.ReactNode {
+  const { t } = useTranslation();
   const {
     group,
     groupKey,
@@ -410,7 +412,7 @@ export function SessionGroupSection(props: Props): React.ReactNode {
       {visibleSessions.map((node) => renderSessionNode(node, 0, group.directory, projectId, group.isArchivedBucket === true))}
       {totalSessions === 0 && allFoldersForGroup.length === 0 ? (
         <div className="py-1 text-left typography-micro text-muted-foreground">
-          {group.isArchivedBucket ? 'No archived sessions yet.' : 'No sessions in this workspace yet.'}
+          {group.isArchivedBucket ? t('No archived sessions yet.') : t('No sessions in this workspace yet.')}
         </div>
       ) : null}
       {remainingCount > 0 && !isExpanded ? (
@@ -419,7 +421,7 @@ export function SessionGroupSection(props: Props): React.ReactNode {
           onClick={() => toggleGroupSessionLimit(groupKey)}
           className="mt-0.5 flex items-center justify-start rounded-md px-1.5 py-0.5 text-left text-xs text-muted-foreground/70 leading-tight hover:text-foreground hover:underline"
         >
-          Show {remainingCount} more {remainingCount === 1 ? 'session' : 'sessions'}
+          {t('Show {{count}} more {{item}}', { count: remainingCount, item: remainingCount === 1 ? t('session') : t('sessions') })}
         </button>
       ) : null}
       {isExpanded && totalSessions > maxVisible ? (
@@ -428,7 +430,7 @@ export function SessionGroupSection(props: Props): React.ReactNode {
           onClick={() => toggleGroupSessionLimit(groupKey)}
           className="mt-0.5 flex items-center justify-start rounded-md px-1.5 py-0.5 text-left text-xs text-muted-foreground/70 leading-tight hover:text-foreground hover:underline"
         >
-          Show fewer sessions
+          {t('Show fewer sessions')}
         </button>
       ) : null}
     </SessionFolderDndScope>
@@ -453,7 +455,7 @@ export function SessionGroupSection(props: Props): React.ReactNode {
             onToggleCollapsedGroup(groupKey);
           }
         }}
-        aria-label={isCollapsed ? `Expand ${group.label}` : `Collapse ${group.label}`}
+        aria-label={isCollapsed ? t('Expand {{label}}', { label: group.label }) : t('Collapse {{label}}', { label: group.label })}
         aria-expanded={!isCollapsed}
       >
         <div
@@ -623,12 +625,12 @@ export function SessionGroupSection(props: Props): React.ReactNode {
                     });
                   }}
                   className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                  aria-label={`Delete archived sessions in ${group.label}`}
+                  aria-label={t('Delete archived sessions in {{label}}', { label: group.label })}
                 >
                   <RiDeleteBinLine className="h-4 w-4" />
                 </button>
               </TooltipTrigger>
-              <TooltipContent side="bottom" sideOffset={4}><p>Delete archived sessions</p></TooltipContent>
+              <TooltipContent side="bottom" sideOffset={4}><p>{t('Delete archived sessions')}</p></TooltipContent>
             </Tooltip>
           </div>
         ) : null}
@@ -647,12 +649,12 @@ export function SessionGroupSection(props: Props): React.ReactNode {
                     });
                   }}
                   className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                  aria-label={`Delete ${group.label}`}
+                  aria-label={t('Delete {{label}}', { label: group.label })}
                 >
                   <RiDeleteBinLine className="h-4 w-4" />
                 </button>
               </TooltipTrigger>
-              <TooltipContent side="bottom" sideOffset={4}><p>Delete worktree</p></TooltipContent>
+              <TooltipContent side="bottom" sideOffset={4}><p>{t('Delete worktree')}</p></TooltipContent>
             </Tooltip>
           </div>
         ) : null}
@@ -670,12 +672,12 @@ export function SessionGroupSection(props: Props): React.ReactNode {
                     openNewSessionDraft({ directoryOverride: group.directory });
                   }}
                   className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                   aria-label={`New draft session in ${group.label}`}
+                   aria-label={t('New draft session in {{label}}', { label: group.label })}
                  >
                    <RiAddLine className="h-4 w-4" />
                  </button>
                </TooltipTrigger>
-               <TooltipContent side="bottom" sideOffset={4}><p>New draft session</p></TooltipContent>
+               <TooltipContent side="bottom" sideOffset={4}><p>{t('New draft session')}</p></TooltipContent>
              </Tooltip>
            </div>
          ) : null}

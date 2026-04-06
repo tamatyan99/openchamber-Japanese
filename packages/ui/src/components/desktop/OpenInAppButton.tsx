@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -74,6 +75,7 @@ type OpenInAppButtonProps = {
 };
 
 export const OpenInAppButton = ({ directory, activeFilePath, className }: OpenInAppButtonProps) => {
+  const { t } = useTranslation();
   const selectedAppId = useOpenInAppsStore((state) => state.selectedAppId);
   const availableApps = useOpenInAppsStore((state) => state.availableApps);
   const isCacheStale = useOpenInAppsStore((state) => state.isCacheStale);
@@ -125,7 +127,7 @@ export const OpenInAppButton = ({ directory, activeFilePath, className }: OpenIn
     if (!result.ok) {
       return;
     }
-    toast.success('Path copied to clipboard');
+    toast.success(t('Path copied to clipboard'));
   };
 
   return (
@@ -143,7 +145,7 @@ export const OpenInAppButton = ({ directory, activeFilePath, className }: OpenIn
           'inline-flex h-full items-center gap-2 px-3 typography-ui-label font-medium',
           'text-foreground hover:bg-interactive-hover transition-colors'
         )}
-        aria-label={`Open in ${selectedApp.label}`}
+        aria-label={t('Open in {{label}}', { label: selectedApp.label })}
       >
         <AppIcon
           label={selectedApp.label}
@@ -151,7 +153,7 @@ export const OpenInAppButton = ({ directory, activeFilePath, className }: OpenIn
           fallbackIconDataUrl={selectedApp.fallbackIconDataUrl}
         />
         <span className={cn('header-open-label', isScanning ? 'animate-pulse text-muted-foreground' : undefined)}>
-          Open
+          {t('Open')}
         </span>
       </button>
       <DropdownMenu>
@@ -163,7 +165,7 @@ export const OpenInAppButton = ({ directory, activeFilePath, className }: OpenIn
               'border-l border-[var(--interactive-border)] text-muted-foreground',
               'hover:bg-interactive-hover hover:text-foreground transition-colors'
             )}
-            aria-label="Choose app to open"
+            aria-label={t('Choose app to open')}
           >
             <RiArrowDownSLine className="h-4 w-4" />
           </button>
@@ -175,7 +177,7 @@ export const OpenInAppButton = ({ directory, activeFilePath, className }: OpenIn
         >
           <DropdownMenuItem className="flex items-center gap-2" onClick={() => void handleCopyPath()}>
             <RiFileCopyLine className="h-4 w-4" />
-            <span className="typography-ui-label text-foreground">Copy Path</span>
+            <span className="typography-ui-label text-foreground">{t('Copy Path')}</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           {availableApps.map((app) => {
@@ -204,7 +206,7 @@ export const OpenInAppButton = ({ directory, activeFilePath, className }: OpenIn
               onClick={() => void loadInstalledApps(true)}
             >
               <RiRefreshLine className="h-4 w-4" />
-              <span className="typography-ui-label text-foreground">Refresh Apps</span>
+              <span className="typography-ui-label text-foreground">{t('Refresh Apps')}</span>
             </DropdownMenuItem>
           ) : null}
         </DropdownMenuContent>

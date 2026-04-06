@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiGitMergeLine,
   RiGitBranchLine,
@@ -66,6 +67,7 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
   onOperationComplete,
   mode = 'dialog',
 }) => {
+  const { t } = useTranslation();
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [operation, setOperation] = React.useState<OperationType>('merge');
   const [selectedBranch, setSelectedBranch] = React.useState<string | null>(null);
@@ -199,13 +201,13 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
         mode === 'dialog' ? (
           <DialogFooter>
             <Button variant="default" size="sm" onClick={handleClose}>
-              {hasError ? 'Close' : 'Done'}
+              {hasError ? t('Close') : t('Done')}
             </Button>
           </DialogFooter>
         ) : (
           <div className="flex justify-end">
             <Button variant="default" size="sm" onClick={handleClose}>
-              {hasError ? 'Close' : 'Done'}
+              {hasError ? t('Close') : t('Done')}
             </Button>
           </div>
         )
@@ -217,7 +219,7 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
     <div className="space-y-4">
       {/* Operation Selection */}
       <div className="space-y-3">
-        <p className="typography-meta text-muted-foreground">Operation</p>
+        <p className="typography-meta text-muted-foreground">{t('Operation')}</p>
         <div className="grid grid-cols-2 gap-3">
           <button
             type="button"
@@ -239,11 +241,11 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
                   operation === 'merge' ? 'text-foreground' : 'text-muted-foreground'
                 )}
               >
-                Merge
+                {t('Merge')}
               </span>
             </div>
             <p className="typography-micro text-muted-foreground">
-              Combines branches with a merge commit and preserves history.
+              {t('Combines branches with a merge commit and preserves history.')}
             </p>
           </button>
 
@@ -267,11 +269,11 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
                   operation === 'rebase' ? 'text-foreground' : 'text-muted-foreground'
                 )}
               >
-                Rebase
+                {t('Rebase')}
               </span>
             </div>
                     <p className="typography-micro text-muted-foreground">
-                      Moves your commits to be on top of another branch. Creates linear history.
+                      {t('Moves your commits to be on top of another branch. Creates linear history.')}
                     </p>
                   </button>
         </div>
@@ -280,13 +282,13 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       {/* Branch Selection */}
       <div className="space-y-3">
         <p className="typography-meta text-muted-foreground">
-          {operation === 'merge' ? `Branch to merge into ${targetBranchLabel}` : 'Branch to rebase onto'}
+          {operation === 'merge' ? t('Branch to merge into {{branch}}', { branch: targetBranchLabel }) : t('Branch to rebase onto')}
         </p>
         <DropdownMenu open={branchDropdownOpen} onOpenChange={setBranchDropdownOpen} modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="lg" className="w-full justify-between">
               <span className={cn('truncate', !selectedBranch && 'text-muted-foreground')}>
-                {selectedBranch || 'Select a branch...'}
+                {selectedBranch || t('Select a branch...')}
               </span>
               <RiArrowDownSLine className="size-4 opacity-60 shrink-0" />
             </Button>
@@ -298,15 +300,15 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
             <Command className="h-full min-h-0">
               <CommandInput
                 ref={searchInputRef}
-                placeholder="Search branches..."
+                placeholder={t('Search branches...')}
                 value={branchSearch}
                 onValueChange={setBranchSearch}
               />
               <CommandList className="h-full min-h-0" disableHorizontal>
-                <CommandEmpty>No branches found.</CommandEmpty>
+                <CommandEmpty>{t('No branches found.')}</CommandEmpty>
 
                 {filteredLocal.length > 0 && (
-                  <CommandGroup heading="Local branches">
+                  <CommandGroup heading={t('Local branches')}>
                     {filteredLocal.map((branch) => (
                       <CommandItem key={`local-${branch}`} onSelect={() => handleSelectBranch(branch)}>
                         <span className="typography-ui-label text-foreground truncate">{branch}</span>
@@ -318,7 +320,7 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
                 {filteredLocal.length > 0 && filteredRemote.length > 0 ? <CommandSeparator /> : null}
 
                 {filteredRemote.length > 0 && (
-                  <CommandGroup heading="Remote branches">
+                  <CommandGroup heading={t('Remote branches')}>
                     {filteredRemote.map((branch) => (
                       <CommandItem key={`remote-${branch}`} onSelect={() => handleSelectBranch(branch)}>
                         <span className="typography-ui-label text-foreground truncate">{branch}</span>
@@ -337,15 +339,9 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
         <div className="rounded-lg bg-muted/50 p-3">
           <p className="typography-meta text-muted-foreground">
             {operation === 'merge' ? (
-              <>
-                This will merge <span className="font-mono text-foreground">{selectedBranch}</span> into{' '}
-                <span className="font-mono text-foreground">{targetBranchLabel}</span>
-              </>
+              t('This will merge {{branch}} into {{target}}', { branch: selectedBranch, target: targetBranchLabel })
             ) : (
-              <>
-                This will rebase <span className="font-mono text-foreground">{targetBranchLabel}</span> onto{' '}
-                <span className="font-mono text-foreground">{selectedBranch}</span>
-              </>
+              t('This will rebase {{target}} onto {{branch}}', { target: targetBranchLabel, branch: selectedBranch })
             )}
           </p>
         </div>
@@ -354,7 +350,7 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       {mode === 'dialog' ? (
         <DialogFooter className="gap-2 pt-1">
           <Button variant="ghost" size="sm" onClick={handleCancel}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button
             variant="default"
@@ -366,12 +362,12 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
             {operation === 'merge' ? (
               <>
                 <RiGitMergeLine className="size-4" />
-                Merge
+                {t('Merge')}
               </>
             ) : (
               <>
                 <RiGitBranchLine className="size-4" />
-                Rebase
+                {t('Rebase')}
               </>
             )}
           </Button>
@@ -379,11 +375,11 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       ) : (
         <div className="flex items-center gap-2 pt-1">
           <Button variant="destructive" size="sm" onClick={handleCancel} disabled={isDisabled}>
-            Reset
+            {t('Reset')}
           </Button>
           <div className="flex-1" />
           <Button variant="default" size="sm" onClick={handleConfirm} disabled={isDisabled || !selectedBranch}>
-            {operation === 'merge' ? 'Merge' : 'Rebase'}
+            {operation === 'merge' ? t('Merge') : t('Rebase')}
           </Button>
         </div>
       )}
@@ -397,10 +393,9 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       <section className="border-0 bg-transparent rounded-none">
         <header className="border-b border-border/40 px-0 py-3">
           <div className="space-y-1">
-            <div className="typography-ui-header font-semibold text-foreground">Update branch</div>
+            <div className="typography-ui-header font-semibold text-foreground">{t('Update branch')}</div>
             <div className="typography-micro text-muted-foreground">
-              Bring changes from another branch into{' '}
-              <span className="font-mono text-foreground">{targetBranchLabel}</span>.
+              {t('Bring changes from another branch into {{branch}}.', { branch: targetBranchLabel })}
             </div>
           </div>
         </header>
@@ -425,11 +420,11 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
             ) : (
               <RiGitMergeLine className="size-4" />
             )}
-            <span>Merge/Rebase</span>
+            <span>{t('Merge/Rebase')}</span>
           </Button>
         </TooltipTrigger>
         <TooltipContent sideOffset={8}>
-          Merge or rebase changes from another branch.
+          {t('Merge or rebase changes from another branch.')}
         </TooltipContent>
       </Tooltip>
 
@@ -442,20 +437,16 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       }}>
           <DialogContent className="max-w-md">
             <DialogHeader>
-              <DialogTitle>Update Branch</DialogTitle>
+              <DialogTitle>{t('Update Branch')}</DialogTitle>
               <DialogDescription>
               {isOperating ? (
                 operationCompleted ? (
-                  hasError ? 'Operation failed' : 'Operation completed'
+                  hasError ? t('Operation failed') : t('Operation completed')
                 ) : (
-                  `${operation === 'merge' ? 'Merging' : 'Rebasing'} in progress...`
+                  t('{{operationType}} in progress...', { operationType: operation === 'merge' ? t('Merging') : t('Rebasing') })
                 )
               ) : (
-                <>
-                  Choose how to bring changes from another branch into{' '}
-                  <span className="font-mono text-foreground">{targetBranchLabel}</span>
-                  .
-                </>
+                t('Choose how to bring changes from another branch into {{branch}}.', { branch: targetBranchLabel })
               )}
             </DialogDescription>
           </DialogHeader>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { RiCheckboxBlankLine, RiCheckboxLine } from '@remixicon/react';
 import type { Session } from '@opencode-ai/sdk/v2';
@@ -17,20 +18,21 @@ export function SessionDeleteConfirmDialog(props: {
   onConfirm: () => Promise<void> | void;
 }): React.ReactNode {
   const { value, setValue, showDeletionDialog, setShowDeletionDialog, onConfirm } = props;
+  const { t } = useTranslation();
 
   return (
     <Dialog open={Boolean(value)} onOpenChange={(open) => { if (!open) setValue(null); }}>
       <DialogContent showCloseButton={false} className="max-w-sm gap-5">
         <DialogHeader>
-          <DialogTitle>{value?.archivedBucket ? 'Delete session?' : 'Archive session?'}</DialogTitle>
+          <DialogTitle>{value?.archivedBucket ? t('Delete session?') : t('Archive session?')}</DialogTitle>
           <DialogDescription>
             {value && value.descendantCount > 0
               ? value.archivedBucket
-                ? `"${value.session.title || 'Untitled Session'}" and its ${value.descendantCount} sub-task${value.descendantCount === 1 ? '' : 's'} will be permanently deleted.`
-                : `"${value.session.title || 'Untitled Session'}" and its ${value.descendantCount} sub-task${value.descendantCount === 1 ? '' : 's'} will be archived.`
+                ? t('"{{title}}" and its {{count}} sub-task{{s}} will be permanently deleted.', { title: value.session.title || t('Untitled Session'), count: value.descendantCount, s: value.descendantCount === 1 ? '' : 's' })
+                : t('"{{title}}" and its {{count}} sub-task{{s}} will be archived.', { title: value.session.title || t('Untitled Session'), count: value.descendantCount, s: value.descendantCount === 1 ? '' : 's' })
               : value?.archivedBucket
-                ? `"${value?.session.title || 'Untitled Session'}" will be permanently deleted.`
-                : `"${value?.session.title || 'Untitled Session'}" will be archived.`}
+                ? t('"{{title}}" will be permanently deleted.', { title: value?.session.title || t('Untitled Session') })
+                : t('"{{title}}" will be archived.', { title: value?.session.title || t('Untitled Session') })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="w-full sm:items-center sm:justify-between">
@@ -41,7 +43,7 @@ export function SessionDeleteConfirmDialog(props: {
             aria-pressed={!showDeletionDialog}
           >
             {!showDeletionDialog ? <RiCheckboxLine className="h-4 w-4 text-primary" /> : <RiCheckboxBlankLine className="h-4 w-4" />}
-            Never ask
+            {t('Never ask')}
           </button>
           <div className="flex items-center gap-2">
             <button
@@ -49,14 +51,14 @@ export function SessionDeleteConfirmDialog(props: {
               onClick={() => setValue(null)}
               className="inline-flex h-8 items-center justify-center rounded-md border border-border px-3 typography-ui-label text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             >
-              Cancel
+              {t('Cancel')}
             </button>
             <button
               type="button"
               onClick={() => void onConfirm()}
               className="inline-flex h-8 items-center justify-center rounded-md bg-destructive px-3 typography-ui-label text-destructive-foreground hover:bg-destructive/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive/50"
             >
-              {value?.archivedBucket ? 'Delete' : 'Archive'}
+              {value?.archivedBucket ? t('Delete') : t('Archive')}
             </button>
           </div>
         </DialogFooter>
@@ -79,16 +81,17 @@ export function FolderDeleteConfirmDialog(props: {
   onConfirm: () => void;
 }): React.ReactNode {
   const { value, setValue, onConfirm } = props;
+  const { t } = useTranslation();
 
   return (
     <Dialog open={Boolean(value)} onOpenChange={(open) => { if (!open) setValue(null); }}>
       <DialogContent showCloseButton={false} className="max-w-sm gap-5">
         <DialogHeader>
-          <DialogTitle>Delete folder?</DialogTitle>
+          <DialogTitle>{t('Delete folder?')}</DialogTitle>
           <DialogDescription>
             {value && (value.subFolderCount > 0 || value.sessionCount > 0)
-              ? `"${value.folderName}" will be deleted${value.subFolderCount > 0 ? ` along with ${value.subFolderCount} sub-folder${value.subFolderCount === 1 ? '' : 's'}` : ''}. Sessions inside will not be deleted.`
-              : `"${value?.folderName}" will be permanently deleted.`}
+              ? t('"{{name}}" will be deleted{{sub}}. Sessions inside will not be deleted.', { name: value.folderName, sub: value.subFolderCount > 0 ? t(' along with {{count}} sub-folder{{s}}', { count: value.subFolderCount, s: value.subFolderCount === 1 ? '' : 's' }) : '' })
+              : t('"{{name}}" will be permanently deleted.', { name: value?.folderName })}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -97,14 +100,14 @@ export function FolderDeleteConfirmDialog(props: {
             onClick={() => setValue(null)}
             className="inline-flex h-8 items-center justify-center rounded-md border border-border px-3 typography-ui-label text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
           >
-            Cancel
+            {t('Cancel')}
           </button>
           <button
             type="button"
             onClick={onConfirm}
             className="inline-flex h-8 items-center justify-center rounded-md bg-destructive px-3 typography-ui-label text-destructive-foreground hover:bg-destructive/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive/50"
           >
-            Delete
+            {t('Delete')}
           </button>
         </DialogFooter>
       </DialogContent>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -40,6 +41,7 @@ export const ConflictDialog: React.FC<ConflictDialogProps> = ({
   const setPendingSyntheticParts = useInputStore((state) => state.setPendingSyntheticParts);
   const setActiveMainTab = useUIStore((state) => state.setActiveMainTab);
 
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState(false);
   const [conflictDetails, setConflictDetails] = React.useState<MergeConflictDetails | null>(null);
   const [loadError, setLoadError] = React.useState<string | null>(null);
@@ -178,17 +180,17 @@ Important:
           <DialogHeader>
             <div className="flex items-center gap-2">
               <RiAlertLine className="size-5 shrink-0 text-[var(--status-warning)]" />
-              <DialogTitle>{operationLabel} Conflicts Detected</DialogTitle>
+              <DialogTitle>{t('{{operationLabel}} Conflicts Detected', { operationLabel })}</DialogTitle>
             </div>
             <DialogDescription>
-              The {operation} operation resulted in conflicts that need to be resolved.
+              {t('The {{operation}} operation resulted in conflicts that need to be resolved.', { operation })}
             </DialogDescription>
           </DialogHeader>
 
           {isLoading && (
             <div className="flex items-center justify-center gap-2 py-4 text-muted-foreground">
               <RiLoader4Line className="size-4 animate-spin" />
-              <span className="typography-meta">Loading conflict details...</span>
+              <span className="typography-meta">{t('Loading conflict details...')}</span>
             </div>
           )}
 
@@ -201,7 +203,7 @@ Important:
           {displayFiles.length > 0 && (
             <div className="space-y-2 overflow-hidden">
               <div className="flex items-center justify-between">
-                <p className="typography-meta text-muted-foreground">Conflicted files:</p>
+                <p className="typography-meta text-muted-foreground">{t('Conflicted files:')}</p>
                 <span className="typography-micro px-1.5 py-0.5 rounded bg-[var(--surface-elevated)] text-muted-foreground">
                   {displayFiles.length}
                 </span>
@@ -224,7 +226,7 @@ Important:
 
           {conflictDetails?.headInfo && (
             <div className="space-y-1 overflow-hidden">
-              <p className="typography-meta text-muted-foreground">HEAD information:</p>
+              <p className="typography-meta text-muted-foreground">{t('HEAD information:')}</p>
               <div className="typography-micro text-foreground font-mono bg-[var(--surface-elevated)] rounded-lg p-3 max-h-24 overflow-y-auto break-words whitespace-pre-wrap">
                 {conflictDetails.headInfo}
               </div>
@@ -243,7 +245,7 @@ Important:
               ) : (
                 <RiAddLine className="size-4" />
               )}
-              Resolve in New Session
+              {t('Resolve in New Session')}
             </Button>
             <Button
               variant="outline"
@@ -256,14 +258,14 @@ Important:
               ) : (
                 <RiChat1Line className="size-4" />
               )}
-              Resolve in Current Session
+              {t('Resolve in Current Session')}
             </Button>
             <div className="flex gap-2 pt-1">
               <Button variant="ghost" size="sm" onClick={handleContinueLater} className="flex-1">
-                Continue Later
+                {t('Continue Later')}
               </Button>
               <Button variant="destructive" size="sm" onClick={handleAbort} className="flex-1">
-                Abort {operationLabel}
+                {t('Abort {{operationLabel}}', { operationLabel })}
               </Button>
             </div>
           </div>

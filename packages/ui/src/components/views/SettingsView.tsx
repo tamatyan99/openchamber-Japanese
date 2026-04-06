@@ -54,6 +54,7 @@ import { OpenChamberPage } from '@/components/sections/openchamber/OpenChamberPa
 import { McpIcon } from '@/components/icons/McpIcon';
 import { useDeviceInfo } from '@/lib/device';
 import { isDesktopShell, isVSCodeRuntime, isWebRuntime } from '@/lib/desktop';
+import { useTranslation } from 'react-i18next';
 import { reloadOpenCodeConfiguration } from '@/stores/useAgentsStore';
 import {
   SETTINGS_PAGE_METADATA,
@@ -160,12 +161,13 @@ function getSettingsNavIcon(slug: SettingsPageSlug): React.ComponentType<{ class
 }
 
 const SettingsHome: React.FC<{ onOpen: (slug: SettingsPageSlug) => void }> = ({ onOpen }) => {
+  const { t } = useTranslation();
   return (
     <div className="h-full overflow-auto">
       <div className="mx-auto w-full max-w-3xl px-6 py-6 space-y-6">
         <div className="space-y-1">
-          <h1 className="typography-ui-header font-semibold text-foreground">Settings</h1>
-          <p className="typography-ui text-muted-foreground">Jump to common pages.</p>
+          <h1 className="typography-ui-header font-semibold text-foreground">{t('Settings')}</h1>
+          <p className="typography-ui text-muted-foreground">{t('Jump to common pages.')}</p>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
@@ -177,8 +179,8 @@ const SettingsHome: React.FC<{ onOpen: (slug: SettingsPageSlug) => void }> = ({ 
               'hover:bg-[var(--interactive-hover)] transition-colors'
             )}
           >
-            <div className="typography-ui-label text-foreground">Providers</div>
-            <div className="typography-micro text-muted-foreground/70">Connect models + credentials</div>
+            <div className="typography-ui-label text-foreground">{t('Providers')}</div>
+            <div className="typography-micro text-muted-foreground/70">{t('Connect models + credentials')}</div>
           </button>
 
           <button
@@ -189,8 +191,8 @@ const SettingsHome: React.FC<{ onOpen: (slug: SettingsPageSlug) => void }> = ({ 
               'hover:bg-[var(--interactive-hover)] transition-colors'
             )}
           >
-            <div className="typography-ui-label text-foreground">Agents</div>
-            <div className="typography-micro text-muted-foreground/70">Prompts, tools, permissions</div>
+            <div className="typography-ui-label text-foreground">{t('Agents')}</div>
+            <div className="typography-micro text-muted-foreground/70">{t('Prompts, tools, permissions')}</div>
           </button>
 
           <button
@@ -201,8 +203,8 @@ const SettingsHome: React.FC<{ onOpen: (slug: SettingsPageSlug) => void }> = ({ 
               'hover:bg-[var(--interactive-hover)] transition-colors'
             )}
           >
-            <div className="typography-ui-label text-foreground">Skills Catalog</div>
-            <div className="typography-micro text-muted-foreground/70">Install skills from catalogs</div>
+            <div className="typography-ui-label text-foreground">{t('Skills Catalog')}</div>
+            <div className="typography-micro text-muted-foreground/70">{t('Install skills from catalogs')}</div>
           </button>
 
           <button
@@ -213,8 +215,8 @@ const SettingsHome: React.FC<{ onOpen: (slug: SettingsPageSlug) => void }> = ({ 
               'hover:bg-[var(--interactive-hover)] transition-colors'
             )}
           >
-            <div className="typography-ui-label text-foreground">MCP</div>
-            <div className="typography-micro text-muted-foreground/70">Configure MCP servers + connections</div>
+            <div className="typography-ui-label text-foreground">{t('MCP')}</div>
+            <div className="typography-micro text-muted-foreground/70">{t('Configure MCP servers + connections')}</div>
           </button>
 
           <button
@@ -225,8 +227,8 @@ const SettingsHome: React.FC<{ onOpen: (slug: SettingsPageSlug) => void }> = ({ 
               'hover:bg-[var(--interactive-hover)] transition-colors'
             )}
           >
-            <div className="typography-ui-label text-foreground">Usage</div>
-            <div className="typography-micro text-muted-foreground/70">Quota + spend visibility</div>
+            <div className="typography-ui-label text-foreground">{t('Usage')}</div>
+            <div className="typography-micro text-muted-foreground/70">{t('Quota + spend visibility')}</div>
           </button>
         </div>
       </div>
@@ -235,6 +237,7 @@ const SettingsHome: React.FC<{ onOpen: (slug: SettingsPageSlug) => void }> = ({ 
 };
 
 export const SettingsView: React.FC<SettingsViewProps> = ({ onClose, forceMobile, isWindowed }) => {
+  const { t } = useTranslation();
   const deviceInfo = useDeviceInfo();
   const isMobile = forceMobile ?? deviceInfo.isMobile;
 
@@ -379,8 +382,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onClose, forceMobile
     return (
       <div className="flex h-full items-center justify-center px-6">
         <div className="max-w-md text-center">
-          <div className="typography-ui-header font-semibold text-foreground">Not available</div>
-          <p className="typography-ui text-muted-foreground mt-1">This settings page is not available in this runtime.</p>
+          <div className="typography-ui-header font-semibold text-foreground">{t('Not available')}</div>
+          <p className="typography-ui text-muted-foreground mt-1">{t('This settings page is not available in this runtime.')}</p>
         </div>
       </div>
     );
@@ -517,7 +520,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onClose, forceMobile
                           collapsed ? 'opacity-0' : 'opacity-100'
                         )}
                       >
-                        <span className="typography-ui-label font-normal truncate">{page.title}</span>
+                        <span className="typography-ui-label font-normal truncate">{t(page.title)}</span>
                         {(page.slug === 'voice' || page.slug === 'tunnel') && (
                           <span className="shrink-0 typography-micro px-1 rounded leading-none pb-px text-[var(--status-warning)] bg-[var(--status-warning)]/10">
                             beta
@@ -528,7 +531,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onClose, forceMobile
                   </TooltipTrigger>
                   {collapsed && (
                     <TooltipContent side="right" sideOffset={8}>
-                      {page.title}
+                      {t(page.title)}
                     </TooltipContent>
                   )}
                 </Tooltip>
@@ -558,11 +561,11 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onClose, forceMobile
                     onClick={() => void reloadOpenCodeConfiguration({ message: 'Restarting OpenCode…', mode: 'projects', scopes: ['all'] })}
                   >
                     <RiRestartLine className="h-4 w-4 shrink-0" />
-                    <span>Reload OpenCode</span>
+                    <span>{t('Reload OpenCode')}</span>
                   </button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  Restart OpenCode and reload its configuration.
+                  {t('Restart OpenCode and reload its configuration.')}
                 </TooltipContent>
               </Tooltip>
             )}
@@ -655,7 +658,7 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onClose, forceMobile
           <button
             type="button"
             onClick={showBackButton ? handleBack : onClose}
-            aria-label={showBackButton ? 'Back to Settings' : 'Close settings'}
+            aria-label={showBackButton ? t('Back to Settings') : t('Close settings')}
             className="inline-flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg p-2 text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <RiArrowLeftSLine className="h-5 w-5" />
@@ -663,8 +666,8 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ onClose, forceMobile
 
           <div className="min-w-0 flex-1 typography-ui-label font-medium text-foreground truncate">
             {mobileStage === 'nav'
-              ? 'Settings'
-              : (activePageMeta?.title ?? 'Settings')}
+              ? t('Settings')
+              : t(activePageMeta?.title ?? 'Settings')}
           </div>
 
           {mobileStage === 'page-content' && activePageMeta?.kind === 'split' && (

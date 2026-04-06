@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -202,6 +203,7 @@ export function NewWorktreeDialog({
   onOpenChange,
   onWorktreeCreated,
 }: NewWorktreeDialogProps) {
+  const { t } = useTranslation();
   const { github, git } = useRuntimeAPIs();
   const isMobile = useUIStore((state) => state.isMobile);
   const githubAuthStatus = useGitHubAuthStore((state) => state.status);
@@ -518,7 +520,7 @@ export function NewWorktreeDialog({
     const agentName = resolveDefaultAgentName() || configState.currentAgentName || undefined;
 
     if (!providerID || !modelID) {
-      toast.error('No model selected');
+      toast.error(t('No model selected'));
       return;
     }
 
@@ -602,7 +604,7 @@ Do not implement changes until I confirm; end with: "Next actions: <1 sentence>"
         ],
       });
 
-      toast.success('Session created from issue');
+      toast.success(t('Session created from issue'));
       return;
     }
 
@@ -678,7 +680,7 @@ Nice-to-have:
         ],
       });
 
-      toast.success('Session created from PR');
+      toast.success(t('Session created from PR'));
     }
   }, [
     applySessionModelAndAgentDefaults,
@@ -800,11 +802,11 @@ Nice-to-have:
       let worktreeError: string | null = null;
       
       if (!normalizedBranch) {
-        branchError = 'Branch name is required';
+        branchError = t('Branch name is required');
       }
-      
+
       if (!normalizedWorktree) {
-        worktreeError = 'Worktree directory is required';
+        worktreeError = t('Worktree directory is required');
       }
       
       // Only run server validation if we have values
@@ -876,7 +878,7 @@ Nice-to-have:
   // Handle worktree creation
   const handleCreate = async () => {
     if (!projectRef || !projectDirectory) {
-      toast.error('No active project');
+      toast.error(t('No active project'));
       return;
     }
     
@@ -889,12 +891,12 @@ Nice-to-have:
     const normalizedWorktree = slugifyWorktreeName(worktreeName);
     
     if (!normalizedBranch) {
-      toast.error('Branch name is required');
+      toast.error(t('Branch name is required'));
       return;
     }
     
     if (!normalizedWorktree) {
-      toast.error('Worktree directory is required');
+      toast.error(t('Worktree directory is required'));
       return;
     }
 
@@ -985,7 +987,7 @@ Nice-to-have:
         localStorage.setItem(LAST_SOURCE_BRANCH_KEY, newBranchState.sourceBranch);
       }
       
-      toast.success('Worktree created', {
+      toast.success(t('Worktree created'), {
         description: `${metadata.branch || metadata.name}${sourceLabel ? ` from ${sourceLabel}` : ''} - bootstrapping in background`,
       });
 
@@ -999,15 +1001,15 @@ Nice-to-have:
           pr: linkedPrState,
           includeDiff: includePrDiff,
         }).catch((error) => {
-          const message = error instanceof Error ? error.message : 'Failed to send GitHub context';
-          toast.error('Failed to send GitHub context', { description: message });
+          const message = error instanceof Error ? error.message : t('Failed to send GitHub context');
+          toast.error(t('Failed to send GitHub context'), { description: message });
         });
       } else {
         onWorktreeCreated?.(metadata.path);
       }
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to create worktree';
-      toast.error('Failed to create worktree', { description: message });
+      const message = error instanceof Error ? error.message : t('Failed to create worktree');
+      toast.error(t('Failed to create worktree'), { description: message });
     } finally {
       setIsCreating(false);
     }
@@ -1127,7 +1129,7 @@ Nice-to-have:
       {isMobile ? (
         <MobileOverlayPanel
           open={open}
-          title="New Worktree"
+          title={t('New Worktree')}
           onClose={() => onOpenChange(false)}
           footer={footerContent}
         >
@@ -1135,8 +1137,8 @@ Nice-to-have:
           <div className="w-full mb-4">
             <SortableTabsStrip
               items={[
-                { id: 'new-branch', label: 'New Branch', icon: <RiGitBranchLine className="h-3.5 w-3.5" /> },
-                { id: 'existing-branch', label: 'Existing Branch', icon: <RiGitRepositoryLine className="h-3.5 w-3.5" /> },
+                { id: 'new-branch', label: t('New Branch'), icon: <RiGitBranchLine className="h-3.5 w-3.5" /> },
+                { id: 'existing-branch', label: t('Existing Branch'), icon: <RiGitRepositoryLine className="h-3.5 w-3.5" /> },
               ]}
               activeId={mode}
               onSelect={(id) => handleModeChange(id as Mode)}
@@ -1151,7 +1153,7 @@ Nice-to-have:
             {mode === 'existing-branch' ? (
               <div className="space-y-1.5">
                 <label className="typography-ui-label text-foreground block font-semibold">
-                  Select Branch
+                  {t('Select Branch')}
                 </label>
                 <div className="flex items-center gap-2">
                   <Button
@@ -1161,7 +1163,7 @@ Nice-to-have:
                     className="flex-1 justify-between h-9"
                   >
                     <span className={existingBranchState.selectedBranch ? 'text-foreground' : 'text-muted-foreground'}>
-                      {existingBranchState.selectedBranch || 'Choose a branch...'}
+                      {existingBranchState.selectedBranch || t('Choose a branch...')}
                     </span>
                     <RiGitBranchLine className="h-4 w-4 text-muted-foreground" />
                   </Button>
@@ -1171,7 +1173,7 @@ Nice-to-have:
                     className="h-8 w-8 px-0 shrink-0"
                     onClick={handleFetchBranches}
                     disabled={!canFetchBranches || isLoadingBranches}
-                    title="Fetch branches"
+                    title={t('Fetch branches')}
                   >
                     {isLoadingBranches ? <RiLoader4Line className="size-4 animate-spin" /> : <RiRefreshLine className="size-4" />}
                   </Button>
@@ -1180,30 +1182,30 @@ Nice-to-have:
                 {/* Mobile Branch Picker Overlay */}
                 <MobileOverlayPanel
                   open={existingBranchPickerOpen}
-                  title="Select Branch"
+                  title={t('Select Branch')}
                   onClose={() => setExistingBranchPickerOpen(false)}
                 >
                   <div className="space-y-4" ref={existingBranchMobileListWrapperRef}>
                     <Input
                       value={existingBranchQuery}
                       onChange={(e) => setExistingBranchQuery(e.target.value)}
-                      placeholder="Search branches..."
+                      placeholder={t('Search branches...')}
                       className="h-8"
                     />
                     {isLoadingBranches ? (
                       <div className="px-2 py-8 text-center typography-small text-muted-foreground">
-                        Loading branches...
+                        {t('Loading branches...')}
                       </div>
                     ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
                       <div className="px-2 py-8 text-center typography-small text-muted-foreground">
-                        No branches found
+                        {t('No branches found')}
                       </div>
                     ) : (
                       <div className="space-y-4">
                         {hasExistingBranchQuery && hasExistingBranchMatches && (
                           <div className="space-y-2">
                             <div className="typography-small font-semibold text-foreground px-2">
-                              Matching branches
+                              {t('Matching branches')}
                             </div>
                             <div className="space-y-1">
                               {existingBranchRankedGroups.matching.map((branch) => (
@@ -1234,14 +1236,14 @@ Nice-to-have:
 
                         {hasExistingBranchQuery && !hasExistingBranchMatches && (
                           <div className="px-2 py-1 text-center typography-small text-muted-foreground">
-                            No matching branches
+                            {t('No matching branches')}
                           </div>
                         )}
 
                         {existingBranchRankedGroups.otherLocal.length > 0 && (
                           <div className="space-y-2">
                             <div className="typography-small font-semibold text-foreground px-2">
-                              {hasExistingBranchQuery ? 'Other local branches' : 'Local branches'}
+                              {hasExistingBranchQuery ? t('Other local branches') : t('Local branches')}
                             </div>
                             <div className="space-y-1">
                               {existingBranchRankedGroups.otherLocal.map((branch) => (
@@ -1273,7 +1275,7 @@ Nice-to-have:
                         {existingBranchRankedGroups.otherRemote.length > 0 && (
                           <div className="space-y-2">
                             <div className="typography-small font-semibold text-foreground px-2">
-                              {hasExistingBranchQuery ? 'Other remote branches' : 'Remote branches'}
+                              {hasExistingBranchQuery ? t('Other remote branches') : t('Remote branches')}
                             </div>
                             <div className="space-y-1">
                               {existingBranchRankedGroups.otherRemote.map((branch) => (
@@ -1310,7 +1312,7 @@ Nice-to-have:
               <div className="space-y-1.5">
                 <div className="flex flex-col items-start gap-1.5">
                   <label className="typography-ui-label text-foreground block font-semibold">
-                    Branch Name
+                    {t('Branch Name')}
                   </label>
                   {mode === 'new-branch' && isGitHubConnected && (
                     <Button
@@ -1320,7 +1322,7 @@ Nice-to-have:
                       className="gap-1.5 h-7"
                     >
                       <RiGithubLine className="size-4 text-status-success" />
-                        {newBranchState.linkedIssue || newBranchState.linkedPr ? 'Change' : 'Start from GitHub Issue/PR'}
+                        {newBranchState.linkedIssue || newBranchState.linkedPr ? t('Change') : t('Start from GitHub Issue/PR')}
                     </Button>
                   )}
                 </div>
@@ -1348,7 +1350,7 @@ Nice-to-have:
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <RiCheckLine className="h-3.5 w-3.5 text-status-success" />
                     <span className="typography-micro">
-                      Using PR branch: {newBranchState.linkedPr.head}
+                      {t('Using PR branch:')} {newBranchState.linkedPr.head}
                     </span>
                   </div>
                 )}
@@ -1356,7 +1358,7 @@ Nice-to-have:
                   <div className="flex items-center gap-1.5 text-muted-foreground">
                     <RiCheckLine className="h-3.5 w-3.5 text-status-success" />
                     <span className="typography-micro">
-                      From issue #{newBranchState.linkedIssue.number}: {newBranchState.linkedIssue.title}
+                      {t('From issue #{{number}}: {{title}}', { number: newBranchState.linkedIssue.number, title: newBranchState.linkedIssue.title })}
                     </span>
                   </div>
                 )}
@@ -1367,7 +1369,7 @@ Nice-to-have:
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <label className="typography-ui-label text-foreground font-semibold">
-                  Worktree Directory
+                  {t('Worktree Directory')}
                 </label>
                 {mode !== 'existing-branch' && (
                   <button
@@ -1386,10 +1388,10 @@ Nice-to-have:
                         ? 'text-muted-foreground/40 cursor-not-allowed'
                         : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                     )}
-                    title="Reset to match branch name"
+                    title={t('Reset to match branch name')}
                   >
                     <RiRefreshLine className="h-3 w-3" />
-                    <span>Reset</span>
+                    <span>{t('Reset')}</span>
                   </button>
                 )}
               </div>
@@ -1451,23 +1453,23 @@ Nice-to-have:
                     <Input
                       value={sourceBranchQuery}
                       onChange={(e) => setSourceBranchQuery(e.target.value)}
-                      placeholder="Search branches..."
+                      placeholder={t('Search branches...')}
                       className="h-8"
                     />
                     {isLoadingBranches ? (
                       <div className="px-2 py-8 text-center typography-small text-muted-foreground">
-                        Loading branches...
+                        {t('Loading branches...')}
                       </div>
                     ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
                       <div className="px-2 py-8 text-center typography-small text-muted-foreground">
-                        No branches found
+                        {t('No branches found')}
                       </div>
                     ) : (
                       <div className="space-y-4">
                         {hasSourceBranchQuery && hasSourceBranchMatches && (
                           <div className="space-y-2">
                             <div className="typography-small font-semibold text-foreground px-2">
-                              Matching branches
+                              {t('Matching branches')}
                             </div>
                             <div className="space-y-1">
                               {sourceBranchRankedGroups.matching.map((branch) => (
@@ -1493,14 +1495,14 @@ Nice-to-have:
 
                         {hasSourceBranchQuery && !hasSourceBranchMatches && (
                           <div className="px-2 py-1 text-center typography-small text-muted-foreground">
-                            No matching branches
+                            {t('No matching branches')}
                           </div>
                         )}
 
                         {sourceBranchRankedGroups.otherLocal.length > 0 && (
                           <div className="space-y-2">
                             <div className="typography-small font-semibold text-foreground px-2">
-                              {hasSourceBranchQuery ? 'Other local branches' : 'Local branches'}
+                              {hasSourceBranchQuery ? t('Other local branches') : t('Local branches')}
                             </div>
                             <div className="space-y-1">
                               {sourceBranchRankedGroups.otherLocal.map((branch) => (
@@ -1527,7 +1529,7 @@ Nice-to-have:
                         {sourceBranchRankedGroups.otherRemote.length > 0 && (
                           <div className="space-y-2">
                             <div className="typography-small font-semibold text-foreground px-2">
-                              {hasSourceBranchQuery ? 'Other remote branches' : 'Remote branches'}
+                              {hasSourceBranchQuery ? t('Other remote branches') : t('Remote branches')}
                             </div>
                             <div className="space-y-1">
                               {sourceBranchRankedGroups.otherRemote.map((branch) => (
@@ -1621,7 +1623,7 @@ Nice-to-have:
               <div className="flex items-center gap-3">
                 <DialogTitle className="flex items-center gap-2 shrink-0">
                   <RiGitBranchLine className="h-5 w-5" />
-                  New Worktree
+                  {t('New Worktree')}
                 </DialogTitle>
                 
                 {/* Mode Selection - using SortableTabsStrip */}
@@ -1653,7 +1655,7 @@ Nice-to-have:
                       <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm" className="h-9 min-w-[220px] max-w-full justify-between gap-2">
                           <span className={cn('truncate', existingBranchState.selectedBranch ? 'text-foreground' : 'text-muted-foreground')}>
-                            {existingBranchState.selectedBranch || 'Choose a branch...'}
+                            {existingBranchState.selectedBranch || t('Choose a branch...')}
                           </span>
                           <RiArrowDownSLine className="h-4 w-4 shrink-0 text-muted-foreground" />
                         </Button>
@@ -1661,21 +1663,21 @@ Nice-to-have:
                       <DropdownMenuContent align="start" className="w-[320px] p-0" ref={existingBranchDropdownContentRef}>
                         <Command shouldFilter={false}>
                         <CommandInput
-                          placeholder="Search branches..."
+                          placeholder={t('Search branches...')}
                           value={existingBranchQuery}
                           onValueChange={setExistingBranchQuery}
                         />
                         <CommandList disableHorizontal>
                           {isLoadingBranches ? (
                             <div className="px-2 py-4 text-center typography-small text-muted-foreground">
-                              Loading branches...
+                              {t('Loading branches...')}
                             </div>
                           ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
                             <CommandEmpty>No branches found</CommandEmpty>
                           ) : (
                             <>
                               {hasExistingBranchQuery && hasExistingBranchMatches && (
-                                <CommandGroup heading="Matching branches">
+                                <CommandGroup heading={t('Matching branches')}>
                                   {existingBranchRankedGroups.matching.map((branch) => (
                                     <CommandItem
                                       key={`${branch.source}-${branch.value}`}
@@ -1698,14 +1700,14 @@ Nice-to-have:
 
                               {hasExistingBranchQuery && !hasExistingBranchMatches && (
                                 <div className="px-2 py-1 text-center typography-small text-muted-foreground">
-                                  No matching branches
+                                  {t('No matching branches')}
                                 </div>
                               )}
 
                               {existingBranchRankedGroups.otherLocal.length > 0 && (
                                 <>
                                   {hasExistingBranchQuery && <CommandSeparator />}
-                                  <CommandGroup heading={hasExistingBranchQuery ? 'Other local branches' : 'Local branches'}>
+                                  <CommandGroup heading={hasExistingBranchQuery ? t('Other local branches') : t('Local branches')}>
                                     {existingBranchRankedGroups.otherLocal.map((branch) => (
                                       <CommandItem
                                         key={`local-${branch}`}
@@ -1732,7 +1734,7 @@ Nice-to-have:
                                   {(existingBranchRankedGroups.otherLocal.length > 0 || hasExistingBranchQuery) && (
                                     <CommandSeparator />
                                   )}
-                                  <CommandGroup heading={hasExistingBranchQuery ? 'Other remote branches' : 'Remote branches'}>
+                                  <CommandGroup heading={hasExistingBranchQuery ? t('Other remote branches') : t('Remote branches')}>
                                     {existingBranchRankedGroups.otherRemote.map((branch) => (
                                       <CommandItem
                                         key={`remote-${branch}`}
@@ -1765,7 +1767,7 @@ Nice-to-have:
                       className="h-8 w-8 px-0 shrink-0"
                       onClick={handleFetchBranches}
                       disabled={!canFetchBranches || isLoadingBranches}
-                      title="Fetch branches"
+                      title={t('Fetch branches')}
                     >
                       {isLoadingBranches ? <RiLoader4Line className="size-4 animate-spin" /> : <RiRefreshLine className="size-4" />}
                     </Button>
@@ -1785,7 +1787,7 @@ Nice-to-have:
                         className="gap-1.5 h-7"
                       >
                         <RiGithubLine className="size-4 text-status-success" />
-                      {newBranchState.linkedIssue || newBranchState.linkedPr ? 'Change' : 'Start from GitHub Issue/PR'}
+                      {newBranchState.linkedIssue || newBranchState.linkedPr ? t('Change') : t('Start from GitHub Issue/PR')}
                       </Button>
                     )}
                   </div>
@@ -1813,7 +1815,7 @@ Nice-to-have:
                     <div className="flex items-center gap-1.5 text-muted-foreground">
                       <RiCheckLine className="h-3.5 w-3.5 text-status-success" />
                       <span className="typography-micro">
-                        Using PR branch: {newBranchState.linkedPr.head}
+                        {t('Using PR branch:')} {newBranchState.linkedPr.head}
                       </span>
                     </div>
                   )}
@@ -1821,7 +1823,7 @@ Nice-to-have:
                     <div className="flex items-center gap-1.5 text-muted-foreground">
                       <RiCheckLine className="h-3.5 w-3.5 text-status-success" />
                       <span className="typography-micro">
-                        From issue #{newBranchState.linkedIssue.number}: {newBranchState.linkedIssue.title}
+                        {t('From issue #{{number}}: {{title}}', { number: newBranchState.linkedIssue.number, title: newBranchState.linkedIssue.title })}
                       </span>
                     </div>
                   )}
@@ -1851,10 +1853,10 @@ Nice-to-have:
                           ? 'text-muted-foreground/40 cursor-not-allowed'
                           : 'text-muted-foreground hover:text-foreground hover:bg-muted'
                       )}
-                      title="Reset to match branch name"
+                      title={t('Reset to match branch name')}
                     >
                       <RiRefreshLine className="h-3 w-3" />
-                      <span>Reset</span>
+                      <span>{t('Reset')}</span>
                     </button>
                   )}
                 </div>
@@ -1901,21 +1903,21 @@ Nice-to-have:
                     <DropdownMenuContent align="start" className="w-[320px] p-0" ref={sourceBranchDropdownContentRef}>
                       <Command shouldFilter={false}>
                         <CommandInput
-                          placeholder="Search branches..."
+                          placeholder={t('Search branches...')}
                           value={sourceBranchQuery}
                           onValueChange={setSourceBranchQuery}
                         />
                         <CommandList disableHorizontal>
                           {isLoadingBranches ? (
                             <div className="px-2 py-4 text-center typography-small text-muted-foreground">
-                              Loading branches...
+                              {t('Loading branches...')}
                             </div>
                           ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
                             <CommandEmpty>No branches found</CommandEmpty>
                           ) : (
                             <>
                               {hasSourceBranchQuery && hasSourceBranchMatches && (
-                                <CommandGroup heading="Matching branches">
+                                <CommandGroup heading={t('Matching branches')}>
                                   {sourceBranchRankedGroups.matching.map((branch) => (
                                     <CommandItem
                                       key={`${branch.source}-${branch.value}`}
@@ -1933,14 +1935,14 @@ Nice-to-have:
 
                               {hasSourceBranchQuery && !hasSourceBranchMatches && (
                                 <div className="px-2 py-1 text-center typography-small text-muted-foreground">
-                                  No matching branches
+                                  {t('No matching branches')}
                                 </div>
                               )}
 
                               {sourceBranchRankedGroups.otherLocal.length > 0 && (
                                 <>
                                   {hasSourceBranchQuery && <CommandSeparator />}
-                                  <CommandGroup heading={hasSourceBranchQuery ? 'Other local branches' : 'Local branches'}>
+                                  <CommandGroup heading={hasSourceBranchQuery ? t('Other local branches') : t('Local branches')}>
                                     {sourceBranchRankedGroups.otherLocal.map((branch) => (
                                       <CommandItem
                                         key={`local-${branch}`}
@@ -1962,7 +1964,7 @@ Nice-to-have:
                                   {(sourceBranchRankedGroups.otherLocal.length > 0 || hasSourceBranchQuery) && (
                                     <CommandSeparator />
                                   )}
-                                  <CommandGroup heading={hasSourceBranchQuery ? 'Other remote branches' : 'Remote branches'}>
+                                  <CommandGroup heading={hasSourceBranchQuery ? t('Other remote branches') : t('Remote branches')}>
                                     {sourceBranchRankedGroups.otherRemote.map((branch) => (
                                       <CommandItem
                                         key={`remote-${branch}`}

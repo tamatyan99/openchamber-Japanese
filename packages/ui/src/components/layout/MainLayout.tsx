@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, useMotionValue, animate } from 'motion/react';
 import { Header } from './Header';
 import { BottomTerminalDock } from './BottomTerminalDock';
@@ -52,6 +53,7 @@ const normalizeDirectoryKey = (value: string): string => {
 };
 
 export const MainLayout: React.FC = () => {
+    const { t } = useTranslation();
     const RIGHT_SIDEBAR_AUTO_CLOSE_WIDTH = 1140;
     const RIGHT_SIDEBAR_AUTO_OPEN_WIDTH = 1220;
     const BOTTOM_TERMINAL_AUTO_CLOSE_HEIGHT = 640;
@@ -688,7 +690,7 @@ export const MainLayout: React.FC = () => {
                             setMobileLeftDrawerOpen(false);
                             setRightSidebarOpen(false);
                         }}
-                        aria-label="Close drawer"
+                        aria-label={t('Close drawer')}
                     />
                     
                     {/* Left drawer (Session) */}

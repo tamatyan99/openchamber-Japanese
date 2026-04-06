@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Checkbox } from '@/components/ui/checkbox';
 import { updateDesktopSettings } from '@/lib/persistence';
 import { useConfigStore } from '@/stores/useConfigStore';
@@ -6,6 +7,7 @@ import { getRegisteredRuntimeAPIs } from '@/contexts/runtimeAPIRegistry';
 import { setFilesViewShowGitignored, useFilesViewShowGitignored } from '@/lib/filesViewShowGitignored';
 
 export const GitSettings: React.FC = () => {
+  const { t } = useTranslation();
   const settingsGitmojiEnabled = useConfigStore((state) => state.settingsGitmojiEnabled);
   const setSettingsGitmojiEnabled = useConfigStore((state) => state.setSettingsGitmojiEnabled);
   const showGitignored = useFilesViewShowGitignored();
@@ -82,7 +84,7 @@ export const GitSettings: React.FC = () => {
   return (
     <div className="mb-8">
       <div className="mb-1 px-1">
-        <h3 className="typography-ui-header font-medium text-foreground">Git Preferences</h3>
+        <h3 className="typography-ui-header font-medium text-foreground">{t('Git Preferences')}</h3>
       </div>
 
       <section className="px-2 pb-2 pt-0 space-y-0.5">
@@ -108,7 +110,7 @@ export const GitSettings: React.FC = () => {
             }}
             ariaLabel="Enable Gitmoji picker"
           />
-          <span className="typography-ui-label text-foreground">Enable Gitmoji Picker</span>
+          <span className="typography-ui-label text-foreground">{t('Enable Gitmoji Picker')}</span>
         </div>
 
         <div
@@ -129,7 +131,7 @@ export const GitSettings: React.FC = () => {
             onChange={setFilesViewShowGitignored}
             ariaLabel="Display gitignored files"
           />
-          <span className="typography-ui-label text-foreground">Display Gitignored Files</span>
+          <span className="typography-ui-label text-foreground">{t('Display Gitignored Files')}</span>
         </div>
       </section>
     </div>

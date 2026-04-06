@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiAddLine, RiDeleteBinLine, RiSendPlaneLine } from '@remixicon/react';
 import { toast } from '@/components/ui';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -46,6 +47,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
   onActionComplete,
   className,
 }) => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = React.useState(false);
   const [notes, setNotes] = React.useState('');
   const [todos, setTodos] = React.useState<OpenChamberProjectTodoItem[]>([]);
@@ -69,7 +71,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
         todos: nextTodos,
       });
       if (!saved) {
-        toast.error('Failed to save project notes');
+        toast.error(t('Failed to save project notes'));
       }
       return saved;
     },
@@ -100,7 +102,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
         setExpandedTodoIds(new Set());
       } catch {
         if (!cancelled) {
-          toast.error('Failed to load project notes');
+          toast.error(t('Failed to load project notes'));
           setNotes('');
           setTodos([]);
         }
@@ -197,7 +199,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
         directoryOverride: projectRef.path,
         initialPrompt: todoText,
       });
-      toast.success('Todo sent to new session');
+      toast.success(t('Todo sent to new session'));
       onActionComplete?.();
     },
     [onActionComplete, openNewSessionDraft, projectRef, routeToChat]
@@ -206,13 +208,13 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
   const handleSendToCurrentSession = React.useCallback(
     (todoText: string) => {
       if (!currentSessionId) {
-        toast.error('No active session selected');
+        toast.error(t('No active session selected'));
         return;
       }
       routeToChat();
       const fenced = `\`\`\`md\n${todoText}\n\`\`\``;
       setPendingInputText(fenced, 'append');
-      toast.success('Todo sent to current session');
+      toast.success(t('Todo sent to current session'));
       onActionComplete?.();
     },
     [currentSessionId, onActionComplete, routeToChat, setPendingInputText]
@@ -224,7 +226,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
         return;
       }
       if (!canCreateWorktree) {
-        toast.error('Worktree actions are only available for Git repositories');
+        toast.error(t('Worktree actions are only available for Git repositories'));
         return;
       }
       setSendingTodoId(todoId);
@@ -234,7 +236,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
         if (!newWorktreePath) {
           return;
         }
-        toast.success('Todo sent to new worktree session');
+        toast.success(t('Todo sent to new worktree session'));
         onActionComplete?.();
       } finally {
         setSendingTodoId(null);
@@ -246,7 +248,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
   if (!projectRef) {
     return (
       <div className={cn('w-full min-w-0 p-3', className)}>
-        <p className="typography-meta text-muted-foreground">Select a project to add notes and todos.</p>
+        <p className="typography-meta text-muted-foreground">{t('Select a project to add notes and todos.')}</p>
       </div>
     );
   }
@@ -256,7 +258,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
       <div className="space-y-1">
         <div className="flex items-center justify-between gap-2">
           <h3 className="min-w-0 truncate typography-ui-label font-semibold text-foreground" title={projectRef.path}>
-            Quick notes - {projectLabel?.trim() || projectRef.path.split('/').filter(Boolean).pop() || projectRef.path}
+            {t('Quick notes - {{label}}', { label: projectLabel?.trim() || projectRef.path.split('/').filter(Boolean).pop() || projectRef.path })}
           </h3>
           <span className="typography-meta text-muted-foreground">{notes.length}/{OPENCHAMBER_PROJECT_NOTES_MAX_LENGTH}</span>
         </div>
@@ -264,7 +266,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
           value={notes}
           onChange={(event) => setNotes(event.target.value.slice(0, OPENCHAMBER_PROJECT_NOTES_MAX_LENGTH))}
           onBlur={handleNotesBlur}
-          placeholder="Capture context, reminders, or links"
+          placeholder={t('Capture context, reminders, or links')}
           className="min-h-28 max-h-80 resize-none"
           useScrollShadow
           scrollShadowSize={56}
@@ -275,15 +277,15 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <h3 className="typography-ui-label font-semibold text-foreground">Todo</h3>
-            <span className="typography-meta text-muted-foreground">{todos.length} item{todos.length === 1 ? '' : 's'}</span>
+            <h3 className="typography-ui-label font-semibold text-foreground">{t('Todo')}</h3>
+            <span className="typography-meta text-muted-foreground">{todos.length} {todos.length === 1 ? t('item') : t('items')}</span>
             <button
               type="button"
               onClick={handleClearCompletedTodos}
               disabled={isLoading || completedTodoCount === 0}
               className="typography-meta rounded-md px-1.5 py-0.5 text-muted-foreground hover:bg-interactive-hover/50 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Clear completed
+              {t('Clear completed')}
             </button>
           </div>
           <span className="typography-meta text-muted-foreground">{todoInputValue.length}/{OPENCHAMBER_PROJECT_TODO_TEXT_MAX_LENGTH}</span>
@@ -299,7 +301,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
                 handleAddTodo();
               }
             }}
-            placeholder="Add a todo"
+            placeholder={t('Add a todo')}
             disabled={isLoading}
             className="h-8"
           />
@@ -308,7 +310,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
             onClick={handleAddTodo}
             disabled={isLoading || todoInputValue.trim().length === 0}
             className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md border border-border/70 text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-50"
-            aria-label="Add todo"
+            aria-label={t('Add todo')}
           >
             <RiAddLine className="h-4 w-4" />
           </button>
@@ -316,7 +318,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
 
         <div className="max-h-56 overflow-y-auto rounded-lg border border-border/60 bg-background/40">
           {todos.length === 0 ? (
-            <p className="px-3 py-3 typography-meta text-muted-foreground">No todos yet. Add a small checklist for this project.</p>
+            <p className="px-3 py-3 typography-meta text-muted-foreground">{t('No todos yet. Add a small checklist for this project.')}</p>
           ) : (
             <ul className="divide-y divide-border/50">
               {todos.map((todo) => {
@@ -339,7 +341,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
                       todo.completed && 'text-muted-foreground line-through'
                     )}
                     title={isExpandedTodo ? undefined : todo.text}
-                    aria-label={isExpandedTodo ? `Collapse todo "${todo.text}"` : `Expand todo "${todo.text}"`}
+                    aria-label={isExpandedTodo ? t('Collapse todo "{{text}}"', { text: todo.text }) : t('Expand todo "{{text}}"', { text: todo.text })}
                   >
                     {todo.text}
                   </button>
@@ -348,7 +350,7 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
                       type="button"
                       onClick={() => handleDeleteTodo(todo.id)}
                       className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                      aria-label={`Delete "${todo.text}"`}
+                      aria-label={t('Delete "{{text}}"', { text: todo.text })}
                     >
                       <RiDeleteBinLine className="h-3.5 w-3.5" />
                     </button>
@@ -358,23 +360,23 @@ export const ProjectNotesTodoPanel: React.FC<ProjectNotesTodoPanelProps> = ({
                           type="button"
                           disabled={sendingTodoId === todo.id}
                           className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 disabled:cursor-not-allowed disabled:opacity-50"
-                          aria-label={`Send "${todo.text}"`}
+                          aria-label={t('Send "{{text}}"', { text: todo.text })}
                         >
                           <RiSendPlaneLine className="h-3.5 w-3.5" />
                         </button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="w-56">
                         <DropdownMenuItem onClick={() => handleSendToCurrentSession(todo.text)}>
-                          Send to current session
+                          {t('Send to current session')}
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => handleSendToNewSession(todo.text)}>
-                          Send to new session
+                          {t('Send to new session')}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => void handleSendToNewWorktreeSession(todo.id, todo.text)}
                           disabled={!canCreateWorktree}
                         >
-                          Send to new worktree session
+                          {t('Send to new worktree session')}
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>

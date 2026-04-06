@@ -27,6 +27,8 @@ import {
     setDirectoryShowHidden,
     useDirectoryShowHidden,
 } from '@/lib/directoryShowHidden';
+import { useTranslation } from 'react-i18next';
+import { useLanguage, LANGUAGE_OPTIONS } from '@/i18n/useLanguage';
 
 interface Option<T extends string> {
     id: T;
@@ -151,6 +153,8 @@ interface OpenChamberVisualSettingsProps {
 }
 
 export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps> = ({ visibleSettings }) => {
+    const { t } = useTranslation();
+    const { currentLanguage, setLanguage } = useLanguage();
     const { isMobile } = useDeviceInfo();
     const { browserTab } = usePwaDetection();
     const directoryShowHidden = useDirectoryShowHidden();
@@ -434,7 +438,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
 
                             <div className="pb-1.5">
                                 <div className="flex min-w-0 flex-col gap-1.5">
-                                    <span className="typography-ui-header font-medium text-foreground">Color Mode</span>
+                                    <span className="typography-ui-header font-medium text-foreground">{t('Color Mode')}</span>
                                     <div className="flex flex-wrap items-center gap-1">
                                         {THEME_MODE_OPTIONS.map((option) => (
                                             <Button
@@ -456,12 +460,28 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                 </div>
                             </div>
 
+                            <div className="mt-2 flex items-center gap-2 py-1.5">
+                                <span className="typography-ui-label text-foreground shrink-0">{t('Language')}</span>
+                                <Select value={currentLanguage} onValueChange={(val) => setLanguage(val as 'en' | 'ja')}>
+                                    <SelectTrigger aria-label={t('Select language')} className="w-fit">
+                                        <SelectValue placeholder={t('Select language')} />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {LANGUAGE_OPTIONS.map((option) => (
+                                            <SelectItem key={option.value} value={option.value}>
+                                                {option.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
                             <div className="mt-2 grid grid-cols-1 gap-2 py-1.5 md:grid-cols-[14rem_auto] md:gap-x-8 md:gap-y-2">
                                 <div className="flex min-w-0 items-center gap-2">
-                                    <span className="typography-ui-label text-foreground shrink-0">Light Theme</span>
+                                    <span className="typography-ui-label text-foreground shrink-0">{t('Light Theme')}</span>
                                     <Select value={selectedLightTheme?.metadata.id ?? ''} onValueChange={setLightThemePreference}>
-                                        <SelectTrigger aria-label="Select light theme" className="w-fit">
-                                            <SelectValue placeholder="Select theme" />
+                                        <SelectTrigger aria-label={t('Select light theme')} className="w-fit">
+                                            <SelectValue placeholder={t('Select theme')} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {lightThemes.map((theme) => (
@@ -473,10 +493,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                     </Select>
                                 </div>
                                 <div className="flex min-w-0 items-center gap-2">
-                                    <span className="typography-ui-label text-foreground shrink-0">Dark Theme</span>
+                                    <span className="typography-ui-label text-foreground shrink-0">{t('Dark Theme')}</span>
                                     <Select value={selectedDarkTheme?.metadata.id ?? ''} onValueChange={setDarkThemePreference}>
-                                        <SelectTrigger aria-label="Select dark theme" className="w-fit">
-                                            <SelectValue placeholder="Select theme" />
+                                        <SelectTrigger aria-label={t('Select dark theme')} className="w-fit">
+                                            <SelectValue placeholder={t('Select theme')} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {darkThemes.map((theme) => (
@@ -508,7 +528,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                     }}
                                     className="inline-flex items-center typography-ui-label font-normal text-foreground underline decoration-[1px] underline-offset-2 hover:text-foreground/80 disabled:cursor-not-allowed disabled:text-muted-foreground/60"
                                 >
-                                    {themesReloading ? 'Reloading themes...' : 'Reload themes'}
+                                    {themesReloading ? t('Reloading themes...') : t('Reload themes')}
                                 </button>
                                 <Tooltip delayDuration={700}>
                                     <TooltipTrigger asChild>
@@ -521,7 +541,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                         </button>
                                     </TooltipTrigger>
                                     <TooltipContent sideOffset={8}>
-                                        Import custom themes from ~/.config/openchamber/themes/
+                                        {t('Import custom themes from ~/.config/openchamber/themes/')}
                                     </TooltipContent>
                                 </Tooltip>
                             </div>
@@ -535,10 +555,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                     />
                                     <div className="flex min-w-0 flex-col">
                                         <span className="typography-ui-label text-foreground">
-                                            Window vibrancy
+                                            {t('Window vibrancy')}
                                         </span>
                                         <span className="typography-meta text-muted-foreground">
-                                            Translucent window background. Disabling may reduce energy usage. Existing windows update immediately, but full transparency changes apply to new windows or after restart.
+                                            {t('Translucent window background. Disabling may reduce energy usage.')}
                                         </span>
                                     </div>
                                 </div>
@@ -547,8 +567,8 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                             {showPwaInstallNameSetting && (
                                 <div className="py-1.5 space-y-1.5">
                                     <div className="flex min-w-0 flex-col">
-                                        <span className="typography-ui-label text-foreground">Install App Name</span>
-                                        <span className="typography-meta text-muted-foreground">Used by PWA installation process.</span>
+                                        <span className="typography-ui-label text-foreground">{t('Install App Name')}</span>
+                                        <span className="typography-meta text-muted-foreground">{t('Used by PWA installation process.')}</span>
                                     </div>
                                     <div className="flex w-full max-w-[28rem] items-center gap-2">
                                         <Input
@@ -593,13 +613,13 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                 {hasLayoutSettings && (
                     <div className="mb-8 space-y-3">
                         <section className="p-2 space-y-0.5">
-                            <h4 className="typography-ui-header font-medium text-foreground">Spacing & Layout</h4>
+                            <h4 className="typography-ui-header font-medium text-foreground">{t('Spacing & Layout')}</h4>
                             <div className="pl-2">
 
                             {shouldShow('fontSize') && !isMobile && (
                                 <div className="flex items-center gap-8 py-1">
                                     <div className="flex min-w-0 flex-col w-56 shrink-0">
-                                        <span className="typography-ui-label text-foreground">Interface Font Size</span>
+                                        <span className="typography-ui-label text-foreground">{t('Interface Font Size')}</span>
                                     </div>
                                     <div className="flex items-center gap-2 w-fit">
                                         <NumberInput
@@ -629,7 +649,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                             {shouldShow('terminalFontSize') && (
                                 <div className={cn("py-1", isMobile ? "flex flex-col gap-3" : "flex items-center gap-8")}>
                                     <div className={cn("flex min-w-0 flex-col", isMobile ? "w-full" : "w-56 shrink-0")}>
-                                        <span className="typography-ui-label text-foreground">Terminal Font Size</span>
+                                        <span className="typography-ui-label text-foreground">{t('Terminal Font Size')}</span>
                                     </div>
                                     <div className={cn("flex items-center gap-2", isMobile ? "w-full" : "w-fit")}>
                                         <NumberInput
@@ -658,7 +678,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                             {shouldShow('spacing') && (
                                 <div className={cn("py-1", isMobile ? "flex flex-col gap-3" : "flex items-center gap-8")}>
                                     <div className={cn("flex min-w-0 flex-col", isMobile ? "w-full" : "w-56 shrink-0")}>
-                                        <span className="typography-ui-label text-foreground">Spacing Density</span>
+                                        <span className="typography-ui-label text-foreground">{t('Spacing Density')}</span>
                                     </div>
                                     <div className={cn("flex items-center gap-2", isMobile ? "w-full" : "w-fit")}>
                                         <NumberInput
@@ -688,13 +708,13 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                 <div className={cn("py-1", isMobile ? "flex flex-col gap-3" : "flex items-center gap-8")}>
                                     <div className={cn("flex min-w-0 flex-col", isMobile ? "w-full" : "w-56 shrink-0")}>
                                         <div className="flex items-center gap-1.5">
-                                            <span className="typography-ui-label text-foreground">Input Bar Offset</span>
+                                            <span className="typography-ui-label text-foreground">{t('Input Bar Offset')}</span>
                                             <Tooltip delayDuration={1000}>
                                                 <TooltipTrigger asChild>
                                                     <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
                                                 </TooltipTrigger>
                                                 <TooltipContent sideOffset={8} className="max-w-xs">
-                                                    Raise input bar to avoid OS-level screen obstructions like home bars.
+                                                    {t('Raise input bar to avoid OS-level screen obstructions like home bars.')}
                                                 </TooltipContent>
                                             </Tooltip>
                                         </div>
@@ -733,7 +753,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                 {hasNavigationSettings && (
                     <div className="space-y-3">
                         <section className="px-2 pb-2 pt-0">
-                            <h4 className="typography-ui-header font-medium text-foreground">Navigation</h4>
+                            <h4 className="typography-ui-header font-medium text-foreground">{t('Navigation')}</h4>
                             {shouldShow('terminalQuickKeys') && !isMobile && (
                                 <div
                                     className="group flex cursor-pointer items-center gap-2 py-1.5"
@@ -754,13 +774,13 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                         ariaLabel="Terminal quick keys"
                                     />
                                     <div className="flex min-w-0 items-center gap-1.5">
-                                        <span className="typography-ui-label text-foreground">Terminal Quick Keys</span>
+                                        <span className="typography-ui-label text-foreground">{t('Terminal Quick Keys')}</span>
                                         <Tooltip delayDuration={1000}>
                                             <TooltipTrigger asChild>
                                                 <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
                                             </TooltipTrigger>
                                             <TooltipContent sideOffset={8} className="max-w-xs">
-                                                Show Esc, Ctrl, Arrows in terminal view
+                                                {t('Show Esc, Ctrl, Arrows in terminal view')}
                                             </TooltipContent>
                                         </Tooltip>
                                     </div>
@@ -779,7 +799,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                 <div className="grid grid-cols-1 gap-y-2 md:grid-cols-[minmax(0,16rem)_minmax(0,16rem)] md:justify-start md:gap-x-2">
                                     {shouldShow('chatRenderMode') && (
                                         <section className="p-2 md:col-span-2">
-                                            <h4 className="typography-ui-header font-medium text-foreground">Chat Render Mode</h4>
+                                            <h4 className="typography-ui-header font-medium text-foreground">{t('Chat Render Mode')}</h4>
                                             <div role="radiogroup" aria-label="Chat render mode" className="mt-1 grid w-full max-w-[26rem] grid-cols-1 gap-3 sm:grid-cols-2">
                                                 {CHAT_RENDER_MODE_OPTIONS.map((option) => {
                                                     const selected = chatRenderMode === option.id;
@@ -863,7 +883,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
 
                                     {shouldShow('activityRenderMode') && chatRenderMode === 'sorted' && (
                                         <section className="p-2 md:col-span-2">
-                                            <h4 className="typography-ui-header font-medium text-foreground">Activity Default</h4>
+                                            <h4 className="typography-ui-header font-medium text-foreground">{t('Activity Default')}</h4>
                                             <div role="radiogroup" aria-label="Activity default mode" className="mt-0.5 space-y-0">
                                                 {ACTIVITY_RENDER_MODE_OPTIONS.map((option) => {
                                                     const selected = activityRenderMode === option.id;
@@ -899,7 +919,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
 
                                     {shouldShow('expandedTools') && (
                                         <section className="p-2 md:col-span-2 space-y-0.5">
-                                            <div className="typography-ui-header font-medium text-foreground py-1.5">Show tools opened by default:</div>
+                                            <div className="typography-ui-header font-medium text-foreground py-1.5">{t('Show tools opened by default:')}</div>
 
                                             <div
                                                 className="group flex cursor-pointer items-center gap-2 py-0.5"
@@ -919,7 +939,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                     onChange={handleShowExpandedBashToolsChange}
                                                     ariaLabel="Show expanded bash tools"
                                                 />
-                                                <span className="typography-ui-label text-foreground">Bash</span>
+                                                <span className="typography-ui-label text-foreground">{t('Bash')}</span>
                                             </div>
 
                                             <div
@@ -940,14 +960,14 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                     onChange={handleShowExpandedEditToolsChange}
                                                     ariaLabel="Show expanded edit tools"
                                                 />
-                                                <span className="typography-ui-label text-foreground">Edit tools</span>
+                                                <span className="typography-ui-label text-foreground">{t('Edit tools')}</span>
                                             </div>
                                         </section>
                                     )}
 
                                     {shouldShow('userMessageRendering') && (
                                         <section className="p-2">
-                                            <h4 className="typography-ui-header font-medium text-foreground">User Message Rendering</h4>
+                                            <h4 className="typography-ui-header font-medium text-foreground">{t('User Message Rendering')}</h4>
                                             <div role="radiogroup" aria-label="User message rendering mode" className="mt-0.5 space-y-0">
                                                 {USER_MESSAGE_RENDERING_OPTIONS.map((option) => {
                                                     const selected = normalizeUserMessageRenderingMode(userMessageRenderingMode) === option.id;
@@ -983,7 +1003,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
 
                                     {shouldShow('mermaidRendering') && (
                                         <section className="p-2">
-                                            <h4 className="typography-ui-header font-medium text-foreground">Mermaid Rendering</h4>
+                                            <h4 className="typography-ui-header font-medium text-foreground">{t('Mermaid Rendering')}</h4>
                                             <div role="radiogroup" aria-label="Mermaid rendering mode" className="mt-0.5 space-y-0">
                                                 {MERMAID_RENDERING_OPTIONS.map((option) => {
                                                     const selected = mermaidRenderingMode === option.id;
@@ -1019,7 +1039,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
 
                                     {shouldShow('diffLayout') && !isVSCode && (
                                         <section className="p-2">
-                                            <h4 className="typography-ui-header font-medium text-foreground">Diff Layout</h4>
+                                            <h4 className="typography-ui-header font-medium text-foreground">{t('Diff Layout')}</h4>
                                             <div role="radiogroup" aria-label="Diff layout" className="mt-0.5 space-y-0">
                                                 {DIFF_LAYOUT_OPTIONS.map((option) => {
                                                     const selected = diffLayoutPreference === option.id;
@@ -1055,7 +1075,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
 
                                     {shouldShow('diffLayout') && !isVSCode && (
                                         <section className="p-2">
-                                            <h4 className="typography-ui-header font-medium text-foreground">Diff View Mode</h4>
+                                            <h4 className="typography-ui-header font-medium text-foreground">{t('Diff View Mode')}</h4>
                                             <div role="radiogroup" aria-label="Diff view mode" className="mt-0.5 space-y-0">
                                                 {DIFF_VIEW_MODE_OPTIONS.map((option) => {
                                                     const selected = diffViewMode === option.id;
@@ -1112,7 +1132,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 onChange={setShowReasoningTraces}
                                                 ariaLabel="Show reasoning traces"
                                             />
-                                            <span className="typography-ui-label text-foreground">Show Reasoning Traces</span>
+                                            <span className="typography-ui-label text-foreground">{t('Show Reasoning Traces')}</span>
                                         </div>
                                     )}
 
@@ -1135,7 +1155,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 onChange={handleStickyUserHeaderChange}
                                                 ariaLabel="Sticky user header"
                                             />
-                                            <span className="typography-ui-label text-foreground">Sticky User Header</span>
+                                            <span className="typography-ui-label text-foreground">{t('Sticky User Header')}</span>
                                         </div>
                                     )}
 
@@ -1158,7 +1178,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 onChange={handleShowToolFileIconsChange}
                                                 ariaLabel="Show tool file icons"
                                             />
-                                            <span className="typography-ui-label text-foreground">Show Tool File Icons</span>
+                                            <span className="typography-ui-label text-foreground">{t('Show Tool File Icons')}</span>
                                         </div>
                                     )}
 
@@ -1181,7 +1201,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 onChange={setShowMobileSessionStatusBar}
                                                 ariaLabel="Show mobile status bar"
                                             />
-                                            <span className="typography-ui-label text-foreground">Show Mobile Status Bar</span>
+                                            <span className="typography-ui-label text-foreground">{t('Show Mobile Status Bar')}</span>
                                         </div>
                                     )}
 
@@ -1204,7 +1224,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 onChange={setDirectoryShowHidden}
                                                 ariaLabel="Show dotfiles"
                                             />
-                                            <span className="typography-ui-label text-foreground">Show Dotfiles</span>
+                                            <span className="typography-ui-label text-foreground">{t('Show Dotfiles')}</span>
                                         </div>
                                     )}
 
@@ -1228,13 +1248,13 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 ariaLabel="Queue messages by default"
                                             />
                                             <div className="flex min-w-0 items-center gap-1.5">
-                                                <span className="typography-ui-label text-foreground">Queue Messages by Default</span>
+                                                <span className="typography-ui-label text-foreground">{t('Queue Messages by Default')}</span>
                                                 <Tooltip delayDuration={1000}>
                                                     <TooltipTrigger asChild>
                                                         <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
                                                     </TooltipTrigger>
                                                     <TooltipContent sideOffset={8} className="max-w-xs">
-                                                        When enabled, Enter queues messages. Use {getModifierLabel()}+Enter to send.
+                                                        {t('When enabled, Enter queues messages. Use {{modifier}}+Enter to send.', { modifier: getModifierLabel() })}
                                                     </TooltipContent>
                                                 </Tooltip>
                                             </div>
@@ -1260,7 +1280,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 onChange={setPersistChatDraft}
                                                 ariaLabel="Persist draft messages"
                                             />
-                                            <span className="typography-ui-label text-foreground">Persist Draft Messages</span>
+                                            <span className="typography-ui-label text-foreground">{t('Persist Draft Messages')}</span>
                                         </div>
                                     )}
 
@@ -1283,7 +1303,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 onChange={handleInputSpellcheckChange}
                                                 ariaLabel="Enable spellcheck in text inputs"
                                             />
-                                            <span className="typography-ui-label text-foreground">Enable Spellcheck in Text Inputs</span>
+                                            <span className="typography-ui-label text-foreground">{t('Enable Spellcheck in Text Inputs')}</span>
                                         </div>
                                     )}
 
@@ -1297,7 +1317,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                 {shouldShow('reportUsage') && (
                     <div className="space-y-3">
                         <section className="px-2 pb-2 pt-0">
-                            <h4 className="typography-ui-header font-medium text-foreground mb-2">Privacy</h4>
+                            <h4 className="typography-ui-header font-medium text-foreground mb-2">{t('Privacy')}</h4>
                             <div className="flex items-start gap-2 py-1.5">
                                 <Checkbox
                                     checked={reportUsage}
@@ -1318,10 +1338,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                             }
                                         }}
                                     >
-                                        <span className="typography-ui-label text-foreground">Send anonymous usage reports</span>
+                                        <span className="typography-ui-label text-foreground">{t('Send anonymous usage reports')}</span>
                                     </div>
                                     <span className="typography-meta text-muted-foreground pointer-events-none">
-                                        Helps us understand which app versions are actively used so we can prioritize improvements. Only app version, platform, and runtime are collected - no personal data or code.
+                                        {t('Helps us understand which app versions are actively used so we can prioritize improvements. Only app version, platform, and runtime are collected - no personal data or code.')}
                                     </span>
                                 </div>
                             </div>

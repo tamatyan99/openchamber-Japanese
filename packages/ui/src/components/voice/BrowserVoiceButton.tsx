@@ -11,6 +11,7 @@
  */
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useBrowserVoice } from '@/hooks/useBrowserVoice';
 import { useConfigStore } from '@/stores/useConfigStore';
 import { browserVoiceService } from '@/lib/voice/browserVoiceService';
@@ -49,7 +50,7 @@ const isIOSSafari = (): boolean => {
     return isIOS && isSafari;
 };
 
-const normalizeVoiceErrorMessage = (error: string): string => {
+const normalizeVoiceErrorMessage = (error: string, t: (key: string) => string): string => {
     const isMediaDevicesError =
         error.includes('getUserMedia') ||
         error.includes('mediaDevices') ||
@@ -60,16 +61,17 @@ const normalizeVoiceErrorMessage = (error: string): string => {
     }
 
     if (typeof window !== 'undefined' && !window.isSecureContext) {
-        return 'Voice requires a secure connection (HTTPS) or localhost. Please use HTTPS or access via localhost.';
+        return t('Voice requires a secure connection (HTTPS) or localhost. Please use HTTPS or access via localhost.');
     }
 
-    return 'Microphone access is unavailable in this runtime. On desktop, check System Settings -> Privacy & Security -> Microphone for OpenChamber.';
+    return t('Microphone access is unavailable in this runtime. On desktop, check System Settings -> Privacy & Security -> Microphone for OpenChamber.');
 };
 
 /**
  * Browser Voice Button with language selection
  */
 export function BrowserVoiceButton() {
+    const { t } = useTranslation();
     const voiceModeEnabled = useConfigStore((s) => s.voiceModeEnabled);
     
     const {
@@ -121,7 +123,7 @@ export function BrowserVoiceButton() {
                 return;
             }
             lastToastedErrorRef.current = error;
-            const displayError = normalizeVoiceErrorMessage(error);
+            const displayError = normalizeVoiceErrorMessage(error, t);
             
             toast.error(displayError, {
                 duration: 5000,
@@ -135,23 +137,23 @@ export function BrowserVoiceButton() {
 
     // Status text for accessibility
     const statusText = isError
-        ? error || 'Voice Error'
+        ? error || t('Voice Error')
         : conversationMode && status === 'idle'
-          ? 'Start Voice (Continuous mode on)'
-          : statusLabels[status] || 'Start Voice';
+          ? t('Start Voice (Continuous mode on)')
+          : (statusLabels[status] ? t(statusLabels[status]) : t('Start Voice'));
 
     // Tooltip content based on state
     const getTooltipContent = () => {
         if (isError && error) {
-            return normalizeVoiceErrorMessage(error);
+            return normalizeVoiceErrorMessage(error, t);
         }
         if (isActive) {
-            return 'Stop voice conversation';
+            return t('Stop voice conversation');
         }
         if (isMobile) {
-            return 'Start voice conversation';
+            return t('Start voice conversation');
         }
-        return `Start voice conversation (Shift+Click for continuous mode) • Cmd/Ctrl+Shift+V to toggle`;
+        return t('Start voice conversation (Shift+Click for continuous mode) • Cmd/Ctrl+Shift+V to toggle');
     };
 
     // Handle voice activation (used by both click and touch)
@@ -271,12 +273,12 @@ export function BrowserVoiceButton() {
     if (!isSupported) {
         const supportDetails = browserVoiceService.getSupportDetails();
         const tooltipMessage = !supportDetails.secureContext
-            ? 'Voice requires HTTPS or localhost. Please use a secure connection.'
+            ? t('Voice requires HTTPS or localhost. Please use a secure connection.')
             : !supportDetails.recognition
-                ? 'Speech recognition not supported in this browser. Try Chrome, Edge, or Safari.'
+                ? t('Speech recognition not supported in this browser. Try Chrome, Edge, or Safari.')
                 : !supportDetails.synthesis
-                    ? 'Speech synthesis not supported in this browser.'
-                    : 'Voice not supported in this browser';
+                    ? t('Speech synthesis not supported in this browser.')
+                    : t('Voice not supported in this browser');
 
         return (
             <TooltipProvider>
@@ -367,8 +369,8 @@ export function BrowserVoiceButton() {
                     variant="ghost"
                     onPointerDownCapture={(event) => event.stopPropagation()}
                     onClick={handleToggleConversationMode}
-                    aria-label={conversationMode ? 'Continuous mode on' : 'Continuous mode off'}
-                    title={conversationMode ? 'Continuous mode on' : 'Continuous mode off'}
+                    aria-label={conversationMode ? t('Continuous mode on') : t('Continuous mode off')}
+                    title={conversationMode ? t('Continuous mode on') : t('Continuous mode off')}
                     className={
                         `${buttonSizeClass} p-0 ${clearHoverBackgroundClass} ${conversationMode ? 'text-[var(--status-info)] hover:text-[var(--status-info)]' : 'text-muted-foreground hover:text-foreground'}`
                     }

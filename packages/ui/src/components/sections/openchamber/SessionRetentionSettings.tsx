@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { RiInformationLine, RiRestartLine } from '@remixicon/react';
 import { toast } from '@/components/ui';
@@ -18,6 +19,7 @@ const RETENTION_ACTION_OPTIONS = [
 ] as const;
 
 export const SessionRetentionSettings: React.FC = () => {
+  const { t } = useTranslation();
   const autoDeleteEnabled = useUIStore((state) => state.autoDeleteEnabled);
   const autoDeleteAfterDays = useUIStore((state) => state.autoDeleteAfterDays);
   const sessionRetentionAction = useUIStore((state) => state.sessionRetentionAction);
@@ -51,14 +53,14 @@ export const SessionRetentionSettings: React.FC = () => {
       <div className="mb-1 px-1">
         <div className="flex items-center gap-2">
           <h3 className="typography-ui-header font-medium text-foreground">
-            Session Retention
+            {t('Session Retention')}
           </h3>
           <Tooltip delayDuration={1000}>
             <TooltipTrigger asChild>
               <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
             </TooltipTrigger>
             <TooltipContent sideOffset={8} className="max-w-xs">
-              Automatically archive or delete inactive sessions based on last activity. Keeps the 5 most recent sessions.
+              {t('Automatically archive or delete inactive sessions based on last activity. Keeps the 5 most recent sessions.')}
             </TooltipContent>
           </Tooltip>
         </div>
@@ -83,12 +85,12 @@ export const SessionRetentionSettings: React.FC = () => {
             onChange={setAutoDeleteEnabled}
             ariaLabel="Enable auto-cleanup"
           />
-          <span className="typography-ui-label text-foreground">Enable Auto-Cleanup</span>
+          <span className="typography-ui-label text-foreground">{t('Enable Auto-Cleanup')}</span>
         </div>
 
         <div className="flex flex-col gap-2 py-1.5 sm:flex-row sm:items-center sm:gap-8">
           <div className="flex min-w-0 flex-col sm:w-56 shrink-0">
-            <span className="typography-ui-label text-foreground">Retention Period</span>
+            <span className="typography-ui-label text-foreground">{t('Retention Period')}</span>
           </div>
           <div className="flex items-center gap-2 sm:w-fit">
             <NumberInput
@@ -100,7 +102,7 @@ export const SessionRetentionSettings: React.FC = () => {
               aria-label="Retention period in days"
               className="w-20 tabular-nums"
             />
-            <span className="typography-ui-label text-muted-foreground">days</span>
+            <span className="typography-ui-label text-muted-foreground">{t('days')}</span>
             <Button size="sm"
               type="button"
               variant="ghost"
@@ -117,7 +119,7 @@ export const SessionRetentionSettings: React.FC = () => {
 
         <div className="flex flex-col gap-2 py-1.5 sm:flex-row sm:items-center sm:gap-8">
           <div className="flex min-w-0 flex-col sm:w-56 shrink-0">
-            <span className="typography-ui-label text-foreground">When sessions expire</span>
+            <span className="typography-ui-label text-foreground">{t('When sessions expire')}</span>
           </div>
           <div className="flex flex-wrap items-center gap-1 sm:w-fit">
             {RETENTION_ACTION_OPTIONS.map((option) => (
@@ -134,7 +136,7 @@ export const SessionRetentionSettings: React.FC = () => {
                 )}
                 onClick={() => setSessionRetentionAction(option.value)}
               >
-                {option.label}
+                {t(option.label)}
               </Button>
             ))}
           </div>
@@ -144,7 +146,7 @@ export const SessionRetentionSettings: React.FC = () => {
       <div className="mt-1 px-2 py-1.5 space-y-1">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-8">
           <div className="flex min-w-0 flex-col sm:w-56 shrink-0">
-            <p className="typography-meta text-foreground font-medium">Manual Cleanup</p>
+            <p className="typography-meta text-foreground font-medium">{t('Manual Cleanup')}</p>
           </div>
           <div className="flex items-center gap-2 sm:w-fit">
             <Button
@@ -155,7 +157,7 @@ export const SessionRetentionSettings: React.FC = () => {
               disabled={isRunning}
               className="!font-normal"
             >
-              {isRunning ? 'Cleaning up...' : 'Run cleanup now'}
+              {isRunning ? t('Cleaning up...') : t('Run cleanup now')}
             </Button>
           </div>
         </div>

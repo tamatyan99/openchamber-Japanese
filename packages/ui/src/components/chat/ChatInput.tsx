@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Textarea } from '@/components/ui/textarea';
 import {
     RiAddCircleLine,
@@ -257,6 +258,7 @@ const ComposerAttachmentControls = React.memo(function ComposerAttachmentControl
         openPrPicker,
         onOpenSettings,
     } = props;
+    const { t } = useTranslation();
 
     return (
         <div className="flex items-center gap-x-1.5">
@@ -275,8 +277,8 @@ const ComposerAttachmentControls = React.memo(function ComposerAttachmentControl
                         }
                     }}
                     onClick={handleOpenCommandMenu}
-                    title="Commands"
-                    aria-label="Commands"
+                    title={t('Commands')}
+                    aria-label={t('Commands')}
                 >
                     <RiCommandLine className={cn(iconSizeClass)} />
                 </button>
@@ -296,8 +298,8 @@ const ComposerAttachmentControls = React.memo(function ComposerAttachmentControl
                         type="button"
                         className={footerIconButtonClass}
                         onClick={handlePickLocalFiles}
-                        title="Attach files"
-                        aria-label="Attach files"
+                        title={t('Attach files')}
+                        aria-label={t('Attach files')}
                     >
                         <RiAttachment2 className={cn(iconSizeClass, 'text-current')} />
                     </button>
@@ -307,8 +309,8 @@ const ComposerAttachmentControls = React.memo(function ComposerAttachmentControl
                             <button
                                 type="button"
                                 className={footerIconButtonClass}
-                                title="Add attachment"
-                                aria-label="Add attachment"
+                                title={t('Add attachment')}
+                                aria-label={t('Add attachment')}
                             >
                                 <RiAddCircleLine className={cn(iconSizeClass, 'text-current')} />
                             </button>
@@ -320,7 +322,7 @@ const ComposerAttachmentControls = React.memo(function ComposerAttachmentControl
                                 }}
                             >
                                 <RiAttachment2 />
-                                Attach files
+                                {t('Attach files')}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                                 onSelect={() => {
@@ -328,7 +330,7 @@ const ComposerAttachmentControls = React.memo(function ComposerAttachmentControl
                                 }}
                             >
                                 <RiGithubLine />
-                                Link GitHub Issue
+                                {t('Link GitHub Issue')}
                             </DropdownMenuItem>
                             <DropdownMenuItem
                                 onSelect={() => {
@@ -336,7 +338,7 @@ const ComposerAttachmentControls = React.memo(function ComposerAttachmentControl
                                 }}
                             >
                                 <RiGitPullRequestLine />
-                                Link GitHub PR
+                                {t('Link GitHub PR')}
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -348,8 +350,8 @@ const ComposerAttachmentControls = React.memo(function ComposerAttachmentControl
                     type="button"
                     onClick={onOpenSettings}
                     className={footerIconButtonClass}
-                    title="Model and agent settings"
-                    aria-label="Model and agent settings"
+                    title={t('Model and agent settings')}
+                    aria-label={t('Model and agent settings')}
                 >
                     <RiAiAgentLine className={cn(iconSizeClass, 'text-current')} />
                 </button>
@@ -382,13 +384,14 @@ const PermissionAutoAcceptButton = React.memo(function PermissionAutoAcceptButto
         handlePermissionAutoAcceptToggle,
         withTooltip = false,
     } = props;
+    const { t } = useTranslation();
 
     const ariaLabel = permissionAutoAcceptEnabled
-        ? 'Disable permission auto-accept'
-        : 'Enable permission auto-accept';
+        ? t('Disable permission auto-accept')
+        : t('Enable permission auto-accept');
     const tooltipLabel = permissionAutoAcceptEnabled
-        ? 'Permission auto-accept: on'
-        : 'Permission auto-accept: off';
+        ? t('Permission auto-accept: on')
+        : t('Permission auto-accept: off');
 
     const button = (
         <button
@@ -445,6 +448,7 @@ type FocusModeButtonProps = {
 
 const FocusModeButton = React.memo(function FocusModeButton(props: FocusModeButtonProps) {
     const { footerIconButtonClass, iconSizeClass, isExpandedInput, onToggle } = props;
+    const { t } = useTranslation();
 
     return (
         <Tooltip delayDuration={600}>
@@ -462,7 +466,7 @@ const FocusModeButton = React.memo(function FocusModeButton(props: FocusModeButt
                         event.preventDefault();
                     }}
                     onClick={onToggle}
-                    aria-label="Toggle focus mode"
+                    aria-label={t('Toggle focus mode')}
                     aria-pressed={isExpandedInput}
                 >
                     <RiFullscreenLine className={cn(iconSizeClass)} />
@@ -470,7 +474,7 @@ const FocusModeButton = React.memo(function FocusModeButton(props: FocusModeButt
             </TooltipTrigger>
             <TooltipContent side="top" sideOffset={8}>
                 <div className="flex flex-col gap-0.5 text-center">
-                    <span>Focus mode</span>
+                    <span>{t('Focus mode')}</span>
                     <span className="font-mono opacity-60">
                         {isMacOS() ? '⌘⇧E' : 'Ctrl+Shift+E'}
                     </span>
@@ -496,6 +500,7 @@ type ComposerActionButtonsProps = {
 };
 
 const ComposerActionButtons = React.memo(function ComposerActionButtons(props: ComposerActionButtonsProps) {
+    const { t } = useTranslation();
     const {
         isMobile,
         footerIconButtonClass,
@@ -529,7 +534,7 @@ const ComposerActionButtons = React.memo(function ComposerActionButtons(props: C
                     ? 'text-primary hover:text-primary'
                     : 'opacity-30'
             )}
-            aria-label="Send message"
+            aria-label={t('Send message')}
         >
             <RiSendPlane2Line className={cn(sendIconSizeClass)} />
         </button>
@@ -556,7 +561,7 @@ const ComposerActionButtons = React.memo(function ComposerActionButtons(props: C
                         'absolute z-20 bottom-full left-1/2 -translate-x-1/2 mb-1',
                         currentSessionId ? 'text-primary hover:text-primary' : 'opacity-30'
                     )}
-                    aria-label="Queue message"
+                    aria-label={t('Queue message')}
                 >
                     <RiSendPlane2Line className={cn(sendIconSizeClass, '-rotate-90')} />
                 </button>
@@ -568,7 +573,7 @@ const ComposerActionButtons = React.memo(function ComposerActionButtons(props: C
                     footerIconButtonClass,
                     'text-[var(--status-error)] hover:text-[var(--status-error)]'
                 )}
-                aria-label="Stop generating"
+                aria-label={t('Stop generating')}
             >
                 <StopIcon className={cn(stopIconSizeClass)} />
             </button>
@@ -655,6 +660,7 @@ const saveStoredDraft = (sessionId: string | null, draft: string): void => {
 };
 
 const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollToBottom }) => {
+    const { t } = useTranslation();
     // Track if we restored a draft on mount (for text selection)
     const initialDraftRef = React.useRef<string | null>(null);
     // Track initial session ID (captured at mount time for draft restoration)
@@ -1531,7 +1537,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                 normalized === 'failed to send message';
 
             if (normalized.includes('payload too large') || normalized.includes('413') || normalized.includes('entity too large')) {
-                toast.error('Attachments are too large to send. Please try reducing the number or size of images.');
+                toast.error(t('Attachments are too large to send. Please try reducing the number or size of images.'));
                 if (allAttachments.length > 0) {
                     useInputStore.setState({ attachedFiles: allAttachments });
                 }
@@ -1541,7 +1547,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
             if (isSoftNetworkError) {
                 if (allAttachments.length > 0) {
                     useInputStore.setState({ attachedFiles: allAttachments });
-                    toast.error('Failed to send attachments. Try fewer files or smaller images.');
+                    toast.error(t('Failed to send attachments. Try fewer files or smaller images.'));
                 }
                 return;
             }
@@ -1549,7 +1555,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
             if (allAttachments.length > 0) {
                 useInputStore.setState({ attachedFiles: allAttachments });
             }
-            toast.error(rawMessage || 'Message failed to send. Attachments restored.');
+            toast.error(rawMessage || t('Message failed to send. Attachments restored.'));
         });
 
         if (!isMobile) {
@@ -2244,7 +2250,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                 await addAttachedFile(file);
             } catch (error) {
                 console.error('Clipboard image attach failed', error);
-                toast.error(error instanceof Error ? error.message : 'Failed to attach image from clipboard');
+                toast.error(error instanceof Error ? error.message : t('Failed to attach image from clipboard'));
             }
         }
     }, [addAttachedFile, currentSessionId, newSessionDraftOpen, insertTextAtSelection]);
@@ -2547,7 +2553,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
         }
 
         setPendingInputText(mentions.join(' '), 'append-inline');
-        toast.success(`Added ${mentions.length} file mention${mentions.length > 1 ? 's' : ''}`);
+        toast.success(t('Added {{count}} file mention', { count: mentions.length, defaultValue_plural: 'Added {{count}} file mentions' }));
     }, [normalizeDroppedPath, setPendingInputText, toProjectRelativeMentionPath]);
 
     const handleDragEnter = (e: React.DragEvent) => {
@@ -2616,7 +2622,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                     await addAttachedFile(file);
                 } catch (error) {
                     console.error('File attach failed', error);
-                    toast.error(error instanceof Error ? error.message : 'Failed to attach file');
+                    toast.error(error instanceof Error ? error.message : t('Failed to attach file'));
                 }
             }
         }
@@ -2724,7 +2730,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                 await addAttachedFile(file);
                             } catch (error) {
                                 console.error('Failed to attach dropped file:', path, error);
-                                toast.error(`Failed to attach ${path.split(/[\\/]/).pop() || 'file'}`);
+                                toast.error(t('Failed to attach {{filename}}', { filename: path.split(/[\\/]/).pop() || 'file' }));
                             }
                         }
                     }
@@ -2758,7 +2764,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                 await addAttachedFile(file);
             } catch (error) {
                 console.error('File attach failed', error);
-                toast.error(error instanceof Error ? error.message : 'Failed to attach file');
+                toast.error(error instanceof Error ? error.message : t('Failed to attach file'));
             }
         }
     }, [addAttachedFile]);
@@ -2774,7 +2780,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                 const summary = skipped
                     .map((s: { name?: string; reason?: string }) => `${s?.name || 'file'}: ${s?.reason || 'skipped'}`)
                     .join('\n');
-                toast.error(`Some files were skipped:\n${summary}`);
+                toast.error(t('Some files were skipped:\n{{summary}}', { summary }));
             }
 
             const asFiles = picked
@@ -2803,7 +2809,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
             }
         } catch (error) {
             console.error('VS Code file pick failed', error);
-            toast.error(error instanceof Error ? error.message : 'Failed to pick files in VS Code');
+            toast.error(error instanceof Error ? error.message : t('Failed to pick files in VS Code'));
         }
     }, [attachFiles]);
 
@@ -3115,13 +3121,13 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
 
     const handlePermissionAutoAcceptToggle = React.useCallback(() => {
         if (!permissionScopeSessionId) {
-            toast.error('Open a session first');
+            toast.error(t('Open a session first'));
             return;
         }
 
         const nextEnabled = !permissionAutoAcceptEnabled;
         setSessionAutoAccept(permissionScopeSessionId, nextEnabled).catch(() => {
-            toast.error('Failed to toggle permission auto-accept');
+            toast.error(t('Failed to toggle permission auto-accept'));
         });
     }, [permissionAutoAcceptEnabled, permissionScopeSessionId, setSessionAutoAccept]);
 
@@ -3177,7 +3183,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                 borderColor: currentTheme?.colors?.interactive?.border,
                             }}
                         >
-                            <span className="text-xs font-medium text-muted-foreground">Review comments:</span>
+                            <span className="text-xs font-medium text-muted-foreground">{t('Review comments:')}</span>
                             <span className="text-xs font-semibold" style={{ color: currentTheme?.colors?.status?.info }}>
                                 {draftCount}
                             </span>
@@ -3203,7 +3209,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                             <span className="text-muted-foreground flex-shrink-0">
                                 #{linkedIssue.number}
                                 {linkedIssue.author && (
-                                    <span className="ml-1">by {linkedIssue.author.login}</span>
+                                    <span className="ml-1">{t('by {{login}}', { login: linkedIssue.author.login })}</span>
                                 )}
                             </span>
                             <span className="text-foreground truncate">
@@ -3216,7 +3222,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
                                     className="flex items-center justify-center h-6 w-6 hover:bg-[var(--interactive-hover)] rounded-full transition-colors"
-                                    aria-label="Open issue in browser"
+                                    aria-label={t('Open issue in browser')}
                                 >
                                     <RiExternalLinkLine className="h-4 w-4 text-muted-foreground" />
                                 </a>
@@ -3226,7 +3232,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                         setLinkedIssue(null);
                                     }}
                                     className="flex items-center justify-center h-6 w-6 hover:bg-[var(--interactive-hover)] rounded-full transition-colors cursor-pointer"
-                                    aria-label="Remove linked issue"
+                                    aria-label={t('Remove linked issue')}
                                 >
                                     <RiCloseLine className="h-4 w-4 text-muted-foreground" />
                                 </span>
@@ -3249,9 +3255,9 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                 />
                             )}
                             <span className="text-muted-foreground flex-shrink-0">
-                                PR #{linkedPr.number}
+                                {t('PR #{{number}}', { number: linkedPr.number })}
                                 {linkedPr.author && (
-                                    <span className="ml-1">by {linkedPr.author.login}</span>
+                                    <span className="ml-1">{t('by {{login}}', { login: linkedPr.author.login })}</span>
                                 )}
                             </span>
                             <span className="text-foreground truncate">
@@ -3267,7 +3273,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                     rel="noopener noreferrer"
                                     onClick={(e) => e.stopPropagation()}
                                     className="flex items-center justify-center h-6 w-6 hover:bg-[var(--interactive-hover)] rounded-full transition-colors"
-                                    aria-label="Open pull request in browser"
+                                    aria-label={t('Open pull request in browser')}
                                 >
                                     <RiExternalLinkLine className="h-4 w-4 text-muted-foreground" />
                                 </a>
@@ -3277,7 +3283,7 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                         setLinkedPr(null);
                                     }}
                                     className="flex items-center justify-center h-6 w-6 hover:bg-[var(--interactive-hover)] rounded-full transition-colors cursor-pointer"
-                                    aria-label="Remove linked pull request"
+                                    aria-label={t('Remove linked pull request')}
                                 >
                                     <RiCloseLine className="h-4 w-4 text-muted-foreground" />
                                 </span>
@@ -3323,13 +3329,13 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                     className="h-7 min-w-0 w-fit max-w-[48vw] sm:max-w-[20rem] border-transparent bg-transparent px-1.5 hover:bg-transparent data-[state=open]:bg-transparent"
                                 >
                                     <SelectValue>
-                                        {selectedDraftBranchLabel ?? 'Branch'}
+                                        {selectedDraftBranchLabel ?? t('Branch')}
                                     </SelectValue>
                                 </SelectTrigger>
                                 <SelectContent fitContent>
                                     {projectRootBranchOption ? (
                                         <SelectGroup>
-                                            <SelectLabel>Project root</SelectLabel>
+                                            <SelectLabel>{t('Project root')}</SelectLabel>
                                             <SelectItem key={projectRootBranchOption.value} value={projectRootBranchOption.value} className="max-w-[24rem] truncate">
                                                 {projectRootBranchOption.label}
                                             </SelectItem>
@@ -3338,14 +3344,14 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                     {projectRootBranchOption ? <SelectSeparator /> : null}
                                     <SelectGroup>
                                         <div className="flex items-center justify-between px-2 py-1.5">
-                                            <span className="text-muted-foreground typography-meta">Worktrees</span>
+                                            <span className="text-muted-foreground typography-meta">{t('Worktrees')}</span>
                                             <button
                                                 type="button"
                                                 className="text-muted-foreground typography-meta hover:text-foreground cursor-pointer"
                                                 onPointerDown={(e) => { e.stopPropagation(); }}
                                                 onClick={(e) => { e.preventDefault(); e.stopPropagation(); void createWorktreeDraft(); }}
                                             >
-                                                + New
+                                                {t('+ New')}
                                             </button>
                                         </div>
                                         {worktreeBranchOptions.map((option) => (
@@ -3394,13 +3400,13 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                                         type="button"
                                         className={iconButtonBaseClass}
                                         onClick={() => handlePickLocalFiles()}
-                                        title="Attach files"
-                                        aria-label="Attach files"
+                                        title={t('Attach files')}
+                                        aria-label={t('Attach files')}
                                     >
                                         <RiAttachment2 className={cn(iconSizeClass, 'text-current')} />
                                     </button>
                                 </div>
-                                <p className="mt-2 typography-ui-label text-muted-foreground">Drop files here to attach</p>
+                                <p className="mt-2 typography-ui-label text-muted-foreground">{t('Drop files here to attach')}</p>
                             </div>
                         </div>
                     )}
@@ -3525,9 +3531,9 @@ const ChatInputComponent: React.FC<ChatInputProps> = ({ onOpenSettings, scrollTo
                             onSelect={updateAutocompleteOverlayPosition}
                             placeholder={currentSessionId || newSessionDraftOpen
                                 ? inputMode === 'shell'
-                                    ? "Enter shell command..."
-                                    : "@ for files/agents; / for commands; ! for shell"
-                                : "Select or create a session to start chatting"}
+                                    ? t('Enter shell command...')
+                                    : t('@ for files/agents; / for commands; ! for shell')
+                                : t('Select or create a session to start chatting')}
                             disabled={!currentSessionId && !newSessionDraftOpen}
                             autoCorrect={isMobile ? "on" : "off"}
                             autoCapitalize={isMobile ? "sentences" : "off"}

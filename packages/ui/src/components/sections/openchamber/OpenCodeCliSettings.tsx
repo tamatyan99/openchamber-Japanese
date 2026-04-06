@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
@@ -8,6 +9,7 @@ import { updateDesktopSettings } from '@/lib/persistence';
 import { reloadOpenCodeConfiguration } from '@/stores/useAgentsStore';
 
 export const OpenCodeCliSettings: React.FC = () => {
+  const { t } = useTranslation();
   const [value, setValue] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(true);
   const [isSaving, setIsSaving] = React.useState(false);
@@ -85,14 +87,14 @@ export const OpenCodeCliSettings: React.FC = () => {
       <div className="mb-1 px-1">
         <div className="flex items-center gap-2">
           <h3 className="typography-ui-header font-medium text-foreground">
-            OpenCode CLI
+            {t('OpenCode CLI')}
           </h3>
           <Tooltip delayDuration={1000}>
             <TooltipTrigger asChild>
               <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
             </TooltipTrigger>
             <TooltipContent sideOffset={8} className="max-w-xs">
-              Optional absolute path to the <code className="font-mono text-xs">opencode</code> binary.
+              {t('Optional absolute path to the')} <code className="font-mono text-xs">opencode</code> {t('binary.')}
             </TooltipContent>
           </Tooltip>
         </div>
@@ -101,7 +103,7 @@ export const OpenCodeCliSettings: React.FC = () => {
       <section className="px-2 pb-2 pt-0 space-y-0.5">
         <div className="flex flex-col gap-2 py-1.5 sm:flex-row sm:items-center sm:gap-3">
           <div className="flex min-w-0 flex-col shrink-0">
-            <span className="typography-ui-label text-foreground">OpenCode Binary Path</span>
+            <span className="typography-ui-label text-foreground">{t('OpenCode Binary Path')}</span>
           </div>
           <div className="flex min-w-0 items-center gap-2 sm:w-[20rem]">
             <Input
@@ -128,7 +130,7 @@ export const OpenCodeCliSettings: React.FC = () => {
 
         <div className="py-1.5">
           <div className="typography-micro text-muted-foreground/70">
-            Tip: you can also use <span className="font-mono">OPENCODE_BINARY</span> env var, but this setting persists in <span className="font-mono">~/.config/openchamber/settings.json</span>.
+            {t('Tip: you can also use')} <span className="font-mono">OPENCODE_BINARY</span> {t('env var, but this setting persists in')} <span className="font-mono">~/.config/openchamber/settings.json</span>.
           </div>
         </div>
 
@@ -140,7 +142,7 @@ export const OpenCodeCliSettings: React.FC = () => {
             disabled={isLoading || isSaving}
             className="shrink-0 !font-normal"
           >
-            {isSaving ? 'Saving…' : 'Save + Reload'}
+            {isSaving ? t('Saving…') : t('Save + Reload')}
           </Button>
         </div>
       </section>

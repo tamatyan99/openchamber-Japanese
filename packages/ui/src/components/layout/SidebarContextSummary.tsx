@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSessionUIStore } from '@/sync/session-ui-store';
 import { useSessions } from '@/sync/sync-context';
 import { useDirectoryStore } from '@/stores/useDirectoryStore';
@@ -8,12 +9,12 @@ interface SidebarContextSummaryProps {
     className?: string;
 }
 
-const formatSessionTitle = (title?: string | null) => {
+const formatSessionTitle = (title?: string | null, untitled = 'Untitled Session') => {
     if (!title) {
-        return 'Untitled Session';
+        return untitled;
     }
     const trimmed = title.trim();
-    return trimmed.length > 0 ? trimmed : 'Untitled Session';
+    return trimmed.length > 0 ? trimmed : untitled;
 };
 
 const formatDirectoryPath = (path?: string) => {
@@ -24,16 +25,17 @@ const formatDirectoryPath = (path?: string) => {
 };
 
 export const SidebarContextSummary: React.FC<SidebarContextSummaryProps> = ({ className }) => {
+    const { t } = useTranslation();
     const currentSessionId = useSessionUIStore((state) => state.currentSessionId);
     const sessions = useSessions();
     const { currentDirectory } = useDirectoryStore();
 
     const activeSessionTitle = React.useMemo(() => {
         if (!currentSessionId) {
-            return 'No active session';
+            return t('No active session');
         }
         const session = sessions.find((item) => item.id === currentSessionId);
-        return session ? formatSessionTitle(session.title) : 'No active session';
+        return session ? formatSessionTitle(session.title, t('Untitled Session')) : t('No active session');
     }, [currentSessionId, sessions]);
 
     const directoryFull = React.useMemo(() => {
@@ -50,7 +52,7 @@ export const SidebarContextSummary: React.FC<SidebarContextSummaryProps> = ({ cl
 
     return (
         <div className={cn('hidden min-h-[48px] flex-col justify-center gap-0.5 border-b bg-sidebar/60 px-3 py-2 backdrop-blur md:flex md:pb-2', className)}>
-            <span className="typography-meta text-muted-foreground">Session</span>
+            <span className="typography-meta text-muted-foreground">{t('Session')}</span>
             <span className="typography-ui-label font-semibold text-foreground truncate" title={activeSessionTitle}>
                 {activeSessionTitle}
             </span>

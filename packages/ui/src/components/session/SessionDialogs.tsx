@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui';
 
@@ -50,6 +51,7 @@ type DeleteDialogState = {
 };
 
 export const SessionDialogs: React.FC = () => {
+    const { t } = useTranslation();
     const [isDirectoryDialogOpen, setIsDirectoryDialogOpen] = React.useState(false);
     const [hasShownInitialDirectoryPrompt, setHasShownInitialDirectoryPrompt] = React.useState(false);
     const [deleteDialog, setDeleteDialog] = React.useState<DeleteDialogState | null>(null);
@@ -125,7 +127,7 @@ export const SessionDialogs: React.FC = () => {
                 .then(async (result) => {
                     if (!result.success || !result.path) {
                         if (result.error && result.error !== 'Directory selection cancelled') {
-                            toast.error('Failed to select directory', {
+                            toast.error(t('Failed to select directory'), {
                                 description: result.error,
                             });
                         }
@@ -134,22 +136,22 @@ export const SessionDialogs: React.FC = () => {
 
                     const accessResult = await startAccessing(result.path);
                     if (!accessResult.success) {
-                        toast.error('Failed to open directory', {
-                            description: accessResult.error || 'Desktop could not grant file access.',
+                        toast.error(t('Failed to open directory'), {
+                            description: accessResult.error || t('Desktop could not grant file access.'),
                         });
                         return;
                     }
 
                     const added = addProject(result.path, { id: result.projectId });
                     if (!added) {
-                        toast.error('Failed to add project', {
-                            description: 'Please select a valid directory path.',
+                        toast.error(t('Failed to add project'), {
+                            description: t('Please select a valid directory path.'),
                         });
                     }
                 })
                 .catch((error) => {
                     console.error('Desktop: Error selecting directory:', error);
-                    toast.error('Failed to select directory');
+                    toast.error(t('Failed to select directory'));
                 });
             return;
         }
@@ -192,9 +194,9 @@ export const SessionDialogs: React.FC = () => {
             const target = payload.sessions[0];
             const success = await deleteSession(target.id);
             if (success) {
-                toast.success('Session deleted');
+                toast.success(t('Session deleted'));
             } else {
-                toast.error('Failed to delete session');
+                toast.error(t('Failed to delete session'));
             }
             return;
         }
@@ -395,8 +397,8 @@ export const SessionDialogs: React.FC = () => {
 
             return true;
         } catch (error) {
-            toast.error('Failed to remove worktree', {
-                description: renderToastDescription(error instanceof Error ? error.message : 'Please try again.'),
+            toast.error(t('Failed to remove worktree'), {
+                description: renderToastDescription(error instanceof Error ? error.message : t('Please try again.')),
             });
             return false;
         }
@@ -578,7 +580,7 @@ export const SessionDialogs: React.FC = () => {
                                     •
                                 </span>
                                 <span className="truncate">
-                                    {session.title || 'Untitled Session'}
+                                    {session.title || t('Untitled Session')}
                                 </span>
                             </li>
                         ))}
@@ -605,17 +607,17 @@ export const SessionDialogs: React.FC = () => {
                         ) : null}
                     </div>
                     <p className="typography-micro text-muted-foreground/80 break-all">
-                        {targetWorktree ? formatPathForDisplay(targetWorktree.path, homeDirectory) : 'Worktree path unavailable.'}
+                        {targetWorktree ? formatPathForDisplay(targetWorktree.path, homeDirectory) : t('Worktree path unavailable.')}
                     </p>
                     {hasDirtyWorktrees && (
-                        <p className="typography-micro text-status-warning">Uncommitted changes will be discarded.</p>
+                        <p className="typography-micro text-status-warning">{t('Uncommitted changes will be discarded.')}</p>
                     )}
 
                 </div>
             ) : (
                 <div className="rounded-xl border border-border/40 bg-sidebar/60 p-3">
                     <p className="typography-meta text-muted-foreground/80">
-                        Worktree directories stay intact. Subsessions linked to the selected sessions will also be removed.
+                        {t('Worktree directories stay intact. Subsessions linked to the selected sessions will also be removed.')}
                     </p>
                 </div>
             )}
@@ -645,10 +647,10 @@ export const SessionDialogs: React.FC = () => {
                 ) : (
                     <RiCheckboxBlankLine className="size-4" />
                 )}
-                Delete remote branch
+                {t('Delete remote branch')}
             </button>
         ) : (
-            <span className="text-xs text-muted-foreground/70">Remote branch info unavailable</span>
+            <span className="text-xs text-muted-foreground/70">{t('Remote branch info unavailable')}</span>
         )
     ) : null;
 
@@ -674,7 +676,7 @@ export const SessionDialogs: React.FC = () => {
             ) : (
                 <RiCheckboxBlankLine className="size-4" />
             )}
-            Delete local branch
+            {t('Delete local branch')}
         </button>
     ) : null;
 
@@ -686,10 +688,10 @@ export const SessionDialogs: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
                 <Button variant="ghost" onClick={closeDeleteDialog} disabled={isProcessingDelete}>
-                    Cancel
+                    {t('Cancel')}
                 </Button>
                 <Button variant="destructive" onClick={handleConfirmDelete} disabled={isProcessingDelete}>
-                    {isProcessingDelete ? 'Deleting…' : 'Delete worktree'}
+                    {isProcessingDelete ? t('Deleting…') : t('Delete worktree')}
                 </Button>
             </div>
         </div>
@@ -702,18 +704,18 @@ export const SessionDialogs: React.FC = () => {
                 aria-pressed={!showDeletionDialog}
             >
                 {!showDeletionDialog ? <RiCheckboxLine className="size-4 text-primary" /> : <RiCheckboxBlankLine className="size-4" />}
-                Never ask
+                {t('Never ask')}
             </button>
             <div className="flex items-center gap-2">
                 <Button variant="ghost" onClick={closeDeleteDialog} disabled={isProcessingDelete}>
-                    Cancel
+                    {t('Cancel')}
                 </Button>
                 <Button variant="destructive" onClick={handleConfirmDelete} disabled={isProcessingDelete}>
                     {isProcessingDelete
-                        ? 'Deleting…'
+                        ? t('Deleting…')
                         : deleteDialog?.sessions.length === 1
-                            ? 'Delete session'
-                            : 'Delete sessions'}
+                            ? t('Delete session')
+                            : t('Delete sessions')}
                 </Button>
             </div>
         </div>

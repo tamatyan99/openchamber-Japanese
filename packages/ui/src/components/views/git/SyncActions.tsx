@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiRefreshLine,
   RiArrowDownLine,
@@ -47,6 +48,7 @@ export const SyncActions: React.FC<SyncActionsProps> = ({
   aheadCount = 0,
   behindCount = 0,
 }) => {
+  const { t } = useTranslation();
   const skipRemoteSelectRef = React.useRef(false);
   const hasNoRemotes = remotes.length === 0;
   const isRemovingRemote = Boolean(removingRemoteName);
@@ -192,8 +194,8 @@ export const SyncActions: React.FC<SyncActionsProps> = ({
                       event.stopPropagation();
                       onRemoveRemote(remote);
                     }}
-                    aria-label={`Remove ${remote.name} remote`}
-                    title={`Remove ${remote.name}`}
+                    aria-label={t('Remove {{name}} remote', { name: remote.name })}
+                    title={t('Remove {{name}}', { name: remote.name })}
                   >
                     {removingRemoteName === remote.name ? (
                       <RiLoader4Line className="size-3.5 animate-spin" />
@@ -217,17 +219,17 @@ export const SyncActions: React.FC<SyncActionsProps> = ({
             'fetch',
             <RiRefreshLine className="size-4" />,
             <RiLoader4Line className="size-4 animate-spin" />,
-            'Fetch',
+            t('Fetch'),
             onFetch,
-            'Fetch from remote'
+            t('Fetch from remote')
           )
         : renderButton(
             'fetch',
             <RiRefreshLine className="size-4" />,
             <RiLoader4Line className="size-4 animate-spin" />,
-            'Fetch',
+            t('Fetch'),
             handleFetch,
-            'Fetch from remote'
+            t('Fetch from remote')
           )}
 
       {hasMultipleRemotes
@@ -235,18 +237,18 @@ export const SyncActions: React.FC<SyncActionsProps> = ({
             'pull',
             <RiArrowDownLine className="size-4" />,
             <RiLoader4Line className="size-4 animate-spin" />,
-            'Pull',
+            t('Pull'),
             onPull,
-            behindCount > 0 ? `Pull changes (${behindCount} behind)` : 'Pull changes',
+            behindCount > 0 ? t('Pull changes ({{count}} behind)', { count: behindCount }) : t('Pull changes'),
             behindCount
           )
         : renderButton(
             'pull',
             <RiArrowDownLine className="size-4" />,
             <RiLoader4Line className="size-4 animate-spin" />,
-            'Pull',
+            t('Pull'),
             handlePull,
-            behindCount > 0 ? `Pull changes (${behindCount} behind)` : 'Pull changes',
+            behindCount > 0 ? t('Pull changes ({{count}} behind)', { count: behindCount }) : t('Pull changes'),
             behindCount
           )}
 
@@ -254,9 +256,9 @@ export const SyncActions: React.FC<SyncActionsProps> = ({
         'push',
         <RiArrowUpLine className="size-4" />,
         <RiLoader4Line className="size-4 animate-spin" />,
-        'Push',
+        t('Push'),
         handlePush,
-        aheadCount > 0 ? `Push changes (${aheadCount} ahead)` : 'Push changes',
+        aheadCount > 0 ? t('Push changes ({{count}} ahead)', { count: aheadCount }) : t('Push changes'),
         aheadCount
       )}
     </div>

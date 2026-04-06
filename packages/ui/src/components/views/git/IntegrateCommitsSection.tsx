@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiArrowDownSLine, RiLoader4Line, RiSplitCellsHorizontal, RiSparklingLine } from '@remixicon/react';
 import {
   DropdownMenu,
@@ -56,6 +57,7 @@ export const IntegrateCommitsSection: React.FC<{
   refreshKey,
   onRefresh,
 }) => {
+  const { t } = useTranslation();
   const currentSessionId = useSessionUIStore((s) => s.currentSessionId);
   const setActiveMainTab = useUIStore((s) => s.setActiveMainTab);
   const [branchDropdownOpen, setBranchDropdownOpen] = React.useState(false);
@@ -351,7 +353,7 @@ Important:
       <div className={headerClassName}>
         <div className="flex items-center gap-2 min-w-0">
           <RiSplitCellsHorizontal className="size-4 text-muted-foreground" />
-          <h3 className="typography-ui-header font-semibold text-foreground truncate">Re-integrate commits</h3>
+          <h3 className="typography-ui-header font-semibold text-foreground truncate">{t('Re-integrate commits')}</h3>
           {ui.kind === 'ready' && ui.plan.commits.length > 0 ? (
             <span className="typography-meta text-muted-foreground truncate">{ui.plan.commits.length} to move</span>
           ) : null}
@@ -366,7 +368,7 @@ Important:
       <div className={bodyClassName}>
         <div className="flex flex-wrap items-center gap-2">
           <div className="min-w-0">
-            <div className="typography-ui-label text-foreground">Move commits</div>
+            <div className="typography-ui-label text-foreground">{t('Move commits')}</div>
               <div className="typography-micro text-muted-foreground truncate">
                 {sourceBranch} → {targetBranch}
               </div>
@@ -377,7 +379,7 @@ Important:
             <DropdownMenu open={branchDropdownOpen} onOpenChange={setBranchDropdownOpen}>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="gap-1.5">
-                  Target
+                  {t('Target')}
                   <span className="max-w-[160px] truncate font-mono text-xs text-muted-foreground">{targetBranch}</span>
                   <RiArrowDownSLine className="size-4 opacity-60" />
                 </Button>
@@ -387,14 +389,14 @@ Important:
                 className="w-72 p-0 max-h-(--radix-dropdown-menu-content-available-height) flex flex-col overflow-hidden"
               >
                 <Command className="h-full min-h-0">
-                  <CommandInput ref={searchInputRef} placeholder="Search branches..." />
+                  <CommandInput ref={searchInputRef} placeholder={t('Search branches...')} />
                   <CommandList
                     className="h-full min-h-0"
                     scrollbarClassName="overlay-scrollbar--flush overlay-scrollbar--dense overlay-scrollbar--zero"
                     disableHorizontal
                   >
-                    <CommandEmpty>No branches found.</CommandEmpty>
-                    <CommandGroup heading="Local branches">
+                    <CommandEmpty>{t('No branches found.')}</CommandEmpty>
+                    <CommandGroup heading={t('Local branches')}>
                       {localBranches.map((branch) => (
                         <CommandItem
                           key={branch}
@@ -416,28 +418,28 @@ Important:
 
             {ui.kind === 'ready' ? (
               <Button size="sm" onClick={() => void handleMove()} disabled={!isEligible || ui.plan.commits.length === 0}>
-                Move
+                {t('Move')}
               </Button>
             ) : ui.kind === 'loading' ? (
               <Button size="sm" variant="outline" disabled>
-                Checking…
+                {t('Checking…')}
               </Button>
             ) : ui.kind === 'running' ? (
               <Button size="sm" variant="outline" disabled>
-                Moving…
+                {t('Moving…')}
               </Button>
             ) : null}
           </div>
 
           {ui.kind === 'ready' && ui.plan.commits.length === 0 && (
-            <div className="typography-meta text-muted-foreground">No commits to move.</div>
+            <div className="typography-meta text-muted-foreground">{t('No commits to move.')}</div>
           )}
 
           {ui.kind === 'ready' && ui.plan.commits.length > 0 && (
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-2">
                 <div className="typography-meta text-foreground">
-                  Commits to move
+                  {t('Commits to move')}
                   <span className="text-muted-foreground"> ({ui.plan.commits.length})</span>
                 </div>
                 {commitSummaries.length > 0 && ui.plan.commits.length > 5 && (
@@ -446,7 +448,7 @@ Important:
                     onClick={() => setShowAllCommits((v) => !v)}
                     className="typography-micro text-muted-foreground hover:text-foreground"
                   >
-                    {showAllCommits ? 'Show less' : 'Show all'}
+                    {showAllCommits ? t('Show less') : t('Show all')}
                   </button>
                 )}
               </div>
@@ -459,11 +461,11 @@ Important:
                   </div>
                 ))}
                 {commitSummaries.length === 0 && (
-                  <div className="typography-meta text-muted-foreground">Preview unavailable.</div>
+                  <div className="typography-meta text-muted-foreground">{t('Preview unavailable.')}</div>
                 )}
                 {ui.plan.commits.length > commitSummaries.length && (
                   <div className="typography-micro text-muted-foreground/70">
-                    Showing first {commitSummaries.length} commits.
+                    {t('Showing first {{count}} commits.', { count: commitSummaries.length })}
                   </div>
                 )}
               </div>
@@ -473,7 +475,7 @@ Important:
           {ui.kind === 'conflict' && (
             <div className="rounded-md border border-border/60 bg-background/60 p-3 space-y-2">
               <div className="typography-meta text-foreground">
-                Conflicts in {ui.details.unmergedFiles.length} files
+                {t('Conflicts in {{count}} files', { count: ui.details.unmergedFiles.length })}
               </div>
               <div className="typography-micro text-muted-foreground/80">
                 Current commit: <span className="font-mono">{ui.state.currentCommit.slice(0, 7)}</span>
@@ -490,7 +492,7 @@ Important:
               </div>
               <div className="flex items-center gap-2 pt-1">
                 <Button size="sm" variant="ghost" className="typography-meta" onClick={() => void handleAbort()}>
-                  Abort
+                  {t('Abort')}
                 </Button>
                 <Button
                   size="sm"
@@ -500,7 +502,7 @@ Important:
                   onClick={() => void handleResolveWithAi({ state: ui.state, details: ui.details }, false)}
                 >
                   <RiSparklingLine className="size-3.5" />
-                  Current Session
+                  {t('Current Session')}
                 </Button>
                 <Button
                   size="sm"
@@ -509,10 +511,10 @@ Important:
                   onClick={() => void handleResolveWithAi({ state: ui.state, details: ui.details }, true)}
                 >
                   <RiSparklingLine className="size-3.5" />
-                  New Session
+                  {t('New Session')}
                 </Button>
                 <Button size="sm" className="typography-meta" onClick={() => void handleContinue()}>
-                  Continue
+                  {t('Continue')}
                 </Button>
               </div>
             </div>

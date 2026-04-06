@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiArrowLeftLine } from '@remixicon/react';
 import type { Message, Part, Session } from '@opencode-ai/sdk/v2';
 
@@ -266,6 +267,7 @@ const HYDRATING_SKELETON_ITEMS: Array<{
 ];
 
 export const ChatContainer: React.FC = () => {
+    const { t } = useTranslation();
     // Session UI state
     const currentSessionId = useSessionUIStore((s) => s.currentSessionId);
     const openNewSessionDraft = useSessionUIStore((s) => s.openNewSessionDraft);
@@ -464,11 +466,11 @@ export const ChatContainer: React.FC = () => {
             size="xs"
             onClick={handleReturnToParentSession}
             className="absolute left-3 top-3 z-20 !font-normal bg-[var(--surface-background)]/95"
-            aria-label="Return to parent session"
-            title={parentSession.title?.trim() ? `Return to: ${parentSession.title}` : 'Return to parent session'}
+            aria-label={t('Return to parent session')}
+            title={parentSession.title?.trim() ? t('Return to: {{title}}', { title: parentSession.title }) : t('Return to parent session')}
         >
             <RiArrowLeftLine className="h-4 w-4" />
-            Parent
+            {t('Parent')}
         </Button>
     ) : null;
 

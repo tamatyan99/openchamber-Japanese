@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollableOverlay } from '@/components/ui/ScrollableOverlay';
 import { ProviderLogo } from '@/components/ui/ProviderLogo';
 import { Button } from '@/components/ui/button';
@@ -27,6 +28,7 @@ const getUsagePercent = (usage: { windows?: Record<string, { usedPercent: number
 };
 
 export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
+  const { t } = useTranslation();
   const results = useQuotaStore((state) => state.results);
   const selectedProviderId = useQuotaStore((state) => state.selectedProviderId);
   const setSelectedProvider = useQuotaStore((state) => state.setSelectedProvider);
@@ -79,9 +81,9 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
   return (
     <div className={cn('flex h-full flex-col', bgClass)}>
       <div className="border-b px-3 pt-4 pb-3">
-        <h2 className="text-base font-semibold text-foreground mb-3">Usage</h2>
+        <h2 className="text-base font-semibold text-foreground mb-3">{t('Usage')}</h2>
         <div className="flex items-center justify-between gap-2">
-          <span className="typography-meta text-muted-foreground">Total {QUOTA_PROVIDERS.length}</span>
+          <span className="typography-meta text-muted-foreground">{t('Total')} {QUOTA_PROVIDERS.length}</span>
           <div className="flex items-center gap-2">
             <Tooltip delayDuration={700}>
               <TooltipTrigger asChild>
@@ -89,12 +91,12 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
                   <Checkbox
                     checked={usageAutoRefresh}
                     onChange={handleUsageAutoRefreshChange}
-                    ariaLabel="Toggle auto refresh"
+                    ariaLabel={t('Toggle auto refresh')}
                   />
                 </span>
               </TooltipTrigger>
               <TooltipContent side="bottom">
-                Auto-refresh usage data at set interval
+                {t('Auto-refresh usage data at set interval')}
               </TooltipContent>
             </Tooltip>
             <Select
@@ -103,7 +105,7 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
               disabled={!usageAutoRefresh}
             >
               <SelectTrigger className="w-fit">
-                <SelectValue placeholder="Interval" />
+                <SelectValue placeholder={t('Interval')} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="30000">30s</SelectItem>
@@ -115,8 +117,8 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
               variant="ghost"
               className="h-7 w-7 px-0 text-muted-foreground"
               onClick={() => fetchAllQuotas()}
-              aria-label="Refresh usage"
-              title="Refresh usage"
+              aria-label={t('Refresh usage')}
+              title={t('Refresh usage')}
               disabled={isLoading}
             >
               <RiRefreshLine className={cn('h-3.5 w-3.5', isLoading && 'animate-spin')} />
@@ -124,14 +126,14 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
           </div>
         </div>
         <div className="mt-2 flex items-center justify-between gap-2">
-          <span className="typography-micro text-muted-foreground">Display</span>
+          <span className="typography-micro text-muted-foreground">{t('Display')}</span>
           <Select value={usageDisplayMode} onValueChange={handleUsageDisplayModeChange}>
             <SelectTrigger className="w-fit">
-              <SelectValue placeholder="Display mode" />
+              <SelectValue placeholder={t('Display mode')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="usage">Usage</SelectItem>
-              <SelectItem value="remaining">Quota remaining</SelectItem>
+              <SelectItem value="usage">{t('Usage')}</SelectItem>
+              <SelectItem value="remaining">{t('Quota remaining')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -175,7 +177,7 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
                   {provider.name}
                 </span>
               {!configured && (
-                <span className="typography-micro text-muted-foreground/60 flex-shrink-0">Not set</span>
+                <span className="typography-micro text-muted-foreground/60 flex-shrink-0">{t('Not set')}</span>
               )}
             </button>
           </div>
