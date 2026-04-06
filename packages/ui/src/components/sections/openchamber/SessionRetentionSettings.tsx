@@ -136,7 +136,7 @@ export const SessionRetentionSettings: React.FC = () => {
                 )}
                 onClick={() => setSessionRetentionAction(option.value)}
               >
-                {option.label}
+                {t(option.label)}
               </Button>
             ))}
           </div>

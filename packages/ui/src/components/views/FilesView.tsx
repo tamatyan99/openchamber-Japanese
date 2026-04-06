@@ -2235,8 +2235,8 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
               size="sm"
               onClick={() => void saveDraft()}
               className="h-6 px-1 gap-1 text-muted-foreground opacity-80 hover:opacity-100"
-              title={`Save now (${getModifierLabel()}+S) - auto-saves after 1.5s`}
-              aria-label={`Save (${getModifierLabel()}+S)`}
+              title={t('Save now ({{modifier}}+S) - auto-saves after 1.5s', { modifier: getModifierLabel() })}
+              aria-label={t('Save ({{modifier}}+S)', { modifier: getModifierLabel() })}
             >
               <RiSave3Line className="h-4 w-4" />
             </Button>
@@ -2526,7 +2526,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
                             handleCloseFile(file.path);
                           }}
                           className="inline-flex h-6 w-6 items-center justify-center rounded-md text-[var(--surface-muted-foreground)] hover:text-[var(--surface-foreground)]"
-                          aria-label={`Close ${file.name}`}
+                          aria-label={t('Close {{name}}', { name: file.name })}
                         >
                           <RiCloseLine className="h-3.5 w-3.5" />
                         </button>
@@ -2587,7 +2587,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
                             'rounded-sm p-0.5 text-[var(--surface-muted-foreground)] hover:text-[var(--surface-foreground)]',
                             !isActive && 'opacity-0 group-hover:opacity-100'
                           )}
-                          aria-label={`Close ${file.name}`}
+                          aria-label={t('Close {{name}}', { name: file.name })}
                         >
                           <RiCloseLine size={14} />
                         </button>

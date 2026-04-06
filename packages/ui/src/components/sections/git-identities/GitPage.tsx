@@ -298,7 +298,7 @@ const IdentityRow: React.FC<IdentityRowProps> = ({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-fit min-w-28">
           <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onToggleDefault(); }}>
-            {isDefault ? 'Unset default' : 'Set as default'}
+            {isDefault ? t('Unset default') : t('Set as default')}
           </DropdownMenuItem>
           {!isReadOnly && onDelete && (
             <DropdownMenuItem
@@ -306,7 +306,7 @@ const IdentityRow: React.FC<IdentityRowProps> = ({
               className="text-destructive focus:text-destructive"
             >
               <RiDeleteBinLine className="h-4 w-4 mr-px" />
-              Delete
+              {t('Delete')}
             </DropdownMenuItem>
           )}
         </DropdownMenuContent>
@@ -324,6 +324,7 @@ interface DiscoveredRowProps {
 }
 
 const DiscoveredRow: React.FC<DiscoveredRowProps> = ({ credential, onImport, hasBorder }) => {
+  const { t } = useTranslation();
   const parts = credential.host.split('/');
   const displayName = parts.length >= 3 ? parts[parts.length - 1] : credential.host;
   const isRepoSpecific = credential.host.includes('/');
@@ -343,7 +344,7 @@ const DiscoveredRow: React.FC<DiscoveredRowProps> = ({ credential, onImport, has
       </div>
       <Button size="sm" variant="ghost" onClick={onImport} className="gap-1 shrink-0">
         <RiDownloadLine className="h-3 w-3" />
-        Import
+        {t('Import')}
       </Button>
     </div>
   );

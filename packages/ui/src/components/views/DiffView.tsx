@@ -454,6 +454,7 @@ const InlineImageDiffViewer = React.memo<InlineImageDiffViewerProps>(({
     diff,
     renderSideBySide,
 }) => {
+    const { t } = useTranslation();
     const hasOriginal = diff.original.length > 0;
     const hasModified = diff.modified.length > 0;
 

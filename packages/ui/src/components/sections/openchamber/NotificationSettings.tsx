@@ -695,7 +695,7 @@ export const NotificationSettings: React.FC = () => {
                 {(['completion', 'subtask', 'error', 'question'] as const).map((event) => (
                   <section key={event} className="p-2">
                     <span className="typography-ui-label text-foreground font-normal capitalize block">
-                      {event === 'subtask' ? 'Subagent Completion' : event}
+                      {event === 'subtask' ? t('Subagent Completion') : event}
                     </span>
                     <div className="mt-1.5 space-y-2">
                       <div>

@@ -686,10 +686,10 @@ export function DesktopHostSwitcherDialog({
         <div className="flex-shrink-0 border-b border-[var(--interactive-border)] px-3 py-2">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0 flex items-baseline gap-1.5 typography-ui-label">
-              <span className="font-medium text-foreground">Current</span>
+              <span className="font-medium text-foreground">{t('Current')}</span>
               <span className="max-w-[9rem] truncate text-muted-foreground">{redactSensitiveUrl(current.label)}</span>
               <span className="text-muted-foreground/50">•</span>
-              <span className="font-medium text-foreground">Default</span>
+              <span className="font-medium text-foreground">{t('Default')}</span>
               <span className="max-w-[9rem] truncate text-muted-foreground">{redactSensitiveUrl(currentDefaultLabel)}</span>
             </div>
             <button
@@ -711,7 +711,7 @@ export function DesktopHostSwitcherDialog({
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <RiServerLine className="h-5 w-5" />
-            Instance
+            {t('Instance')}
           </DialogTitle>
           <DialogDescription>
             {t('Switch between Local and remote OpenChamber servers')}
@@ -813,7 +813,7 @@ export function DesktopHostSwitcherDialog({
                           <span className="inline-flex items-center gap-1 typography-micro text-muted-foreground">
                             {statusIcon(statusKind)}
                             <span>
-                              {isSsh ? sshPhaseLabel(sshStatus?.phase) : statusLabel(status?.status ?? null)}
+                              {isSsh ? t(sshPhaseLabel(sshStatus?.phase)) : t(statusLabel(status?.status ?? null))}
                               {!isSsh && status?.status === 'ok' && typeof status.latencyMs === 'number' ? ` · ${Math.max(0, Math.round(status.latencyMs))}ms ping` : ''}
                             </span>
                           </span>

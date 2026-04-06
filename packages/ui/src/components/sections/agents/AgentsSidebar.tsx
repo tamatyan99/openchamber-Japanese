@@ -525,6 +525,7 @@ const AgentListItem: React.FC<AgentListItemProps> = ({
   isMenuOpen,
   onMenuOpenChange,
 }) => {
+  const { t } = useTranslation();
   const extAgent = agent as Agent & { scope?: AgentScope };
   const isMobile = isMobileDeviceViaCSS();
   
@@ -582,7 +583,7 @@ const AgentListItem: React.FC<AgentListItemProps> = ({
                 }}
               >
                 <RiEditLine className="h-4 w-4 mr-px" />
-                Rename
+                {t('Rename')}
               </DropdownMenuItem>
             )}
 
@@ -593,7 +594,7 @@ const AgentListItem: React.FC<AgentListItemProps> = ({
               }}
             >
               <RiFileCopyLine className="h-4 w-4 mr-px" />
-              Duplicate
+              {t('Duplicate')}
             </DropdownMenuItem>
 
             {onReset && (
@@ -604,7 +605,7 @@ const AgentListItem: React.FC<AgentListItemProps> = ({
                 }}
               >
                 <RiRestartLine className="h-4 w-4 mr-px" />
-                Reset
+                {t('Reset')}
               </DropdownMenuItem>
             )}
 
@@ -617,7 +618,7 @@ const AgentListItem: React.FC<AgentListItemProps> = ({
                 className="text-destructive focus:text-destructive"
               >
                 <RiDeleteBinLine className="h-4 w-4 mr-px" />
-                Delete
+                {t('Delete')}
               </DropdownMenuItem>
             )}
           </DropdownMenuContent>
