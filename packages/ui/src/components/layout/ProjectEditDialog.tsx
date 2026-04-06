@@ -423,10 +423,10 @@ export const ProjectEditDialog: React.FC<ProjectEditDialogProps> = ({
 
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button onClick={handleSave} disabled={!name.trim() || isUploadingIcon || isRemovingCustomIcon}>
-            Save
+            {t('Save')}
           </Button>
         </DialogFooter>
       </DialogContent>

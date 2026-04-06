@@ -158,7 +158,7 @@ export const UsagePage: React.FC = () => {
           <ProviderLogo providerId={selectedProviderId} className="h-5 w-5 shrink-0" />
           <div className="min-w-0">
             <h2 className="typography-ui-header font-semibold text-foreground truncate">
-              {providerName} Usage
+              {t('{{providerName}} Usage', { providerName })}
             </h2>
             <p className="typography-meta text-muted-foreground truncate">
               {isLoading ? (

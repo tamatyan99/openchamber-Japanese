@@ -140,7 +140,7 @@ export function BrowserVoiceButton() {
         ? error || t('Voice Error')
         : conversationMode && status === 'idle'
           ? t('Start Voice (Continuous mode on)')
-          : statusLabels[status] || t('Start Voice');
+          : (statusLabels[status] ? t(statusLabels[status]) : t('Start Voice'));
 
     // Tooltip content based on state
     const getTooltipContent = () => {

@@ -418,7 +418,7 @@ export const GitIdentityEditorDialog: React.FC<GitIdentityEditorDialogProps> = (
                       <Input
                         value={host}
                         onChange={(e) => setHost(e.target.value)}
-                        placeholder="github.com"
+                        placeholder={t('github.com')}
                         required
                         className="h-8 font-mono text-xs"
                       />
@@ -437,15 +437,15 @@ export const GitIdentityEditorDialog: React.FC<GitIdentityEditorDialogProps> = (
                 onClick={() => setIsDeleteDialogOpen(true)}
                 className="text-[var(--status-error)] hover:text-[var(--status-error)] border-[var(--status-error)]/30 hover:bg-[var(--status-error)]/10 mr-auto"
               >
-                <RiDeleteBinLine className="w-3.5 h-3.5 mr-1" /> Delete
+                <RiDeleteBinLine className="w-3.5 h-3.5 mr-1" /> {t('Delete')}
               </Button>
             )}
             <Button variant="ghost" size="sm" onClick={() => onOpenChange(false)} className="text-foreground hover:bg-interactive-hover hover:text-foreground">
-              {isGlobalProfile ? 'Close' : 'Cancel'}
+              {isGlobalProfile ? t('Close') : t('Cancel')}
             </Button>
             {!isGlobalProfile && (
               <Button size="sm" onClick={handleSave} disabled={isSaving}>
-                {isSaving ? 'Saving...' : isNewProfile ? 'Create' : 'Save'}
+                {isSaving ? t('Saving...') : isNewProfile ? t('Create') : t('Save')}
               </Button>
             )}
           </DialogFooter>
@@ -459,17 +459,17 @@ export const GitIdentityEditorDialog: React.FC<GitIdentityEditorDialogProps> = (
       >
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete Profile</DialogTitle>
+            <DialogTitle>{t('Delete Profile')}</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete "{selectedProfile?.name || name}"?
+              {t('Are you sure you want to delete "{{name}}"?', { name: selectedProfile?.name || name })}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="ghost" onClick={() => setIsDeleteDialogOpen(false)} disabled={isDeleting}>
-              Cancel
+              {t('Cancel')}
             </Button>
             <Button size="sm" variant="destructive" onClick={() => void handleConfirmDelete()} disabled={isDeleting}>
-              Delete
+              {t('Delete')}
             </Button>
           </DialogFooter>
         </DialogContent>

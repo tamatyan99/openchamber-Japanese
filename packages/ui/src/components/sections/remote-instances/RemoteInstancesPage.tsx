@@ -59,34 +59,35 @@ const isPortInUseError = (error: unknown): boolean => {
   return message.includes('address already in use') || message.includes('eaddrinuse') || message.includes('port already in use');
 };
 
-const phaseLabel = (phase?: string): string => {
+const phaseLabel = (phase?: string, t?: (key: string) => string): string => {
+  const tr = t ?? ((k: string) => k);
   switch (phase) {
     case 'config_resolved':
-      return 'Resolving configuration';
+      return tr('Resolving configuration');
     case 'auth_check':
-      return 'Checking auth';
+      return tr('Checking auth');
     case 'master_connecting':
-      return 'Establishing SSH';
+      return tr('Establishing SSH');
     case 'remote_probe':
-      return 'Probing remote';
+      return tr('Probing remote');
     case 'installing':
-      return 'Installing OpenChamber';
+      return tr('Installing OpenChamber');
     case 'updating':
-      return 'Updating OpenChamber';
+      return tr('Updating OpenChamber');
     case 'server_detecting':
-      return 'Detecting server';
+      return tr('Detecting server');
     case 'server_starting':
-      return 'Starting server';
+      return tr('Starting server');
     case 'forwarding':
-      return 'Forwarding ports';
+      return tr('Forwarding ports');
     case 'ready':
-      return 'Ready';
+      return tr('Ready');
     case 'degraded':
-      return 'Reconnecting';
+      return tr('Reconnecting');
     case 'error':
-      return 'Error';
+      return tr('Error');
     default:
-      return 'Idle';
+      return tr('Idle');
   }
 };
 
@@ -741,9 +742,9 @@ export const RemoteInstancesPage: React.FC = () => {
         <h2 className="typography-ui-header font-semibold text-foreground truncate">{instanceTitle}</h2>
         <div className="mt-1 flex flex-wrap items-center gap-2 typography-meta text-muted-foreground">
           <span className={`h-2.5 w-2.5 rounded-full ${phaseDotClass(statusPhase)}`} />
-          <span>{phaseLabel(statusPhase)}</span>
+          <span>{phaseLabel(statusPhase, t)}</span>
           {status?.localUrl ? <span className="font-mono text-foreground/80">{status.localUrl}</span> : null}
-          {reconnectAppearsStuck ? <span>reconnect stale</span> : null}
+          {reconnectAppearsStuck ? <span>{t('reconnect stale')}</span> : null}
         </div>
       </div>
 
