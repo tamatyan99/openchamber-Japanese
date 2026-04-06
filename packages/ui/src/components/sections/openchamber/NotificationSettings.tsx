@@ -755,13 +755,13 @@ export const NotificationSettings: React.FC = () => {
                 <div className={cn("flex flex-col gap-2 py-1 sm:flex-row sm:items-center sm:gap-8")}>
                   <div className="flex min-w-0 flex-col sm:w-56 shrink-0">
                     <div className="flex items-center gap-2">
-                      <span className="typography-ui-label text-foreground">Summarization Model</span>
+                      <span className="typography-ui-label text-foreground">{t('Summarization Model')}</span>
                       <Tooltip delayDuration={1000}>
                         <TooltipTrigger asChild>
                           <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
                         </TooltipTrigger>
                         <TooltipContent sideOffset={8} className="max-w-xs">
-                          Used for notification and voice summaries.
+                          {t('Used for notification and voice summaries.')}
                         </TooltipContent>
                       </Tooltip>
                     </div>
@@ -772,10 +772,10 @@ export const NotificationSettings: React.FC = () => {
                       onValueChange={handleUtilityModelChange}
                     >
                       <SelectTrigger className="w-fit min-w-[220px]">
-                        <SelectValue placeholder="Not selected" />
+                        <SelectValue placeholder={t('Not selected')} />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value={UTILITY_NOT_SELECTED_VALUE}>Not selected</SelectItem>
+                        <SelectItem value={UTILITY_NOT_SELECTED_VALUE}>{t('Not selected')}</SelectItem>
                         {utilityModelOptions.map((model) => (
                           <SelectItem key={model.id} value={model.id}>
                             {model.name}
@@ -790,8 +790,8 @@ export const NotificationSettings: React.FC = () => {
                   <>
                     <div className="flex items-center gap-8 py-1.5 mt-1 border-t border-[var(--surface-subtle)]">
                       <div className="flex min-w-0 flex-col w-56 shrink-0">
-                        <span className="typography-ui-label text-foreground">Threshold</span>
-                        <span className="typography-meta text-muted-foreground">Messages longer than this will be summarized</span>
+                        <span className="typography-ui-label text-foreground">{t('Threshold')}</span>
+                        <span className="typography-meta text-muted-foreground">{t('Messages longer than this will be summarized')}</span>
                       </div>
                       <div className="flex items-center gap-2 w-fit">
                         <NumberInput
@@ -817,8 +817,8 @@ export const NotificationSettings: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-8 py-1.5">
                       <div className="flex min-w-0 flex-col w-56 shrink-0">
-                        <span className="typography-ui-label text-foreground">Length</span>
-                        <span className="typography-meta text-muted-foreground">Target character length of the summary</span>
+                        <span className="typography-ui-label text-foreground">{t('Length')}</span>
+                        <span className="typography-meta text-muted-foreground">{t('Target character length of the summary')}</span>
                       </div>
                       <div className="flex items-center gap-2 w-fit">
                         <NumberInput

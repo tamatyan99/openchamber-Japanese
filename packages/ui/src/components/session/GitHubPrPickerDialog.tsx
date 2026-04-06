@@ -438,10 +438,10 @@ export function GitHubPrPickerDialog({
                 {isLoadingMore ? (
                   <span className="inline-flex items-center gap-2">
                     <RiLoader4Line className="h-4 w-4 animate-spin" />
-                    Loading...
+                    {t('Loading...')}
                   </span>
                 ) : (
-                  'Load more'
+                  t('Load more')
                 )}
               </button>
             </div>

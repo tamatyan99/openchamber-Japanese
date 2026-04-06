@@ -350,7 +350,7 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       {mode === 'dialog' ? (
         <DialogFooter className="gap-2 pt-1">
           <Button variant="ghost" size="sm" onClick={handleCancel}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button
             variant="default"
@@ -362,12 +362,12 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
             {operation === 'merge' ? (
               <>
                 <RiGitMergeLine className="size-4" />
-                Merge
+                {t('Merge')}
               </>
             ) : (
               <>
                 <RiGitBranchLine className="size-4" />
-                Rebase
+                {t('Rebase')}
               </>
             )}
           </Button>
@@ -375,11 +375,11 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       ) : (
         <div className="flex items-center gap-2 pt-1">
           <Button variant="destructive" size="sm" onClick={handleCancel} disabled={isDisabled}>
-            Reset
+            {t('Reset')}
           </Button>
           <div className="flex-1" />
           <Button variant="default" size="sm" onClick={handleConfirm} disabled={isDisabled || !selectedBranch}>
-            {operation === 'merge' ? 'Merge' : 'Rebase'}
+            {operation === 'merge' ? t('Merge') : t('Rebase')}
           </Button>
         </div>
       )}
@@ -393,10 +393,9 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       <section className="border-0 bg-transparent rounded-none">
         <header className="border-b border-border/40 px-0 py-3">
           <div className="space-y-1">
-            <div className="typography-ui-header font-semibold text-foreground">Update branch</div>
+            <div className="typography-ui-header font-semibold text-foreground">{t('Update branch')}</div>
             <div className="typography-micro text-muted-foreground">
-              Bring changes from another branch into{' '}
-              <span className="font-mono text-foreground">{targetBranchLabel}</span>.
+              {t('Bring changes from another branch into {{branch}}.', { branch: targetBranchLabel })}
             </div>
           </div>
         </header>

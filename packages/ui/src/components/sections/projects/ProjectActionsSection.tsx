@@ -390,17 +390,17 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
                                     }}
                                   >
                                     <SelectTrigger className="h-7 w-full max-w-[30rem]">
-                                      <SelectValue placeholder="Use output/manual URL" />
+                                      <SelectValue placeholder={t('Use output/manual URL')} />
                                     </SelectTrigger>
                                     <SelectContent>
-                                      <SelectItem value="__none__">Use output/manual URL</SelectItem>
+                                      <SelectItem value="__none__">{t('Use output/manual URL')}</SelectItem>
                                       {desktopForwardOptions.map((entry) => (
                                         <SelectItem key={entry.id} value={entry.id}>{entry.label}</SelectItem>
                                       ))}
                                     </SelectContent>
                                   </Select>
                                 ) : (
-                                  <p className="typography-meta text-muted-foreground">No enabled local SSH forwards available.</p>
+                                  <p className="typography-meta text-muted-foreground">{t('No enabled local SSH forwards available.')}</p>
                                 )}
                               </div>
                             ) : null}
@@ -427,7 +427,7 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
             onClick={handleSave}
             disabled={!canSave}
           >
-            {isSaving ? 'Saving...' : 'Save Actions'}
+            {isSaving ? t('Saving...') : t('Save Actions')}
           </Button>
         </div>
       </section>

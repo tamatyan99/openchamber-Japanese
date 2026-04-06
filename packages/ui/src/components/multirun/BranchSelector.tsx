@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Select,
   SelectContent,
@@ -101,6 +102,7 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
   disabled,
   id,
 }) => {
+  const { t } = useTranslation();
   const { localBranches, remoteBranches, isLoading, isGitRepository } = useBranchOptions(directory);
   const allBranches = React.useMemo(
     () => [...localBranches, ...remoteBranches.map(b => `remotes/${b}`)],
@@ -151,22 +153,22 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
           size="lg"
           className={className ?? 'w-fit typography-meta text-foreground'}
         >
-          <SelectValue placeholder={isLoading ? 'Loading branches…' : 'Select source branch...'} />
+          <SelectValue placeholder={isLoading ? t('Loading branches…') : t('Select source branch...')} />
         </SelectTrigger>
         <SelectContent className="max-h-[280px] max-w-[320px]">
           {isLoading ? (
             <div className="px-2 py-4 text-center typography-meta text-muted-foreground">
-              Loading branches...
+              {t('Loading branches...')}
             </div>
           ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
             <div className="px-2 py-4 text-center typography-meta text-muted-foreground">
-              No branches found
+              {t('No branches found')}
             </div>
           ) : (
             <>
               {localBranches.length > 0 && (
                 <SelectGroup>
-                  <SelectLabel className="font-semibold text-foreground">Local branches</SelectLabel>
+                  <SelectLabel className="font-semibold text-foreground">{t('Local branches')}</SelectLabel>
                   {localBranches.map((branch) => (
                     <SelectItem key={branch} value={branch} className="whitespace-normal break-all">
                       {branch}
@@ -179,7 +181,7 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
               )}
               {remoteBranches.length > 0 && (
                 <SelectGroup>
-                  <SelectLabel className="font-semibold text-foreground">Remote branches</SelectLabel>
+                  <SelectLabel className="font-semibold text-foreground">{t('Remote branches')}</SelectLabel>
                   {remoteBranches.map((branch) => (
                     <SelectItem key={`remotes/${branch}`} value={`remotes/${branch}`} className="whitespace-normal break-all">
                       {branch}
