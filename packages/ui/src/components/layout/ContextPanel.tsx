@@ -396,8 +396,19 @@ export const ContextPanel: React.FC = () => {
     postEmbeddedVisibilityToChats();
   }, [darkThemeId, lightThemeId, postEmbeddedVisibilityToChats, postThemeSyncToEmbeddedChat, tabs, themeMode]);
 
+  const translateModeLabel = React.useCallback((label: string): string => {
+    const modeLabels: Record<string, string> = {
+      Chat: t('Chat'),
+      Files: t('Files'),
+      Diff: t('Diff'),
+      Plan: t('Plan'),
+      Context: t('Context'),
+    };
+    return modeLabels[label] ?? label;
+  }, [t]);
+
   const tabItems = React.useMemo(() => tabs.map((tab) => {
-    const rawLabel = getTabLabel(tab);
+    const rawLabel = translateModeLabel(getTabLabel(tab));
     const label = truncateTabLabel(rawLabel, CONTEXT_TAB_LABEL_MAX_CHARS);
     const tabPathLabel = getRelativePathLabel(tab.targetPath, effectiveDirectory);
     return {
@@ -407,7 +418,7 @@ export const ContextPanel: React.FC = () => {
       title: tabPathLabel ? `${rawLabel}: ${tabPathLabel}` : rawLabel,
       closeLabel: t('Close {{label}} tab', { label }),
     };
-  }), [effectiveDirectory, t, tabs]);
+  }), [effectiveDirectory, t, tabs, translateModeLabel]);
 
   const activeNonChatContent = activeTab?.mode === 'diff'
     ? <DiffView hideStackedFileSidebar stackedDefaultCollapsedAll hideFileSelector pinSelectedFileHeaderToTopOnNavigate showOpenInEditorAction />
@@ -474,8 +485,8 @@ export const ContextPanel: React.FC = () => {
           size="sm"
           onClick={handleClose}
           className="h-7 w-7 p-0"
-          title="Close panel"
-          aria-label="Close panel"
+          title={t('Close panel')}
+          aria-label={t('Close panel')}
         >
           <RiCloseLine className="h-3.5 w-3.5" />
         </Button>
@@ -529,7 +540,7 @@ export const ContextPanel: React.FC = () => {
           onPointerCancel={handleResizeEnd}
           role="separator"
           aria-orientation="vertical"
-          aria-label="Resize context panel"
+          aria-label={t('Resize context panel')}
         />
       )}
       {header}
