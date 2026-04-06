@@ -697,7 +697,7 @@ export const TunnelSettings: React.FC = () => {
       if (tunnelMode === 'managed-remote') {
         if (!selectedPreset) {
           setState('idle');
-          setManagedRemoteValidationError('Select or add a managed remote tunnel first');
+          setManagedRemoteValidationError(t('Select or add a managed remote tunnel first'));
           toast.error(t('Select or add a managed remote tunnel first'));
           return;
         }
@@ -731,7 +731,7 @@ export const TunnelSettings: React.FC = () => {
       if (!res.ok || !data.ok) {
         if (tunnelMode === 'managed-remote' && typeof data.error === 'string' && data.error.includes('Managed remote tunnel token is required')) {
           setState('idle');
-          setManagedRemoteValidationError('Managed remote tunnel token is required before starting');
+          setManagedRemoteValidationError(t('Managed remote tunnel token is required before starting'));
           toast.error(t('Add a managed remote tunnel token before starting'));
           return;
         }
@@ -1343,7 +1343,7 @@ export const TunnelSettings: React.FC = () => {
                   />
                   {typeof suggestedConnectorPort === 'number' && (
                     <p className="typography-meta text-muted-foreground/70">
-                      For Cloudflare connector target, use <code>http://localhost:{suggestedConnectorPort}</code>.
+                      {t('For Cloudflare connector target, use')} <code>http://localhost:{suggestedConnectorPort}</code>.
                     </p>
                   )}
                   <div className="flex items-center gap-2">

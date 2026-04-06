@@ -316,6 +316,7 @@ const FileRow: React.FC<FileRowProps> = ({
   onRevealPath,
   onOpenDialog,
 }) => {
+  const { t } = useTranslation();
   const isDir = node.type === 'directory';
   const { canRename, canCreateFile, canCreateFolder, canDelete, canReveal } = permissions;
 
@@ -400,7 +401,7 @@ const FileRow: React.FC<FileRowProps> = ({
             <DropdownMenuContent align="end" side={isMobile ? "bottom" : "bottom"} onCloseAutoFocus={() => setContextMenuPath(null)}>
               {canRename && (
                 <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onOpenDialog('rename', node); }}>
-                  <RiEditLine className="mr-2 h-4 w-4" /> Rename
+                  <RiEditLine className="mr-2 h-4 w-4" /> {t('Rename')}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem onClick={(e) => {
@@ -417,7 +418,7 @@ const FileRow: React.FC<FileRowProps> = ({
               </DropdownMenuItem>
               {canReveal && (
                 <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onRevealPath(node.path); }}>
-                  <RiFolderReceivedLine className="mr-2 h-4 w-4" /> Reveal in Finder
+                  <RiFolderReceivedLine className="mr-2 h-4 w-4" /> {t('Reveal in Finder')}
                 </DropdownMenuItem>
               )}
               {isDir && (canCreateFile || canCreateFolder) && (
@@ -425,12 +426,12 @@ const FileRow: React.FC<FileRowProps> = ({
                   <DropdownMenuSeparator />
                   {canCreateFile && (
                     <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onOpenDialog('createFile', node); }}>
-                      <RiFileAddLine className="mr-2 h-4 w-4" /> New File
+                      <RiFileAddLine className="mr-2 h-4 w-4" /> {t('New File')}
                     </DropdownMenuItem>
                   )}
                   {canCreateFolder && (
                     <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onOpenDialog('createFolder', node); }}>
-                      <RiFolderAddLine className="mr-2 h-4 w-4" /> New Folder
+                      <RiFolderAddLine className="mr-2 h-4 w-4" /> {t('New Folder')}
                     </DropdownMenuItem>
                   )}
                 </>
@@ -442,7 +443,7 @@ const FileRow: React.FC<FileRowProps> = ({
                     onClick={(e) => { e.stopPropagation(); onOpenDialog('delete', node); }}
                     className="text-destructive focus:text-destructive"
                   >
-                    <RiDeleteBinLine className="mr-2 h-4 w-4" /> Delete
+                    <RiDeleteBinLine className="mr-2 h-4 w-4" /> {t('Delete')}
                   </DropdownMenuItem>
                 </>
               )}
@@ -618,7 +619,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
   const handleRevealPath = React.useCallback((targetPath: string) => {
     if (!files.revealPath) return;
     void files.revealPath(targetPath).catch(() => {
-      toast.error('Failed to reveal path');
+      toast.error(t('Failed to reveal path'));
     });
   }, [files]);
 
@@ -944,7 +945,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
       await files.writeFile(newPath, '')
         .then(async (result) => {
           if (result.success) {
-            toast.success('File created');
+            toast.success(t('File created'));
             await refreshDirectory(parentPath);
           }
           finishDialogOperation();
@@ -967,7 +968,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
       await files.createDirectory(newPath)
         .then(async (result) => {
           if (result.success) {
-            toast.success('Folder created');
+            toast.success(t('Folder created'));
             await refreshDirectory(parentPath);
           }
           finishDialogOperation();
@@ -998,7 +999,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
       await files.rename(oldPath, newPath)
         .then(async (result) => {
           if (result.success) {
-            toast.success('Renamed successfully');
+            toast.success(t('Renamed successfully'));
             await refreshDirectory(parentDir);
             if (root) {
               removeOpenPathsByPrefix(root, oldPath);
@@ -1035,7 +1036,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
       await files.delete(deletedPath)
         .then(async (result) => {
           if (result.success) {
-            toast.success('Deleted successfully');
+            toast.success(t('Deleted successfully'));
             await refreshDirectory(parentDir);
             if (root) {
               removeOpenPathsByPrefix(root, deletedPath);
@@ -1142,7 +1143,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
 
   const saveDraft = React.useCallback(async () => {
     if (!selectedFile || !files.writeFile) {
-      toast.error('Saving not supported');
+      toast.error(t('Saving not supported'));
       return;
     }
 
@@ -1155,7 +1156,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
     await files.writeFile(selectedFile.path, draftContent)
       .then((result) => {
         if (!result?.success) {
-          toast.error('Failed to write file');
+          toast.error(t('Failed to write file'));
           return;
         }
         setFileContent(draftContent);
@@ -2118,16 +2119,16 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {activeDialog === 'createFile' && 'Create File'}
-            {activeDialog === 'createFolder' && 'Create Folder'}
-            {activeDialog === 'rename' && 'Rename'}
-            {activeDialog === 'delete' && 'Delete'}
+            {activeDialog === 'createFile' && t('Create File')}
+            {activeDialog === 'createFolder' && t('Create Folder')}
+            {activeDialog === 'rename' && t('Rename')}
+            {activeDialog === 'delete' && t('Delete')}
           </DialogTitle>
           <DialogDescription>
-            {activeDialog === 'createFile' && `Create a new file in ${dialogData?.path ?? 'root'}`}
-            {activeDialog === 'createFolder' && `Create a new folder in ${dialogData?.path ?? 'root'}`}
-            {activeDialog === 'rename' && `Rename ${dialogData?.name}`}
-            {activeDialog === 'delete' && `Are you sure you want to delete ${dialogData?.name}? This action cannot be undone.`}
+            {activeDialog === 'createFile' && t('Create a new file in {{path}}', { path: dialogData?.path ?? 'root' })}
+            {activeDialog === 'createFolder' && t('Create a new folder in {{path}}', { path: dialogData?.path ?? 'root' })}
+            {activeDialog === 'rename' && t('Rename {{name}}', { name: dialogData?.name })}
+            {activeDialog === 'delete' && t('Are you sure you want to delete {{name}}? This action cannot be undone.', { name: dialogData?.name })}
           </DialogDescription>
         </DialogHeader>
 
@@ -2136,7 +2137,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
             <Input
               value={dialogInputValue}
               onChange={(e) => setDialogInputValue(e.target.value)}
-              placeholder={activeDialog === 'rename' ? 'New name' : 'Name'}
+              placeholder={activeDialog === 'rename' ? t('New name') : t('Name')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   void handleDialogSubmit();
@@ -2149,7 +2150,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
 
         <DialogFooter>
           <Button variant="outline" onClick={() => setActiveDialog(null)} disabled={isDialogSubmitting}>
-            Cancel
+            {t('Cancel')}
           </Button>
           <Button
             variant={activeDialog === 'delete' ? 'destructive' : 'default'}
@@ -2157,7 +2158,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
             disabled={isDialogSubmitting || (activeDialog !== 'delete' && !dialogInputValue.trim())}
           >
             {isDialogSubmitting ? <RiLoader4Line className="animate-spin" /> : (
-                activeDialog === 'delete' ? 'Delete' : 'Confirm'
+                activeDialog === 'delete' ? t('Delete') : t('Confirm')
             )}
           </Button>
         </DialogFooter>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Session } from '@opencode-ai/sdk/v2';
 import {
   DropdownMenu,
@@ -151,6 +152,7 @@ const areEqual = (prev: Props, next: Props): boolean => {
 };
 
 function SessionNodeItemComponent(props: Props): React.ReactNode {
+  const { t } = useTranslation();
   const {
     node,
     depth = 0,
@@ -259,7 +261,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
               onChange={(event) => setEditTitle(event.target.value)}
               className="flex-1 min-w-0 bg-transparent typography-ui-label outline-none placeholder:text-muted-foreground"
               autoFocus
-              placeholder="Rename session"
+              placeholder={t('Rename session')}
               onKeyDown={(event) => {
                 if (event.key === 'Escape') {
                   event.stopPropagation();
@@ -298,7 +300,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
   const statusMarkerContent = isStreaming
     ? <GridLoader size="xs" className="text-primary" />
     : (
-        <span className="grid grid-cols-3 gap-[1px] text-[var(--status-info)]" aria-label="Unread updates" title="Unread updates">
+        <span className="grid grid-cols-3 gap-[1px] text-[var(--status-info)]" aria-label={t('Unread updates')} title={t('Unread updates')}>
           {Array.from({ length: 9 }, (_, i) => (
             ATTENTION_DIAMOND_INDICES.has(i) ? (
               <span key={i} className="h-[3px] w-[3px] rounded-full bg-current animate-attention-diamond-pulse" style={{ animationDelay: getAttentionDiamondDelay(i) }} />
@@ -344,7 +346,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
           ? 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100 group-focus-within:pointer-events-auto'
           : '',
       )}
-      aria-label={isExpanded ? 'Collapse subsessions' : 'Expand subsessions'}
+      aria-label={isExpanded ? t('Collapse subsessions') : t('Expand subsessions')}
     >
       {isExpanded ? <RiArrowDownSLine className="h-3 w-3" /> : <RiArrowRightSLine className="h-3 w-3" />}
     </span>
@@ -386,25 +388,25 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
         className="[&>svg]:mr-1"
       >
         <RiPencilAiLine className="mr-1 h-4 w-4" />
-        Rename
+        {t('Rename')}
       </DropdownMenuItem>
       <DropdownMenuItem onClick={() => togglePinnedSession(session.id)} className="[&>svg]:mr-1">
         {isPinnedSession ? <RiUnpinLine className="mr-1 h-4 w-4" /> : <RiPushpinLine className="mr-1 h-4 w-4" />}
-        {isPinnedSession ? 'Unpin session' : 'Pin session'}
+        {isPinnedSession ? t('Unpin session') : t('Pin session')}
       </DropdownMenuItem>
       {!resolvedSession.share ? (
         <DropdownMenuItem onClick={() => handleShareSession(resolvedSession)} className="[&>svg]:mr-1">
           <RiShare2Line className="mr-1 h-4 w-4" />
-          Share
+          {t('Share')}
         </DropdownMenuItem>
       ) : (
         <>
           <DropdownMenuItem onClick={() => { if (resolvedSession.share?.url) handleCopyShareUrl(resolvedSession.share.url, session.id); }} className="[&>svg]:mr-1">
-            {copiedSessionId === session.id ? <><RiCheckLine className="mr-1 h-4 w-4" style={{ color: 'var(--status-success)' }} />Copied</> : <><RiFileCopyLine className="mr-1 h-4 w-4" />Copy link</>}
+            {copiedSessionId === session.id ? <><RiCheckLine className="mr-1 h-4 w-4" style={{ color: 'var(--status-success)' }} />{t('Copied')}</> : <><RiFileCopyLine className="mr-1 h-4 w-4" />{t('Copy link')}</>}
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => handleUnshareSession(session.id)} className="[&>svg]:mr-1">
             <RiLinkUnlinkM className="mr-1 h-4 w-4" />
-            Unshare
+            {t('Unshare')}
           </DropdownMenuItem>
         </>
       )}
@@ -416,10 +418,10 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
           <>
             <DropdownMenuSeparator />
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger className="[&>svg]:mr-1"><RiFolderLine className="h-4 w-4" />Move to folder</DropdownMenuSubTrigger>
+              <DropdownMenuSubTrigger className="[&>svg]:mr-1"><RiFolderLine className="h-4 w-4" />{t('Move to folder')}</DropdownMenuSubTrigger>
               <DropdownMenuSubContent className="min-w-[180px]">
                 {scopeFolders.length === 0 ? (
-                  <DropdownMenuItem disabled className="text-muted-foreground">No folders yet</DropdownMenuItem>
+                  <DropdownMenuItem disabled className="text-muted-foreground">{t('No folders yet')}</DropdownMenuItem>
                 ) : (
                   scopeFolders.map((folder) => (
                     <DropdownMenuItem key={folder.id} onClick={() => { if (currentFolderId === folder.id) removeSessionFromFolder(sessionDirectory, session.id); else addSessionToFolder(sessionDirectory, folder.id, session.id); }}>
@@ -431,12 +433,12 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => { const newFolder = createFolderAndStartRename(sessionDirectory); if (!newFolder) return; addSessionToFolder(sessionDirectory, newFolder.id, session.id); }}>
                   <RiAddLine className="mr-1 h-4 w-4" />
-                  New folder...
+                  {t('New folder...')}
                 </DropdownMenuItem>
                 {currentFolderId ? (
                   <DropdownMenuItem onClick={() => { removeSessionFromFolder(sessionDirectory, session.id); }} className="text-destructive focus:text-destructive">
                     <RiCloseLine className="mr-1 h-4 w-4" />
-                    Remove from folder
+                    {t('Remove from folder')}
                   </DropdownMenuItem>
                 ) : null}
               </DropdownMenuSubContent>
@@ -459,7 +461,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
           className="[&>svg]:mr-1"
         >
           <RiChat4Line className="mr-1 h-4 w-4" />
-          <span className="truncate">Open in Side Panel</span>
+          <span className="truncate">{t('Open in Side Panel')}</span>
           <span className="shrink-0 typography-micro px-1 rounded leading-none pb-px text-[var(--status-warning)] bg-[var(--status-warning)]/10">beta</span>
         </DropdownMenuItem>
       ) : null}
@@ -467,7 +469,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
       <DropdownMenuSeparator />
       <DropdownMenuItem className="text-destructive focus:text-destructive [&>svg]:mr-1" onClick={() => handleDeleteSession(session, { archivedBucket })}>
         <RiDeleteBinLine className="mr-1 h-4 w-4" />
-        {archivedBucket ? 'Delete' : 'Archive'}
+        {archivedBucket ? t('Delete') : t('Archive')}
       </DropdownMenuItem>
     </DropdownMenuContent>
   );
@@ -501,7 +503,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
                     )}
                   >
                     <div className={cn('flex w-full items-center min-w-0 flex-1 overflow-hidden', isMinimalMode ? 'gap-1' : 'gap-1')}>
-                      {isPinnedSession ? <RiPushpinLine className="h-3 w-3 flex-shrink-0 text-primary" aria-label="Pinned session" /> : null}
+                      {isPinnedSession ? <RiPushpinLine className="h-3 w-3 flex-shrink-0 text-primary" aria-label={t('Pinned session')} /> : null}
                       <div className={cn('block min-w-0 flex-1 truncate typography-ui-label font-normal', isActive ? 'text-primary' : 'text-foreground')}>{renderHighlightedText(sessionTitle, normalizedSessionSearchQuery)}</div>
                       {mobileVariant ? <span className="ml-2 flex-shrink-0 text-[0.72rem] text-muted-foreground/75">{sessionCompactUpdatedLabel}</span> : null}
                       {!mobileVariant ? (
@@ -524,7 +526,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
                                     ? 'opacity-100 pointer-events-auto'
                                     : cn('opacity-0 pointer-events-none', revealOnHoverClass),
                                 )}
-                                aria-label="Session menu"
+                                aria-label={t('Session menu')}
                                 onClick={handleMenuTriggerClick}
                                 onKeyDown={(event) => event.stopPropagation()}
                               >
@@ -536,7 +538,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
                         </div>
                       ) : null}
                       {pendingPermissionCount > 0 ? (
-                        <span className="inline-flex items-center gap-1 rounded bg-destructive/10 px-1 py-0.5 text-[0.7rem] text-destructive flex-shrink-0" title="Permission required" aria-label="Permission required">
+                        <span className="inline-flex items-center gap-1 rounded bg-destructive/10 px-1 py-0.5 text-[0.7rem] text-destructive flex-shrink-0" title={t('Permission required')} aria-label={t('Permission required')}>
                           <RiShieldLine className="h-3 w-3" />
                           <span className="leading-none">{pendingPermissionCount}</span>
                         </span>
@@ -582,10 +584,10 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
               >
                 <div className={cn('flex w-full items-center min-w-0 flex-1 overflow-hidden', isMinimalMode ? 'gap-1' : 'gap-1')}>
                     {inlineStatusMarker}
-                    {isPinnedSession ? <RiPushpinLine className="h-3 w-3 flex-shrink-0 text-primary" aria-label="Pinned session" /> : null}
+                    {isPinnedSession ? <RiPushpinLine className="h-3 w-3 flex-shrink-0 text-primary" aria-label={t('Pinned session')} /> : null}
                     <div className={cn('block min-w-0 flex-1 truncate typography-ui-label font-normal', isActive ? 'text-primary' : 'text-foreground')}>{renderHighlightedText(sessionTitle, normalizedSessionSearchQuery)}</div>
                     {pendingPermissionCount > 0 ? (
-                      <span className="inline-flex items-center gap-1 rounded bg-destructive/10 px-1 py-0.5 text-[0.7rem] text-destructive flex-shrink-0" title="Permission required" aria-label="Permission required">
+                      <span className="inline-flex items-center gap-1 rounded bg-destructive/10 px-1 py-0.5 text-[0.7rem] text-destructive flex-shrink-0" title={t('Permission required')} aria-label={t('Permission required')}>
                         <RiShieldLine className="h-3 w-3" />
                         <span className="leading-none">{pendingPermissionCount}</span>
                       </span>
@@ -636,7 +638,7 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
                             : cn('h-4 w-4 opacity-0 pointer-events-none', revealOnHoverClass))
                         : 'h-6 w-6 opacity-100',
                     )}
-                    aria-label="Session menu"
+                    aria-label={t('Session menu')}
                     onClick={handleMenuTriggerClick}
                     onKeyDown={(event) => event.stopPropagation()}
                     >
