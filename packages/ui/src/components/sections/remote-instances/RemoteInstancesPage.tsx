@@ -799,22 +799,22 @@ export const RemoteInstancesPage: React.FC = () => {
                 void removeInstance(draft.id)
                   .then(() => {
                     setSelectedId(null);
-                    toast.success('SSH instance removed');
+                    toast.success(t('SSH instance removed'));
                   })
                   .catch((err) => {
-                    toast.error('Failed to remove SSH instance', {
+                    toast.error(t('Failed to remove SSH instance'), {
                       description: err instanceof Error ? err.message : String(err),
                     });
                   });
               }}
             >
               <RiDeleteBinLine className="h-3.5 w-3.5" />
-              Remove
+              {t('Remove')}
             </Button>
           </div>
           {status?.localUrl ? (
             <div className="flex flex-wrap items-center gap-2 typography-meta text-muted-foreground">
-              <span>Current local URL:</span>
+              <span>{t('Current local URL:')}</span>
               <span className="font-mono text-foreground/90">{status.localUrl}</span>
             </div>
           ) : null}
@@ -823,12 +823,12 @@ export const RemoteInstancesPage: React.FC = () => {
 
       <div className="mb-8">
         <div className="mb-1 px-1 space-y-0.5">
-          <h3 className="typography-ui-header font-medium text-foreground">Instance</h3>
-          <p className="typography-meta text-muted-foreground">Core SSH settings.</p>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Instance')}</h3>
+          <p className="typography-meta text-muted-foreground">{t('Core SSH settings.')}</p>
         </div>
         <section className="px-2 pb-2 pt-0 space-y-3">
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
-            <span className="typography-ui-label text-foreground w-56 shrink-0">SSH command</span>
+            <span className="typography-ui-label text-foreground w-56 shrink-0">{t('SSH command')}</span>
             <Input
               className="h-7 md:max-w-xl"
               value={draft.sshCommand}
@@ -838,11 +838,11 @@ export const RemoteInstancesPage: React.FC = () => {
                   sshCommand: event.target.value,
                 }))
               }
-              placeholder="ssh -J jump user@host"
+              placeholder={t('ssh -J jump user@host')}
             />
           </div>
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
-            <span className="typography-ui-label text-foreground w-56 shrink-0">Nickname</span>
+            <span className="typography-ui-label text-foreground w-56 shrink-0">{t('Nickname')}</span>
             <Input
               className="h-7 md:max-w-sm"
               value={draft.nickname || ''}
@@ -852,11 +852,11 @@ export const RemoteInstancesPage: React.FC = () => {
                   nickname: event.target.value,
                 }))
               }
-              placeholder="Production Host"
+              placeholder={t('Production Host')}
             />
           </div>
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
-            <span className="typography-ui-label text-foreground w-56 shrink-0">Connection timeout (sec)</span>
+            <span className="typography-ui-label text-foreground w-56 shrink-0">{t('Connection timeout (sec)')}</span>
             <NumberInput
               containerClassName="w-fit"
               min={5}
@@ -877,8 +877,8 @@ export const RemoteInstancesPage: React.FC = () => {
 
       <div className="mb-8 border-t border-[var(--surface-subtle)] pt-8">
         <div className="mb-1 px-1 space-y-0.5">
-          <h3 className="typography-ui-header font-medium text-foreground">Remote server</h3>
-          <p className="typography-meta text-muted-foreground">How OpenChamber is discovered or started on the remote machine.</p>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Remote server')}</h3>
+          <p className="typography-meta text-muted-foreground">{t('How OpenChamber is discovered or started on the remote machine.')}</p>
         </div>
         <section className="px-2 pb-2 pt-0 space-y-3">
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">

@@ -21,6 +21,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
   open,
   onOpenChange,
 }) => {
+  const { t } = useTranslation();
   const [version, setVersion] = React.useState<string | null>(null);
   const [isCopyingDiagnostics, setIsCopyingDiagnostics] = React.useState(false);
   const [copiedDiagnostics, setCopiedDiagnostics] = React.useState(false);
@@ -33,8 +34,8 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
     setCopiedDiagnostics(false);
     try {
       if (!diagnosticsReport) {
-        toast.error('Copy failed', {
-          description: 'Diagnostics not ready yet. Wait a second and retry.',
+        toast.error(t('Copy failed'), {
+          description: t('Diagnostics not ready yet. Wait a second and retry.'),
         });
         return;
       }
@@ -42,14 +43,14 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
       const result = await debugUtils.copyTextToClipboard(diagnosticsReport);
       if (result.ok) {
         setCopiedDiagnostics(true);
-        toast.success('Diagnostics copied');
+        toast.success(t('Diagnostics copied'));
       } else {
-        toast.error('Copy failed', {
+        toast.error(t('Copy failed'), {
           description: result.error,
         });
       }
     } catch (error) {
-      toast.error('Copy failed');
+      toast.error(t('Copy failed'));
       console.error('Failed to copy diagnostics:', error);
     } finally {
       setIsCopyingDiagnostics(false);
@@ -118,13 +119,13 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
             <h2 className="text-lg font-semibold">OpenChamber</h2>
             {displayVersion && (
               <p className="typography-meta text-muted-foreground">
-                Version {displayVersion}
+                {t('Version {{version}}', { version: displayVersion })}
               </p>
             )}
           </div>
 
           <p className="typography-meta text-muted-foreground">
-            A fan-made interface for{' '}
+            {t('A fan-made interface for')}{' '}
             <a
               href="https://opencode.ai/"
               target="_blank"
@@ -133,7 +134,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
             >
               OpenCode
             </a>{' '}
-            agent
+            {t('agent')}
           </p>
 
           <div className="flex flex-col items-center gap-2 pt-2">

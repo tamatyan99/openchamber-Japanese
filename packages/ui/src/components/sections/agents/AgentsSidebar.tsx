@@ -100,6 +100,7 @@ const rulesetToPermissionConfig = (ruleset: unknown): AgentDraft['permission'] =
 };
 
 export const AgentsSidebar: React.FC<AgentsSidebarProps> = ({ onItemSelect }) => {
+  const { t } = useTranslation();
   const [renameDialogAgent, setRenameDialogAgent] = React.useState<Agent | null>(null);
   const [renameNewName, setRenameNewName] = React.useState('');
   const [confirmActionAgent, setConfirmActionAgent] = React.useState<Agent | null>(null);

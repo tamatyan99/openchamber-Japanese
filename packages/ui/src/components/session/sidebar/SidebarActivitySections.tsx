@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiArrowDownSLine, RiArrowRightSLine } from '@remixicon/react';
 import { cn } from '@/lib/utils';
 import type { SessionNode } from './types';
@@ -27,6 +28,7 @@ type Props = {
 const MAX_VISIBLE_RECENT_SESSIONS = 7;
 
 export function SidebarActivitySections({ sections, renderSessionNode }: Props): React.ReactNode {
+  const { t } = useTranslation();
   const [collapsed, setCollapsed] = React.useState<Set<string>>(new Set());
   const [expandedSections, setExpandedSections] = React.useState<Set<string>>(new Set());
 
@@ -88,7 +90,7 @@ export function SidebarActivitySections({ sections, renderSessionNode }: Props):
                     onClick={() => toggleSectionLimit(section.key)}
                     className="mt-0.5 flex items-center justify-start rounded-md px-1.5 py-0.5 text-left text-xs text-muted-foreground/70 leading-tight hover:text-foreground hover:underline"
                   >
-                    Show {remainingCount} more {remainingCount === 1 ? 'session' : 'sessions'}
+                    {t('Show {{count}} more {{item}}', { count: remainingCount, item: remainingCount === 1 ? t('session') : t('sessions') })}
                   </button>
                 ) : null}
                 {isExpanded && section.items.length > MAX_VISIBLE_RECENT_SESSIONS ? (
@@ -97,7 +99,7 @@ export function SidebarActivitySections({ sections, renderSessionNode }: Props):
                     onClick={() => toggleSectionLimit(section.key)}
                     className="mt-0.5 flex items-center justify-start rounded-md px-1.5 py-0.5 text-left text-xs text-muted-foreground/70 leading-tight hover:text-foreground hover:underline"
                   >
-                    Show fewer sessions
+                    {t('Show fewer sessions')}
                   </button>
                 ) : null}
               </div>

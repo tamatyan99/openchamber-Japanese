@@ -531,7 +531,7 @@ export const VoiceSettings: React.FC = () => {
 
                             {/* Speech Volume */}
                             <div className="flex items-center gap-8 py-1.5">
-                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">Speech Volume</span>
+                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">{t('Speech Volume')}</span>
                                 <div className="flex items-center gap-2 w-fit">
                                     {!isMobile && <input type="range" min={0} max={1} step={0.1} value={speechVolume} onChange={(e) => setSpeechVolume(Number(e.target.value))} disabled={!isSupported} className={sliderClass} />}
                                     {isMobile ? (
@@ -546,11 +546,11 @@ export const VoiceSettings: React.FC = () => {
 
                             {/* Language */}
                             <div className="flex items-center gap-8 py-1.5">
-                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">Language</span>
+                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">{t('Language')}</span>
                                 <div className="flex items-center gap-2 w-fit">
                                     <Select value={language} onValueChange={setLanguage} disabled={!isSupported}>
                                         <SelectTrigger className="w-fit">
-                                            <SelectValue placeholder="Select language" />
+                                            <SelectValue placeholder={t('Select language')} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {LANGUAGE_OPTIONS.map((lang) => (
@@ -569,7 +569,7 @@ export const VoiceSettings: React.FC = () => {
             <div className="mb-8">
                 <div className="mb-1 px-1">
                     <h3 className="typography-ui-header font-medium text-foreground">
-                        Playback & Summarization
+                        {t('Playback & Summarization')}
                     </h3>
                 </div>
 
@@ -583,7 +583,7 @@ export const VoiceSettings: React.FC = () => {
                         onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setShowMessageTTSButtons(!showMessageTTSButtons); } }}
                     >
                         <Checkbox checked={showMessageTTSButtons} onChange={setShowMessageTTSButtons} ariaLabel="Message read aloud button" />
-                        <span className="typography-ui-label text-foreground">Message Read Aloud Button</span>
+                        <span className="typography-ui-label text-foreground">{t('Message Read Aloud Button')}</span>
                     </div>
 
                     <div
@@ -595,7 +595,7 @@ export const VoiceSettings: React.FC = () => {
                         onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setSummarizeMessageTTS(!summarizeMessageTTS); } }}
                     >
                         <Checkbox checked={summarizeMessageTTS} onChange={setSummarizeMessageTTS} ariaLabel="Summarize before playback" />
-                        <span className="typography-ui-label text-foreground">Summarize Before Playback</span>
+                        <span className="typography-ui-label text-foreground">{t('Summarize Before Playback')}</span>
                     </div>
 
                     {voiceModeEnabled && (
@@ -608,14 +608,14 @@ export const VoiceSettings: React.FC = () => {
                             onKeyDown={(e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); setSummarizeVoiceConversation(!summarizeVoiceConversation); } }}
                         >
                             <Checkbox checked={summarizeVoiceConversation} onChange={setSummarizeVoiceConversation} ariaLabel="Summarize voice mode responses" />
-                            <span className="typography-ui-label text-foreground">Summarize Voice Mode Responses</span>
+                            <span className="typography-ui-label text-foreground">{t('Summarize Voice Mode Responses')}</span>
                         </div>
                     )}
 
                     {(summarizeMessageTTS || summarizeVoiceConversation) && (
                         <>
                             <div className="flex items-center gap-8 py-1.5">
-                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">Summarization Threshold</span>
+                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">{t('Summarization Threshold')}</span>
                                 <div className="flex items-center gap-2 w-fit">
                                     {!isMobile && <input type="range" min={50} max={2000} step={50} value={summarizeCharacterThreshold} onChange={(e) => setSummarizeCharacterThreshold(Number(e.target.value))} className={sliderClass} />}
                                     <NumberInput value={summarizeCharacterThreshold} onValueChange={setSummarizeCharacterThreshold} min={50} max={2000} step={50} className="w-16 tabular-nums" />
@@ -623,7 +623,7 @@ export const VoiceSettings: React.FC = () => {
                             </div>
 
                             <div className="flex items-center gap-8 py-1.5">
-                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">Summary Max Length</span>
+                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">{t('Summary Max Length')}</span>
                                 <div className="flex items-center gap-2 w-fit">
                                     {!isMobile && <input type="range" min={50} max={2000} step={50} value={summarizeMaxLength} onChange={(e) => setSummarizeMaxLength(Number(e.target.value))} className={sliderClass} />}
                                     <NumberInput value={summarizeMaxLength} onValueChange={setSummarizeMaxLength} min={50} max={2000} step={50} className="w-16 tabular-nums" />
@@ -636,7 +636,7 @@ export const VoiceSettings: React.FC = () => {
                 {voiceModeEnabled && isSupported && (
                     <div className="mt-2 px-2">
                         <p className="typography-meta text-muted-foreground">
-                            Press <kbd className="px-1 py-0.5 mx-0.5 rounded border border-[var(--interactive-border)] bg-background typography-mono text-[10px]">Shift</kbd> + <kbd className="px-1 py-0.5 mx-0.5 rounded border border-[var(--interactive-border)] bg-background typography-mono text-[10px]">Click</kbd> on the mic button to toggle continuous mode
+                            {t('Press')} <kbd className="px-1 py-0.5 mx-0.5 rounded border border-[var(--interactive-border)] bg-background typography-mono text-[10px]">Shift</kbd> + <kbd className="px-1 py-0.5 mx-0.5 rounded border border-[var(--interactive-border)] bg-background typography-mono text-[10px]">Click</kbd> {t('on the mic button to toggle continuous mode')}
                         </p>
                     </div>
                 )}
