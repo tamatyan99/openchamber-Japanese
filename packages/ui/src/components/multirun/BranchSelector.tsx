@@ -195,7 +195,7 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
       </Select>
 
       {isGitRepository === false && (
-        <p className="typography-micro text-muted-foreground/70 mt-2">Not in a git repository.</p>
+        <p className="typography-micro text-muted-foreground/70 mt-2">{t('Not in a git repository.')}</p>
       )}
     </div>
   );

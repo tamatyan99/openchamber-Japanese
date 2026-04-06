@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui';
 
@@ -50,6 +51,7 @@ type DeleteDialogState = {
 };
 
 export const SessionDialogs: React.FC = () => {
+    const { t } = useTranslation();
     const [isDirectoryDialogOpen, setIsDirectoryDialogOpen] = React.useState(false);
     const [hasShownInitialDirectoryPrompt, setHasShownInitialDirectoryPrompt] = React.useState(false);
     const [deleteDialog, setDeleteDialog] = React.useState<DeleteDialogState | null>(null);
@@ -125,7 +127,7 @@ export const SessionDialogs: React.FC = () => {
                 .then(async (result) => {
                     if (!result.success || !result.path) {
                         if (result.error && result.error !== 'Directory selection cancelled') {
-                            toast.error('Failed to select directory', {
+                            toast.error(t('Failed to select directory'), {
                                 description: result.error,
                             });
                         }
@@ -134,22 +136,22 @@ export const SessionDialogs: React.FC = () => {
 
                     const accessResult = await startAccessing(result.path);
                     if (!accessResult.success) {
-                        toast.error('Failed to open directory', {
-                            description: accessResult.error || 'Desktop could not grant file access.',
+                        toast.error(t('Failed to open directory'), {
+                            description: accessResult.error || t('Desktop could not grant file access.'),
                         });
                         return;
                     }
 
                     const added = addProject(result.path, { id: result.projectId });
                     if (!added) {
-                        toast.error('Failed to add project', {
-                            description: 'Please select a valid directory path.',
+                        toast.error(t('Failed to add project'), {
+                            description: t('Please select a valid directory path.'),
                         });
                     }
                 })
                 .catch((error) => {
                     console.error('Desktop: Error selecting directory:', error);
-                    toast.error('Failed to select directory');
+                    toast.error(t('Failed to select directory'));
                 });
             return;
         }
@@ -192,9 +194,9 @@ export const SessionDialogs: React.FC = () => {
             const target = payload.sessions[0];
             const success = await deleteSession(target.id);
             if (success) {
-                toast.success('Session deleted');
+                toast.success(t('Session deleted'));
             } else {
-                toast.error('Failed to delete session');
+                toast.error(t('Failed to delete session'));
             }
             return;
         }
@@ -395,8 +397,8 @@ export const SessionDialogs: React.FC = () => {
 
             return true;
         } catch (error) {
-            toast.error('Failed to remove worktree', {
-                description: renderToastDescription(error instanceof Error ? error.message : 'Please try again.'),
+            toast.error(t('Failed to remove worktree'), {
+                description: renderToastDescription(error instanceof Error ? error.message : t('Please try again.')),
             });
             return false;
         }

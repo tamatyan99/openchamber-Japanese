@@ -846,7 +846,7 @@ export const NotificationSettings: React.FC = () => {
                 ) : (
                   <div className={cn("py-1.5 mt-1 border-t border-[var(--surface-subtle)]", isMobile ? "flex flex-col gap-3" : "flex items-center gap-8")}>
                     <div className={cn("flex min-w-0 flex-col", isMobile ? "w-full" : "w-56 shrink-0")}>
-                      <span className="typography-ui-label text-foreground">Max Length</span>
+                      <span className="typography-ui-label text-foreground">{t('Max Length')}</span>
                       <span className="typography-meta text-muted-foreground">Truncate {'{last_message}'} to this length</span>
                     </div>
                     <div className={cn("flex items-center gap-2", isMobile ? "w-full" : "w-fit")}>
@@ -882,7 +882,7 @@ export const NotificationSettings: React.FC = () => {
           <div className="mb-8">
             <div className="mb-1 px-1">
               <h3 className="typography-ui-header font-medium text-foreground">
-                Background Push Notifications
+                {t('Background Push Notifications')}
               </h3>
             </div>
 
@@ -901,11 +901,11 @@ export const NotificationSettings: React.FC = () => {
                   ariaLabel="Enable push notifications"
                 />
                 <div className="flex min-w-0 flex-col">
-                  <span className={cn("typography-ui-label", !pushSupported ? "text-muted-foreground" : "text-foreground")}>Enable push notifications</span>
+                  <span className={cn("typography-ui-label", !pushSupported ? "text-muted-foreground" : "text-foreground")}>{t('Enable push notifications')}</span>
                   <span className="typography-meta text-muted-foreground">
                     {!pushSupported
-                      ? "Push not supported. Desktop Chrome/Edge and Android support push. iOS requires an installed PWA."
-                      : "Receive alerts via your operating system background service"}
+                      ? t("Push not supported. Desktop Chrome/Edge and Android support push. iOS requires an installed PWA.")
+                      : t("Receive alerts via your operating system background service")}
                   </span>
                 </div>
                 {pushBusy && (

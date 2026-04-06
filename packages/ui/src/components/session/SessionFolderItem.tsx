@@ -282,8 +282,8 @@ const SessionFolderItemBase = <TSessionNode,>({
                     onNewSubFolder();
                   }}
                   className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                  aria-label={`New sub-folder in ${folder.name}`}
-                  title="New sub-folder"
+                  aria-label={t('New sub-folder in {{name}}', { name: folder.name })}
+                  title={t('New sub-folder')}
                 >
                   <RiFolderAddLine className="h-3.5 w-3.5" />
                 </button>
@@ -296,7 +296,7 @@ const SessionFolderItemBase = <TSessionNode,>({
                     handleStartRename();
                   }}
                   className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                  aria-label={`Rename folder ${folder.name}`}
+                  aria-label={t('Rename folder {{name}}', { name: folder.name })}
                 >
                   <RiPencilAiLine className="h-3.5 w-3.5" />
                 </button>
@@ -308,7 +308,7 @@ const SessionFolderItemBase = <TSessionNode,>({
                   onDelete();
                 }}
                 className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-destructive hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                aria-label={archivedBucket ? `Delete archived sessions in folder ${folder.name}` : `Delete folder ${folder.name}`}
+                aria-label={archivedBucket ? t('Delete archived sessions in folder {{name}}', { name: folder.name }) : t('Delete folder {{name}}', { name: folder.name })}
               >
                 <RiDeleteBinLine className="h-3.5 w-3.5" />
               </button>
@@ -329,7 +329,7 @@ const SessionFolderItemBase = <TSessionNode,>({
             )
           ) : !subFolderItems ? (
             <div className="py-1 pl-1.5 text-left typography-micro text-muted-foreground/70">
-              Empty folder
+              {t('Empty folder')}
             </div>
           ) : null}
         </div>

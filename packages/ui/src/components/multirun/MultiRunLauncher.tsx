@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiAddLine, RiArrowDownSLine, RiAttachment2, RiCloseLine, RiFileImageLine, RiFileLine, RiFolderLine, RiInformationLine, RiTerminalLine } from '@remixicon/react';
 import { toast } from '@/components/ui';
 import { Button } from '@/components/ui/button';
@@ -90,6 +91,7 @@ export const MultiRunLauncher: React.FC<MultiRunLauncherProps> = ({
   onCancel,
   isWindowed = false,
 }) => {
+  const { t } = useTranslation();
   const [name, setName] = React.useState('');
   const [prompt, setPrompt] = React.useState(() => initialPrompt ?? '');
   const [selectedModels, setSelectedModels] = React.useState<ModelSelectionWithId[]>([]);

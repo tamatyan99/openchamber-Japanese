@@ -28,10 +28,11 @@ export const StashDialog: React.FC<StashDialogProps> = ({
   targetBranch,
   onConfirm,
 }) => {
+  const { t } = useTranslation();
   const [restoreAfter, setRestoreAfter] = React.useState(true);
   const [isProcessing, setIsProcessing] = React.useState(false);
 
-  const operationLabel = operation === 'merge' ? 'Merge' : 'Rebase';
+  const operationLabel = operation === 'merge' ? t('Merge') : t('Rebase');
 
   const handleConfirm = async () => {
     setIsProcessing(true);

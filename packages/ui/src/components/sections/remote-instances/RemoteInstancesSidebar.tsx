@@ -29,26 +29,27 @@ const isPortInUseError = (error: unknown): boolean => {
   return message.includes('address already in use') || message.includes('eaddrinuse') || message.includes('port already in use');
 };
 
-const phaseLabel = (phase?: string): string => {
+const phaseLabel = (phase?: string, t?: (key: string) => string): string => {
+  const tr = t ?? ((k: string) => k);
   switch (phase) {
     case 'ready':
-      return 'Ready';
+      return tr('Ready');
     case 'error':
-      return 'Error';
+      return tr('Error');
     case 'degraded':
-      return 'Reconnect';
+      return tr('Reconnect');
     case 'installing':
-      return 'Installing';
+      return tr('Installing');
     case 'updating':
-      return 'Updating';
+      return tr('Updating');
     case 'forwarding':
-      return 'Forwarding';
+      return tr('Forwarding');
     case 'server_starting':
-      return 'Starting';
+      return tr('Starting');
     case 'master_connecting':
-      return 'Connecting';
+      return tr('Connecting');
     default:
-      return 'Idle';
+      return tr('Idle');
   }
 };
 
@@ -91,11 +92,11 @@ export const RemoteInstancesSidebar: React.FC<RemoteInstancesSidebarProps> = ({ 
   const handleAdd = React.useCallback(async () => {
     const id = makeId();
     try {
-      await createFromCommand(id, 'ssh user@example.com', 'New SSH Instance');
+      await createFromCommand(id, 'ssh user@example.com', t('New SSH Instance'));
       setSelectedId(id);
       onItemSelect?.();
     } catch (error) {
-      toast.error('Failed to create SSH instance', {
+      toast.error(t('Failed to create SSH instance'), {
         description: error instanceof Error ? error.message : String(error),
       });
     }
@@ -125,7 +126,7 @@ export const RemoteInstancesSidebar: React.FC<RemoteInstancesSidebarProps> = ({ 
 
       await upsertInstance(nextInstance);
       await connect(nextInstance.id);
-      toast.success('Retried with a random local port');
+      toast.success(t('Retried with a random local port'));
     }
   }, [connect, upsertInstance]);
 
@@ -134,16 +135,16 @@ export const RemoteInstancesSidebar: React.FC<RemoteInstancesSidebarProps> = ({ 
       variant="background"
       header={
         <div className="border-b px-3 pt-4 pb-3">
-          <h2 className="text-base font-semibold text-foreground mb-3">Remote Instances</h2>
+          <h2 className="text-base font-semibold text-foreground mb-3">{t('Remote Instances')}</h2>
           <div className="flex items-center justify-between gap-2">
-            <span className="typography-meta text-muted-foreground">Total {instances.length}</span>
+            <span className="typography-meta text-muted-foreground">{t('Total')} {instances.length}</span>
             <Button
               type="button"
               variant="ghost"
               size="icon"
               className="h-7 w-7 -my-1 text-muted-foreground"
               onClick={() => void handleAdd()}
-              aria-label="Add SSH instance"
+              aria-label={t('Add SSH instance')}
             >
               <RiAddLine className="size-4" />
             </Button>
@@ -155,7 +156,7 @@ export const RemoteInstancesSidebar: React.FC<RemoteInstancesSidebarProps> = ({ 
         const status = statusesById[instance.id];
         const selected = instance.id === selectedId;
         const title = instance.nickname?.trim() || instance.sshParsed?.destination || instance.id;
-        const metadata = `${phaseLabel(status?.phase)}${status?.localUrl ? ` · ${status.localUrl}` : ''}`;
+        const metadata = `${phaseLabel(status?.phase, t)}${status?.localUrl ? ` · ${status.localUrl}` : ''}`;
         const isReady = status?.phase === 'ready';
         const canRetry = status?.phase === 'error' || status?.phase === 'degraded';
 
@@ -171,31 +172,31 @@ export const RemoteInstancesSidebar: React.FC<RemoteInstancesSidebarProps> = ({ 
             }}
             actions={[
               {
-                label: isReady ? 'Disconnect' : 'Connect',
+                label: isReady ? t('Disconnect') : t('Connect'),
                 icon: isReady ? RiStopLine : RiPlug2Line,
                 onClick: () => {
                   const op = isReady ? disconnect(instance.id) : connectWithPortRecovery(instance);
                   void op.catch((error) => {
-                    toast.error(`Failed to ${isReady ? 'disconnect' : 'connect'} instance`, {
+                    toast.error(isReady ? t('Failed to disconnect instance') : t('Failed to connect instance'), {
                       description: error instanceof Error ? error.message : String(error),
                     });
                   });
                 },
               },
               {
-                label: 'Retry',
+                label: t('Retry'),
                 icon: RiRefreshLine,
                 onClick: () => {
                   if (!canRetry) return;
                   void retry(instance.id).catch((error) => {
-                    toast.error('Failed to retry connection', {
+                    toast.error(t('Failed to retry connection'), {
                       description: error instanceof Error ? error.message : String(error),
                     });
                   });
                 },
               },
               {
-                label: 'Remove',
+                label: t('Remove'),
                 icon: RiDeleteBinLine,
                 destructive: true,
                 onClick: () => {
@@ -205,7 +206,7 @@ export const RemoteInstancesSidebar: React.FC<RemoteInstancesSidebarProps> = ({ 
                       setSelectedId(next?.id || null);
                     }
                   }).catch((error) => {
-                    toast.error('Failed to remove instance', {
+                    toast.error(t('Failed to remove instance'), {
                       description: error instanceof Error ? error.message : String(error),
                     });
                   });

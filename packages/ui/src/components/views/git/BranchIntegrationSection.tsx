@@ -420,11 +420,11 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
             ) : (
               <RiGitMergeLine className="size-4" />
             )}
-            <span>Merge/Rebase</span>
+            <span>{t('Merge/Rebase')}</span>
           </Button>
         </TooltipTrigger>
         <TooltipContent sideOffset={8}>
-          Merge or rebase changes from another branch.
+          {t('Merge or rebase changes from another branch.')}
         </TooltipContent>
       </Tooltip>
 
@@ -437,20 +437,16 @@ export const BranchIntegrationSection: React.FC<BranchIntegrationSectionProps> =
       }}>
           <DialogContent className="max-w-md">
             <DialogHeader>
-              <DialogTitle>Update Branch</DialogTitle>
+              <DialogTitle>{t('Update Branch')}</DialogTitle>
               <DialogDescription>
               {isOperating ? (
                 operationCompleted ? (
-                  hasError ? 'Operation failed' : 'Operation completed'
+                  hasError ? t('Operation failed') : t('Operation completed')
                 ) : (
-                  `${operation === 'merge' ? 'Merging' : 'Rebasing'} in progress...`
+                  t('{{operationType}} in progress...', { operationType: operation === 'merge' ? t('Merging') : t('Rebasing') })
                 )
               ) : (
-                <>
-                  Choose how to bring changes from another branch into{' '}
-                  <span className="font-mono text-foreground">{targetBranchLabel}</span>
-                  .
-                </>
+                t('Choose how to bring changes from another branch into {{branch}}.', { branch: targetBranchLabel })
               )}
             </DialogDescription>
           </DialogHeader>
