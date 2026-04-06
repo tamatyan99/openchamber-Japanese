@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiCloseLine, RiFullscreenExitLine, RiFullscreenLine } from '@remixicon/react';
 import { cn } from '@/lib/utils';
 import { useUIStore } from '@/stores/useUIStore';
@@ -14,6 +15,7 @@ interface BottomTerminalDockProps {
 }
 
 export const BottomTerminalDock: React.FC<BottomTerminalDockProps> = ({ isOpen, isMobile, children }) => {
+  const { t } = useTranslation();
   const bottomTerminalHeight = useUIStore((state) => state.bottomTerminalHeight);
   const isFullscreen = useUIStore((state) => state.isBottomTerminalExpanded);
   const setBottomTerminalHeight = useUIStore((state) => state.setBottomTerminalHeight);

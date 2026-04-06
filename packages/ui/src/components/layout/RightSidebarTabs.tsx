@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiFolder3Line, RiGitBranchLine } from '@remixicon/react';
 
 import { SortableTabsStrip } from '@/components/ui/sortable-tabs-strip';
@@ -9,21 +10,22 @@ import { SidebarFilesTree } from './SidebarFilesTree';
 type RightTab = 'git' | 'files';
 
 export const RightSidebarTabs: React.FC = () => {
+  const { t } = useTranslation();
   const rightSidebarTab = useUIStore((state) => state.rightSidebarTab);
   const setRightSidebarTab = useUIStore((state) => state.setRightSidebarTab);
 
   const tabItems = React.useMemo(() => [
     {
       id: 'git',
-      label: 'Git',
+      label: t('Git'),
       icon: <RiGitBranchLine className="h-3.5 w-3.5" />,
     },
     {
       id: 'files',
-      label: 'Files',
+      label: t('Files'),
       icon: <RiFolder3Line className="h-3.5 w-3.5" />,
     },
-  ], []);
+  ], [t]);
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden bg-transparent">
