@@ -366,9 +366,9 @@ export const VoiceSettings: React.FC = () => {
                                             </TooltipTrigger>
                                             <TooltipContent sideOffset={8} className="max-w-xs">
                                                 <ul className="space-y-1">
-                                                    <li><strong>Browser:</strong> Free, offline, limited mobile support.</li>
-                                                    <li><strong>OpenAI:</strong> High quality, mobile ready, needs API key.</li>
-                                                    <li><strong>Say:</strong> macOS native. Fast, free, offline.</li>
+                                                    <li><strong>Browser:</strong> {t('Free, offline, limited mobile support.')}</li>
+                                                    <li><strong>OpenAI:</strong> {t('High quality, mobile ready, needs API key.')}</li>
+                                                    <li><strong>Say:</strong> {t('macOS native. Fast, free, offline.')}</li>
                                                 </ul>
                                             </TooltipContent>
                                         </Tooltip>
@@ -424,10 +424,10 @@ export const VoiceSettings: React.FC = () => {
                             {voiceProvider === 'openai' && (
                                 <div className="py-1.5">
                                     <span className={cn("typography-ui-label text-foreground", !isOpenAIAvailable && "text-[var(--status-error)]")}>
-                                        API Key
+                                        {t('API Key')}
                                     </span>
                                     <span className={cn("typography-meta ml-2", !isOpenAIAvailable ? "text-[var(--status-error)]/80" : "text-muted-foreground")}>
-                                        {isOpenAIAvailable && !openaiApiKey ? 'Using key from configuration' : !isOpenAIAvailable ? 'OpenAI TTS requires an API key' : 'Provide your OpenAI key'}
+                                        {isOpenAIAvailable && !openaiApiKey ? t('Using key from configuration') : !isOpenAIAvailable ? t('OpenAI TTS requires an API key') : t('Provide your OpenAI key')}
                                     </span>
                                     <div className="relative mt-1.5 max-w-xs">
                                         <input
@@ -452,13 +452,13 @@ export const VoiceSettings: React.FC = () => {
 
                             {/* Voice Selection */}
                             <div className="flex items-center gap-8 py-1.5">
-                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">Voice</span>
+                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">{t('Voice')}</span>
                                 <div className="flex items-center gap-2 w-fit">
                                     {voiceProvider === 'openai' && isOpenAIAvailable && (
                                         <>
                                             <Select value={openaiVoice} onValueChange={setOpenaiVoice}>
                                                 <SelectTrigger className="w-fit">
-                                                    <SelectValue placeholder="Select voice" />
+                                                    <SelectValue placeholder={t('Select voice')} />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     {OPENAI_VOICE_OPTIONS.map((v) => (
@@ -476,7 +476,7 @@ export const VoiceSettings: React.FC = () => {
                                         <>
                                             <Select value={sayVoice} onValueChange={setSayVoice}>
                                                 <SelectTrigger className="w-fit">
-                                                    <SelectValue placeholder="Select voice" />
+                                                    <SelectValue placeholder={t('Select voice')} />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     {sayVoices.map((v) => (
@@ -513,7 +513,7 @@ export const VoiceSettings: React.FC = () => {
 
                             {/* Speech Rate */}
                             <div className="flex items-center gap-8 py-1.5">
-                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">Speech Rate</span>
+                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">{t('Speech Rate')}</span>
                                 <div className="flex items-center gap-2 w-fit">
                                     {!isMobile && <input type="range" min={0.5} max={2} step={0.1} value={speechRate} onChange={(e) => setSpeechRate(Number(e.target.value))} disabled={!isSupported} className={sliderClass} />}
                                     <NumberInput value={speechRate} onValueChange={setSpeechRate} min={0.5} max={2} step={0.1} className="w-16 tabular-nums" />
@@ -522,7 +522,7 @@ export const VoiceSettings: React.FC = () => {
 
                             {/* Speech Pitch */}
                             <div className="flex items-center gap-8 py-1.5">
-                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">Speech Pitch</span>
+                                <span className="typography-ui-label text-foreground sm:w-56 shrink-0">{t('Speech Pitch')}</span>
                                 <div className="flex items-center gap-2 w-fit">
                                     {!isMobile && <input type="range" min={0.5} max={2} step={0.1} value={speechPitch} onChange={(e) => setSpeechPitch(Number(e.target.value))} disabled={!isSupported} className={sliderClass} />}
                                     <NumberInput value={speechPitch} onValueChange={setSpeechPitch} min={0.5} max={2} step={0.1} className="w-16 tabular-nums" />

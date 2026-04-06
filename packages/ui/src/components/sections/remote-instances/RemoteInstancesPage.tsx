@@ -645,23 +645,23 @@ export const RemoteInstancesPage: React.FC = () => {
       <SettingsPageLayout>
         <div className="mb-8">
           <div className="mb-1 px-1 space-y-0.5">
-            <h3 className="typography-ui-header font-medium text-foreground">Remote Instances</h3>
-            <p className="typography-meta text-muted-foreground">Manage SSH-backed OpenChamber instances.</p>
+            <h3 className="typography-ui-header font-medium text-foreground">{t('Remote Instances')}</h3>
+            <p className="typography-meta text-muted-foreground">{t('Manage SSH-backed OpenChamber instances.')}</p>
           </div>
           <section className="px-2 pb-2 pt-0 space-y-3">
-            <p className="typography-meta text-muted-foreground">Select an instance from the sidebar or import one from SSH config.</p>
+            <p className="typography-meta text-muted-foreground">{t('Select an instance from the sidebar or import one from SSH config.')}</p>
           </section>
         </div>
 
         <div className="mb-8 border-t border-[var(--surface-subtle)] pt-8">
           <div className="mb-1 px-1 space-y-0.5">
-            <h3 className="typography-ui-header font-medium text-foreground">Import from SSH config</h3>
+            <h3 className="typography-ui-header font-medium text-foreground">{t('Import from SSH config')}</h3>
           </div>
           <section className="px-2 pb-2 pt-0">
           {isImportsLoading ? (
-            <p className="typography-meta text-muted-foreground">Loading SSH hosts...</p>
+            <p className="typography-meta text-muted-foreground">{t('Loading SSH hosts...')}</p>
           ) : importCandidates.length === 0 ? (
-            <p className="typography-meta text-muted-foreground">No SSH config hosts found.</p>
+            <p className="typography-meta text-muted-foreground">{t('No SSH config hosts found.')}</p>
           ) : (
             <div className="space-y-2">
               {importCandidates.map((candidate) => (
@@ -680,7 +680,7 @@ export const RemoteInstancesPage: React.FC = () => {
                     className="!font-normal"
                     onClick={() => void handleImportCandidate(candidate.host, candidate.pattern)}
                   >
-                    Create
+                    {t('Create')}
                   </Button>
                 </div>
               ))}
@@ -699,9 +699,9 @@ export const RemoteInstancesPage: React.FC = () => {
         >
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Create from wildcard pattern</DialogTitle>
+              <DialogTitle>{t('Create from wildcard pattern')}</DialogTitle>
               <DialogDescription>
-                {patternHost ? `${patternHost} requires a concrete destination.` : 'Enter destination.'}
+                {patternHost ? t('{{host}} requires a concrete destination.', { host: patternHost }) : t('Enter destination.')}
               </DialogDescription>
             </DialogHeader>
             <form
@@ -714,15 +714,15 @@ export const RemoteInstancesPage: React.FC = () => {
               <Input
                 value={patternDestination}
                 onChange={(event) => setPatternDestination(event.target.value)}
-                placeholder="user@host"
+                placeholder={t('user@host')}
                 autoFocus
               />
               <div className="flex items-center justify-end gap-2">
                 <Button type="button" variant="outline" size="xs" className="!font-normal" onClick={closePatternDialog} disabled={patternCreating}>
-                  Cancel
+                  {t('Cancel')}
                 </Button>
                 <Button type="submit" size="xs" className="!font-normal" disabled={patternCreating}>
-                  Create
+                  {t('Create')}
                 </Button>
               </div>
             </form>
@@ -749,8 +749,8 @@ export const RemoteInstancesPage: React.FC = () => {
 
       <div className="mb-8">
         <div className="mb-1 px-1 space-y-0.5">
-          <h3 className="typography-ui-header font-medium text-foreground">Actions</h3>
-          <p className="typography-meta text-muted-foreground">Connect, inspect logs, and manage this instance.</p>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Actions')}</h3>
+          <p className="typography-meta text-muted-foreground">{t('Connect, inspect logs, and manage this instance.')}</p>
         </div>
         <section className="px-2 pb-2 pt-0 space-y-3">
           <div className="flex flex-wrap items-center gap-2">
@@ -786,7 +786,7 @@ export const RemoteInstancesPage: React.FC = () => {
               }}
             >
               <RiTerminalWindowLine className="h-3.5 w-3.5" />
-              Logs
+              {t('Logs')}
             </Button>
             <Button
               type="button"

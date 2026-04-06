@@ -418,28 +418,28 @@ Important:
 
             {ui.kind === 'ready' ? (
               <Button size="sm" onClick={() => void handleMove()} disabled={!isEligible || ui.plan.commits.length === 0}>
-                Move
+                {t('Move')}
               </Button>
             ) : ui.kind === 'loading' ? (
               <Button size="sm" variant="outline" disabled>
-                Checking…
+                {t('Checking…')}
               </Button>
             ) : ui.kind === 'running' ? (
               <Button size="sm" variant="outline" disabled>
-                Moving…
+                {t('Moving…')}
               </Button>
             ) : null}
           </div>
 
           {ui.kind === 'ready' && ui.plan.commits.length === 0 && (
-            <div className="typography-meta text-muted-foreground">No commits to move.</div>
+            <div className="typography-meta text-muted-foreground">{t('No commits to move.')}</div>
           )}
 
           {ui.kind === 'ready' && ui.plan.commits.length > 0 && (
             <div className="space-y-2">
               <div className="flex items-center justify-between gap-2">
                 <div className="typography-meta text-foreground">
-                  Commits to move
+                  {t('Commits to move')}
                   <span className="text-muted-foreground"> ({ui.plan.commits.length})</span>
                 </div>
                 {commitSummaries.length > 0 && ui.plan.commits.length > 5 && (
@@ -448,7 +448,7 @@ Important:
                     onClick={() => setShowAllCommits((v) => !v)}
                     className="typography-micro text-muted-foreground hover:text-foreground"
                   >
-                    {showAllCommits ? 'Show less' : 'Show all'}
+                    {showAllCommits ? t('Show less') : t('Show all')}
                   </button>
                 )}
               </div>
@@ -461,11 +461,11 @@ Important:
                   </div>
                 ))}
                 {commitSummaries.length === 0 && (
-                  <div className="typography-meta text-muted-foreground">Preview unavailable.</div>
+                  <div className="typography-meta text-muted-foreground">{t('Preview unavailable.')}</div>
                 )}
                 {ui.plan.commits.length > commitSummaries.length && (
                   <div className="typography-micro text-muted-foreground/70">
-                    Showing first {commitSummaries.length} commits.
+                    {t('Showing first {{count}} commits.', { count: commitSummaries.length })}
                   </div>
                 )}
               </div>
@@ -475,7 +475,7 @@ Important:
           {ui.kind === 'conflict' && (
             <div className="rounded-md border border-border/60 bg-background/60 p-3 space-y-2">
               <div className="typography-meta text-foreground">
-                Conflicts in {ui.details.unmergedFiles.length} files
+                {t('Conflicts in {{count}} files', { count: ui.details.unmergedFiles.length })}
               </div>
               <div className="typography-micro text-muted-foreground/80">
                 Current commit: <span className="font-mono">{ui.state.currentCommit.slice(0, 7)}</span>
@@ -492,7 +492,7 @@ Important:
               </div>
               <div className="flex items-center gap-2 pt-1">
                 <Button size="sm" variant="ghost" className="typography-meta" onClick={() => void handleAbort()}>
-                  Abort
+                  {t('Abort')}
                 </Button>
                 <Button
                   size="sm"
@@ -502,7 +502,7 @@ Important:
                   onClick={() => void handleResolveWithAi({ state: ui.state, details: ui.details }, false)}
                 >
                   <RiSparklingLine className="size-3.5" />
-                  Current Session
+                  {t('Current Session')}
                 </Button>
                 <Button
                   size="sm"
@@ -511,10 +511,10 @@ Important:
                   onClick={() => void handleResolveWithAi({ state: ui.state, details: ui.details }, true)}
                 >
                   <RiSparklingLine className="size-3.5" />
-                  New Session
+                  {t('New Session')}
                 </Button>
                 <Button size="sm" className="typography-meta" onClick={() => void handleContinue()}>
-                  Continue
+                  {t('Continue')}
                 </Button>
               </div>
             </div>
