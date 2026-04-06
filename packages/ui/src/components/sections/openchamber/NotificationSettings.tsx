@@ -568,7 +568,7 @@ export const NotificationSettings: React.FC = () => {
                   onChange={(checked) => setNotificationMode(checked ? 'always' : 'hidden-only')}
                   ariaLabel="Notify while app is focused"
                 />
-                <span className="typography-ui-label text-foreground">Notify While App is Focused</span>
+                <span className="typography-ui-label text-foreground">{t('Notify While App is Focused')}</span>
               </div>
             )}
           </section>
@@ -576,16 +576,16 @@ export const NotificationSettings: React.FC = () => {
           {isBrowser && (
             <div className="mt-1 px-2">
               <p className="typography-meta text-muted-foreground/70">
-                Your browser may ask for permission the first time.
+                {t('Your browser may ask for permission the first time.')}
               </p>
               {notificationPermission === 'denied' && (
                 <p className="typography-meta text-[var(--status-error)] mt-1">
-                  Notification permission denied. Enable it in your browser settings.
+                  {t('Notification permission denied. Enable it in your browser settings.')}
                 </p>
               )}
               {notificationPermission === 'granted' && !nativeNotificationsEnabled && (
                 <p className="typography-meta text-muted-foreground/70 mt-1">
-                  Permission granted, but notifications are disabled.
+                  {t('Permission granted, but notifications are disabled.')}
                 </p>
               )}
             </div>
@@ -593,7 +593,7 @@ export const NotificationSettings: React.FC = () => {
           {isVSCode && (
             <div className="mt-1 px-2">
               <p className="typography-meta text-muted-foreground/70">
-                When enabled, notifications are delivered through VS Code native notifications.
+                {t('When enabled, notifications are delivered through VS Code native notifications.')}
               </p>
             </div>
           )}
@@ -605,7 +605,7 @@ export const NotificationSettings: React.FC = () => {
             <div className="mb-8">
               <div className="mb-1 px-1">
                 <h3 className="typography-ui-header font-medium text-foreground">
-                  Notification Events
+                  {t('Notification Events')}
                 </h3>
               </div>
 
@@ -624,7 +624,7 @@ export const NotificationSettings: React.FC = () => {
                   }}
                 >
                   <Checkbox checked={notifyOnCompletion} onChange={setNotifyOnCompletion} ariaLabel="Agent completion" />
-                  <span className="typography-ui-label text-foreground">Agent Completion</span>
+                  <span className="typography-ui-label text-foreground">{t('Agent Completion')}</span>
                 </div>
 
                 <div
@@ -641,7 +641,7 @@ export const NotificationSettings: React.FC = () => {
                   }}
                 >
                   <Checkbox checked={notifyOnSubtasks} onChange={setNotifyOnSubtasks} ariaLabel="Subagent completion" />
-                  <span className="typography-ui-label text-foreground">Subagent Completion</span>
+                  <span className="typography-ui-label text-foreground">{t('Subagent Completion')}</span>
                 </div>
 
                 <div
@@ -658,7 +658,7 @@ export const NotificationSettings: React.FC = () => {
                   }}
                 >
                   <Checkbox checked={notifyOnError} onChange={setNotifyOnError} ariaLabel="Agent errors" />
-                  <span className="typography-ui-label text-foreground">Agent Errors</span>
+                  <span className="typography-ui-label text-foreground">{t('Agent Errors')}</span>
                 </div>
 
                 <div
@@ -675,7 +675,7 @@ export const NotificationSettings: React.FC = () => {
                   }}
                 >
                   <Checkbox checked={notifyOnQuestion} onChange={setNotifyOnQuestion} ariaLabel="Agent questions" />
-                  <span className="typography-ui-label text-foreground">Agent Questions</span>
+                  <span className="typography-ui-label text-foreground">{t('Agent Questions')}</span>
                 </div>
               </section>
             </div>
@@ -684,7 +684,7 @@ export const NotificationSettings: React.FC = () => {
             <div className="mb-8">
               <div className="mb-1 px-1">
                 <h3 className="typography-ui-header font-medium text-foreground">
-                  Notification Templates
+                  {t('Notification Templates')}
                 </h3>
                 <p className="typography-meta text-muted-foreground mt-0.5">
                   Variables: <code className="text-[var(--primary-base)]">{'{project_name}'}</code> <code className="text-[var(--primary-base)]">{'{worktree}'}</code> <code className="text-[var(--primary-base)]">{'{branch}'}</code> <code className="text-[var(--primary-base)]">{'{session_name}'}</code> <code className="text-[var(--primary-base)]">{'{agent_name}'}</code> <code className="text-[var(--primary-base)]">{'{model_name}'}</code> <code className="text-[var(--primary-base)]">{'{last_message}'}</code>
@@ -699,7 +699,7 @@ export const NotificationSettings: React.FC = () => {
                     </span>
                     <div className="mt-1.5 space-y-2">
                       <div>
-                        <label className="typography-micro text-muted-foreground block mb-1">Title</label>
+                        <label className="typography-micro text-muted-foreground block mb-1">{t('Title')}</label>
                         <Input
                           value={notificationTemplates[event].title}
                           onChange={(e) => updateTemplate(event, 'title', e.target.value)}
@@ -708,7 +708,7 @@ export const NotificationSettings: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label className="typography-micro text-muted-foreground block mb-1">Message</label>
+                        <label className="typography-micro text-muted-foreground block mb-1">{t('Message')}</label>
                         <Input
                           value={notificationTemplates[event].message}
                           onChange={(e) => updateTemplate(event, 'message', e.target.value)}
@@ -726,7 +726,7 @@ export const NotificationSettings: React.FC = () => {
             <div className="mb-8">
               <div className="mb-1 px-1">
                 <h3 className="typography-ui-header font-medium text-foreground">
-                  AI Summarization
+                  {t('AI Summarization')}
                 </h3>
               </div>
 
@@ -749,7 +749,7 @@ export const NotificationSettings: React.FC = () => {
                     onChange={setSummarizeLastMessage}
                     ariaLabel="Summarize last message"
                   />
-                  <span className="typography-ui-label text-foreground">Summarize Last Message</span>
+                  <span className="typography-ui-label text-foreground">{t('Summarize Last Message')}</span>
                 </div>
 
                 <div className={cn("flex flex-col gap-2 py-1 sm:flex-row sm:items-center sm:gap-8")}>

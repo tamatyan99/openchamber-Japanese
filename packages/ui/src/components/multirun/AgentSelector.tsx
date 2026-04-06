@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Select,
   SelectContent,
@@ -34,6 +35,7 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
   disabled,
   id,
 }) => {
+  const { t } = useTranslation();
   const getVisibleAgents = useConfigStore((state) => state.getVisibleAgents);
   const loadAgents = useConfigStore((state) => state.loadAgents);
   const defaultAgentName = useConfigStore((state) => state.currentAgentName);
@@ -95,7 +97,7 @@ export const AgentSelector: React.FC<AgentSelectorProps> = ({
           WebkitBackdropFilter: 'blur(10px)',
         }}
       >
-        <SelectValue placeholder="Select an agent" />
+        <SelectValue placeholder={t('Select an agent')} />
       </SelectTrigger>
       <SelectContent fitContent>
         {selectableAgents.length > 0 && (

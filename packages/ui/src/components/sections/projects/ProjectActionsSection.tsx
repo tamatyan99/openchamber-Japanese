@@ -174,7 +174,7 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
         primaryActionId: null,
       });
       if (!ok) {
-        toast.error('Failed to save actions');
+        toast.error(t('Failed to save actions'));
         return;
       }
       setInitialSnapshot(JSON.stringify({ actions }));
@@ -183,9 +183,9 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
           detail: { projectId: projectRef.id },
         }));
       }
-      toast.success('Project actions saved');
+      toast.success(t('Project actions saved'));
     } catch {
-      toast.error('Failed to save actions');
+      toast.error(t('Failed to save actions'));
     } finally {
       setIsSaving(false);
     }
@@ -197,21 +197,21 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
     <div className="mb-8">
       <div className="mb-1 flex items-start justify-between gap-2">
         <div>
-          <h3 className="typography-ui-header font-medium text-foreground">Actions</h3>
-          <p className="typography-meta text-muted-foreground">Per-project commands shown in header next to project name.</p>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Actions')}</h3>
+          <p className="typography-meta text-muted-foreground">{t('Per-project commands shown in header next to project name.')}</p>
         </div>
         <Button type="button" variant="outline" size="xs" className="!font-normal" onClick={handleAddAction}>
           <RiAddLine className="h-3.5 w-3.5" />
-          Add action
+          {t('Add action')}
         </Button>
       </div>
 
       <section className="pb-2 pt-0 space-y-2">
         {isLoading ? (
-          <p className="typography-meta text-muted-foreground">Loading...</p>
+          <p className="typography-meta text-muted-foreground">{t('Loading...')}</p>
         ) : actions.length === 0 ? (
           <div className="py-2">
-            <p className="typography-meta text-muted-foreground">No actions configured yet.</p>
+            <p className="typography-meta text-muted-foreground">{t('No actions configured yet.')}</p>
           </div>
         ) : (
           <div className="space-y-0 max-w-[30rem]">
@@ -219,7 +219,7 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
               const selectedIconKey = (action.icon as keyof typeof PROJECT_ACTION_ICON_MAP) || 'play';
               const SelectedIcon = PROJECT_ACTION_ICON_MAP[selectedIconKey] || RiPlayLine;
               const isOpen = expandedActions[action.id] ?? false;
-              const title = action.name.trim() || 'Untitled action';
+              const title = action.name.trim() || t('Untitled action');
 
               return (
                 <Collapsible
@@ -269,7 +269,7 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
                               <button
                                 type="button"
                                 className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-[var(--interactive-border)] text-foreground hover:bg-[var(--interactive-hover)]"
-                                aria-label="Select icon"
+                                aria-label={t('Select icon')}
                               >
                                 <SelectedIcon className="h-4 w-4" />
                               </button>
@@ -288,7 +288,7 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
                                       'inline-flex h-8 w-8 items-center justify-center rounded-md border border-transparent text-foreground hover:bg-[var(--interactive-hover)]',
                                       selected && 'border-[var(--primary-base)] bg-[var(--primary-base)]/10 text-[var(--primary-base)]'
                                     )}
-                                    aria-label={`Icon ${entry.label}`}
+                                    aria-label={t('Icon {{label}}', { label: entry.label })}
                                   >
                                     <Icon className="h-4 w-4" />
                                   </button>
@@ -301,24 +301,24 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
                           <Input
                             value={action.name}
                             onChange={(event) => updateAction(action.id, (current) => ({ ...current, name: event.target.value }))}
-                            placeholder="Action name"
+                            placeholder={t('Action name')}
                             className="h-7 max-w-[14rem]"
                           />
                       </div>
 
                       <div className="py-1">
-                        <p className="typography-meta mb-0.5 text-muted-foreground">Command</p>
+                        <p className="typography-meta mb-0.5 text-muted-foreground">{t('Command')}</p>
                         <Textarea
                           value={action.command}
                           onChange={(event) => updateAction(action.id, (current) => ({ ...current, command: event.target.value }))}
-                          placeholder="e.g. bun run lint"
+                          placeholder={t('e.g. bun run lint')}
                           className="min-h-[88px] max-w-[30rem] font-mono text-xs"
                         />
                       </div>
 
                       <div className="py-1">
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                          <span className="typography-ui-label text-foreground">Auto-open URL</span>
+                          <span className="typography-ui-label text-foreground">{t('Auto-open URL')}</span>
                           <div
                             className="group flex cursor-pointer items-center gap-2"
                             role="button"
@@ -346,7 +346,7 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
                               }))}
                               ariaLabel={`Auto-open URL for ${title}`}
                             />
-                            <span className="typography-ui-label font-normal text-foreground/80">Open URL from output or custom URL below</span>
+                            <span className="typography-ui-label font-normal text-foreground/80">{t('Open URL from output or custom URL below')}</span>
                           </div>
                         </div>
 
@@ -359,7 +359,7 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
                                   ...current,
                                   openUrl: event.target.value,
                                 }))}
-                                placeholder="Override URL (optional)"
+                                placeholder={t('Override URL (optional)')}
                                 className="h-7 w-full max-w-[24rem]"
                               />
                               <Tooltip delayDuration={1000}>
@@ -367,14 +367,14 @@ export const ProjectActionsSection: React.FC<ProjectActionsSectionProps> = ({ pr
                                   <RiInformationLine className="h-3.5 w-3.5 shrink-0 text-muted-foreground/60 cursor-help" />
                                 </TooltipTrigger>
                                 <TooltipContent sideOffset={8} className="max-w-xs">
-                                  If this field is filled, custom URL is used. If empty, app opens best URL from output.
+                                  {t('If this field is filled, custom URL is used. If empty, app opens best URL from output.')}
                                 </TooltipContent>
                               </Tooltip>
                             </div>
 
                             {isDesktopShellApp ? (
                               <div className="mt-2">
-                                <p className="typography-meta mb-0.5 text-muted-foreground">Desktop SSH forward</p>
+                                <p className="typography-meta mb-0.5 text-muted-foreground">{t('Desktop SSH forward')}</p>
                                 {desktopForwardOptions.length > 0 ? (
                                   <Select
                                     value={

@@ -18,6 +18,7 @@
  */
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     RiMicLine,
     RiMicOffLine,
@@ -103,6 +104,7 @@ export function VoiceStatusIndicator({
     className = '',
     conversationMode = false,
 }: VoiceStatusIndicatorProps) {
+    const { t } = useTranslation();
     const config = statusConfig[status];
     const Icon = config.icon;
     const sizeClass = sizeClasses[size];
@@ -123,13 +125,13 @@ export function VoiceStatusIndicator({
                 {conversationMode && status === 'idle' && (
                     <span
                         className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-green-500 rounded-full"
-                        aria-label="Conversation mode active"
+                        aria-label={t('Conversation mode active')}
                     />
                 )}
             </div>
             {showLabel && (
                 <span className={`typography-meta ${config.color}`}>
-                    {config.label}
+                    {t(config.label)}
                 </span>
             )}
         </div>
