@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Session } from '@opencode-ai/sdk/v2';
 import { RiLayoutLeftLine } from '@remixicon/react';
 import { toast } from '@/components/ui';
@@ -164,6 +165,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
   hideDirectoryControls = false,
   showOnlyMainWorkspace = false,
 }) => {
+  const { t } = useTranslation();
   const [isSessionSearchOpen, setIsSessionSearchOpen] = React.useState(false);
   const [sessionSearchQuery, setSessionSearchQuery] = React.useState('');
   const sessionSearchContainerRef = React.useRef<HTMLDivElement | null>(null);
@@ -626,11 +628,11 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
     void updateStore.checkForUpdates().then(() => {
       const { available, error } = useUpdateStore.getState();
       if (error) {
-        toast.error('Failed to check for updates', { description: error });
+        toast.error(t('Failed to check for updates'), { description: error });
         return;
       }
       if (!available) {
-        toast.success('You are on the latest version');
+        toast.success(t('You are on the latest version'));
         return;
       }
       setUpdateDialogOpen(true);
@@ -716,19 +718,19 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
         if (result.success && result.path) {
           const added = addProject(result.path, { id: result.projectId });
           if (!added) {
-            toast.error('Failed to add project', {
-              description: 'Please select a valid directory.',
+            toast.error(t('Failed to add project'), {
+              description: t('Please select a valid directory.'),
             });
           }
         } else if (result.error && result.error !== 'Directory selection cancelled') {
-          toast.error('Failed to select directory', {
+          toast.error(t('Failed to select directory'), {
             description: result.error,
           });
         }
       })
       .catch((error) => {
         console.error('Desktop: Error selecting directory:', error);
-        toast.error('Failed to select directory');
+        toast.error(t('Failed to select directory'));
       });
   }, [addProject, tauriIpcAvailable]);
 
@@ -1465,13 +1467,13 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
                 type="button"
                 onClick={toggleSidebar}
                 className={desktopSidebarToggleButtonClass}
-                aria-label="Close sessions"
+                aria-label={t('Close sessions')}
               >
                 <RiLayoutLeftLine className="h-[18px] w-[18px]" />
               </button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Close sessions</p>
+              <p>{t('Close sessions')}</p>
             </TooltipContent>
           </Tooltip>
         </div>
