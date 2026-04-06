@@ -1489,13 +1489,13 @@ export const RemoteInstancesPage: React.FC = () => {
                 onClick={() => {
                   void copyTextToClipboard(status.localUrl || '').then((result) => {
                     if (result.ok) {
-                      toast.success('Local URL copied');
+                      toast.success(t('Local URL copied'));
                     }
                   });
                 }}
               >
                 <RiFileCopyLine className="h-3.5 w-3.5" />
-                Copy local URL
+                {t('Copy local URL')}
               </Button>
               <Button
                 type="button"
@@ -1507,7 +1507,7 @@ export const RemoteInstancesPage: React.FC = () => {
                 }}
               >
                 <RiExternalLinkLine className="h-3.5 w-3.5" />
-                Open
+                {t('Open')}
               </Button>
             </>
           ) : null}
@@ -1518,7 +1518,7 @@ export const RemoteInstancesPage: React.FC = () => {
       <Dialog open={logDialogOpen} onOpenChange={setLogDialogOpen}>
         <DialogContent className="sm:max-w-2xl">
           <DialogHeader>
-            <DialogTitle>SSH Logs</DialogTitle>
+            <DialogTitle>{t('SSH Logs')}</DialogTitle>
             <DialogDescription>
               {draft?.nickname?.trim() || draft?.sshParsed?.destination || draft?.id || 'Selected instance'}
             </DialogDescription>
@@ -1526,20 +1526,20 @@ export const RemoteInstancesPage: React.FC = () => {
           <div className="flex items-center justify-end gap-2">
             <Button type="button" variant="outline" size="xs" className="!font-normal" onClick={handleCopyAllLogs} disabled={logDialogLoading || !logLinesText.trim()}>
               <RiFileCopyLine className="h-3.5 w-3.5" />
-              Copy all
+              {t('Copy all')}
             </Button>
             <Button type="button" variant="outline" size="xs" className="!font-normal" onClick={() => void handleClearLogs()} disabled={logDialogLoading}>
               <RiDeleteBinLine className="h-3.5 w-3.5" />
-              Clear
+              {t('Clear')}
             </Button>
           </div>
           {logDialogLoading ? (
-            <div className="typography-meta text-muted-foreground">Loading logs...</div>
+            <div className="typography-meta text-muted-foreground">{t('Loading logs...')}</div>
           ) : logDialogError ? (
             <div className="typography-meta text-[var(--status-error)]">{logDialogError}</div>
           ) : (
             <pre className="max-h-[55vh] overflow-auto rounded-md border border-[var(--interactive-border)] bg-[var(--surface-elevated)] p-3 typography-micro text-foreground whitespace-pre-wrap break-words">
-              {logDialogLines.length > 0 ? logDialogLines.join('\n') : 'No SSH logs yet.'}
+              {logDialogLines.length > 0 ? logDialogLines.join('\n') : t('No SSH logs yet.')}
             </pre>
           )}
         </DialogContent>
@@ -1555,9 +1555,9 @@ export const RemoteInstancesPage: React.FC = () => {
       >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Create from wildcard pattern</DialogTitle>
+            <DialogTitle>{t('Create from wildcard pattern')}</DialogTitle>
             <DialogDescription>
-              {patternHost ? `${patternHost} requires a concrete destination.` : 'Enter destination.'}
+              {patternHost ? t('{{host}} requires a concrete destination.', { host: patternHost }) : t('Enter destination.')}
             </DialogDescription>
           </DialogHeader>
           <form
@@ -1570,15 +1570,15 @@ export const RemoteInstancesPage: React.FC = () => {
             <Input
               value={patternDestination}
               onChange={(event) => setPatternDestination(event.target.value)}
-              placeholder="user@host"
+              placeholder={t('user@host')}
               autoFocus
             />
             <div className="flex items-center justify-end gap-2">
               <Button type="button" variant="outline" size="xs" className="!font-normal" onClick={closePatternDialog} disabled={patternCreating}>
-                Cancel
+                {t('Cancel')}
               </Button>
               <Button type="submit" size="xs" className="!font-normal" disabled={patternCreating}>
-                Create
+                {t('Create')}
               </Button>
             </div>
           </form>

@@ -474,7 +474,7 @@ export const AgentsSidebar: React.FC<AgentsSidebarProps> = ({ onItemSelect }) =>
           <Input
             value={renameNewName}
             onChange={(e) => setRenameNewName(e.target.value)}
-            placeholder="New agent name..."
+            placeholder={t('New agent name...')}
             className="text-foreground placeholder:text-muted-foreground"
             onKeyDown={(e) => {
               if (e.key === 'Enter') {

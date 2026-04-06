@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiArrowDownSLine, RiArrowRightSLine, RiEditLine, RiGitCommitLine, RiLoader4Line, RiTextWrap } from '@remixicon/react';
 
 import { useUIStore } from '@/stores/useUIStore';
@@ -52,9 +53,10 @@ type FileEntry = GitStatus['files'][number] & {
 type DiffData = { original: string; modified: string; isBinary?: boolean };
 
 const BinaryDiffPlaceholder = React.memo(() => {
+    const { t } = useTranslation();
     return (
         <div className="rounded-lg border border-border/60 bg-background px-3 py-2">
-            <div className="typography-meta text-muted-foreground">Content of this file cannot be viewed.</div>
+            <div className="typography-meta text-muted-foreground">{t('Content of this file cannot be viewed.')}</div>
         </div>
     );
 });
@@ -205,6 +207,7 @@ const FileSelector = React.memo<FileSelectorProps>(({
     mode,
     onModeChange,
 }) => {
+    const { t } = useTranslation();
     const getLabel = React.useCallback((path: string) => {
         if (!isMobile) return path;
         const lastSlash = path.lastIndexOf('/');
@@ -226,7 +229,7 @@ const FileSelector = React.memo<FileSelectorProps>(({
                             {formatDiffTotals(selectedFileEntry.insertions, selectedFileEntry.deletions)}
                         </div>
                     ) : (
-                        <span className="text-muted-foreground">Select file</span>
+                        <span className="text-muted-foreground">{t('Select file')}</span>
                     )}
                     <RiArrowDownSLine className="size-4 opacity-50" />
                 </button>
@@ -235,7 +238,7 @@ const FileSelector = React.memo<FileSelectorProps>(({
                 {showModeSelector && mode && onModeChange ? (
                     <>
                         <DropdownMenuLabel className="typography-meta text-muted-foreground">
-                            View mode
+                            {t('View mode')}
                         </DropdownMenuLabel>
                         <DropdownMenuRadioGroup
                             value={mode}
@@ -248,7 +251,7 @@ const FileSelector = React.memo<FileSelectorProps>(({
                                     className="items-center"
                                 >
                                     <span className="typography-meta text-foreground">
-                                        {option.label}
+                                        {t(option.label)}
                                     </span>
                                 </DropdownMenuRadioItem>
                             ))}
@@ -282,6 +285,7 @@ interface DiffViewModeSelectorProps {
 }
 
 const DiffViewModeSelector = React.memo<DiffViewModeSelectorProps>(({ mode, onModeChange }) => {
+    const { t } = useTranslation();
     const currentOption =
         DIFF_VIEW_MODE_OPTIONS.find((option) => option.value === mode) ?? DIFF_VIEW_MODE_OPTIONS[0];
 
@@ -290,7 +294,7 @@ const DiffViewModeSelector = React.memo<DiffViewModeSelectorProps>(({ mode, onMo
             <DropdownMenuTrigger asChild>
                 <button className="flex h-8 items-center gap-2 rounded-lg border border-input bg-transparent px-2 typography-ui-label text-foreground outline-none hover:bg-interactive-hover hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring">
                     <span className="min-w-0 truncate typography-meta">
-                        {currentOption.label}
+                        {t(currentOption.label)}
                     </span>
                     <RiArrowDownSLine className="size-4 opacity-50" />
                 </button>
@@ -933,6 +937,7 @@ export const DiffView: React.FC<DiffViewProps> = ({
     pinSelectedFileHeaderToTopOnNavigate = false,
     showOpenInEditorAction = false,
 }) => {
+    const { t } = useTranslation();
     const { git, files } = useRuntimeAPIs();
     const effectiveDirectory = useEffectiveDirectory();
     const { screenWidth, isMobile } = useDeviceInfo();

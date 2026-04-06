@@ -2846,7 +2846,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
             size="sm"
             onClick={() => handleOpenDialog('createFile', { path: currentDirectory, type: 'directory' })}
             className="h-8 w-8 p-0 flex-shrink-0"
-            title="New File"
+            title={t('New File')}
           >
             <RiFileAddLine className="h-4 w-4" />
           </Button>
@@ -2855,7 +2855,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
             size="sm"
             onClick={() => handleOpenDialog('createFolder', { path: currentDirectory, type: 'directory' })}
             className="h-8 w-8 p-0 flex-shrink-0"
-            title="New Folder"
+            title={t('New Folder')}
           >
             <RiFolderAddLine className="h-4 w-4" />
           </Button>
@@ -2900,7 +2900,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
           ) : hasTree ? (
             renderTree(root, 0)
           ) : (
-            <li className="px-2 py-1 typography-meta text-muted-foreground">Loading…</li>
+            <li className="px-2 py-1 typography-meta text-muted-foreground">{t('Loading…')}</li>
           )}
         </ul>
       </ScrollableOverlay>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollableOverlay } from '@/components/ui/ScrollableOverlay';
 import { ProviderLogo } from '@/components/ui/ProviderLogo';
 import { Button } from '@/components/ui/button';
@@ -27,6 +28,7 @@ const getUsagePercent = (usage: { windows?: Record<string, { usedPercent: number
 };
 
 export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
+  const { t } = useTranslation();
   const results = useQuotaStore((state) => state.results);
   const selectedProviderId = useQuotaStore((state) => state.selectedProviderId);
   const setSelectedProvider = useQuotaStore((state) => state.setSelectedProvider);
@@ -79,9 +81,9 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
   return (
     <div className={cn('flex h-full flex-col', bgClass)}>
       <div className="border-b px-3 pt-4 pb-3">
-        <h2 className="text-base font-semibold text-foreground mb-3">Usage</h2>
+        <h2 className="text-base font-semibold text-foreground mb-3">{t('Usage')}</h2>
         <div className="flex items-center justify-between gap-2">
-          <span className="typography-meta text-muted-foreground">Total {QUOTA_PROVIDERS.length}</span>
+          <span className="typography-meta text-muted-foreground">{t('Total')} {QUOTA_PROVIDERS.length}</span>
           <div className="flex items-center gap-2">
             <Tooltip delayDuration={700}>
               <TooltipTrigger asChild>
@@ -89,7 +91,7 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
                   <Checkbox
                     checked={usageAutoRefresh}
                     onChange={handleUsageAutoRefreshChange}
-                    ariaLabel="Toggle auto refresh"
+                    ariaLabel={t('Toggle auto refresh')}
                   />
                 </span>
               </TooltipTrigger>

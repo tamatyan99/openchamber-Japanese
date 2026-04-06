@@ -1094,13 +1094,13 @@ export const TunnelSettings: React.FC = () => {
                         <ProviderOptionLabel provider="cloudflare" />
                       </SelectItem>
                     )}
-                  <SelectItem value="__more-soon" disabled>More providers coming soon</SelectItem>
+                  <SelectItem value="__more-soon" disabled>{t('More providers coming soon')}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-1.5">
-              <p className="typography-ui-label text-foreground">Tunnel type</p>
+              <p className="typography-ui-label text-foreground">{t('Tunnel type')}</p>
               <div className="flex flex-wrap items-center gap-1">
                 {TUNNEL_MODE_OPTIONS.map((option) => (
                   <Tooltip key={option.value} delayDuration={700}>
@@ -1133,7 +1133,7 @@ export const TunnelSettings: React.FC = () => {
 
           <div className="mt-2 grid grid-cols-1 gap-2 py-1.5 md:grid-cols-[14rem_auto] md:gap-x-8 md:gap-y-2">
             <div className="flex min-w-0 items-center gap-2">
-              <span className="typography-ui-label shrink-0 text-foreground">Connect link TTL</span>
+              <span className="typography-ui-label shrink-0 text-foreground">{t('Connect link TTL')}</span>
               <Select
                 value={ttlOptionValue(BOOTSTRAP_TTL_OPTIONS, bootstrapTtlMs, '1800000')}
                 onValueChange={(value) => {
@@ -1153,7 +1153,7 @@ export const TunnelSettings: React.FC = () => {
             </div>
 
             <div className="flex min-w-0 items-center gap-2">
-              <span className="typography-ui-label shrink-0 text-foreground">Tunnel session TTL</span>
+              <span className="typography-ui-label shrink-0 text-foreground">{t('Tunnel session TTL')}</span>
               <Select
                 value={ttlOptionValue(SESSION_TTL_OPTIONS, sessionTtlMs, '28800000')}
                 onValueChange={(value) => {
@@ -1179,10 +1179,10 @@ export const TunnelSettings: React.FC = () => {
                 <RiErrorWarningLine className="mt-0.5 size-4 shrink-0 text-[var(--status-warning)]" />
                 <div>
                   <p className="typography-meta text-[var(--status-warning)]">
-                    Quick Tunnel is best effort and Cloudflare does not guarantee uptime.
+                    {t('Quick Tunnel is best effort and Cloudflare does not guarantee uptime.')}
                   </p>
                   <p className="typography-meta mt-1 text-[var(--status-warning)]">
-                    For more reliable long-lived access, switch to Managed Remote or Managed Local tunnel mode.
+                    {t('For more reliable long-lived access, switch to Managed Remote or Managed Local tunnel mode.')}
                   </p>
                 </div>
               </div>
@@ -1200,7 +1200,7 @@ export const TunnelSettings: React.FC = () => {
               )}
 
               <div className="mb-1 flex items-center justify-between gap-3">
-                <p className="typography-ui-label text-foreground">Saved managed remote tunnels</p>
+                <p className="typography-ui-label text-foreground">{t('Saved managed remote tunnels')}</p>
                 <Button
                   variant="ghost"
                   size="xs"
@@ -1209,7 +1209,7 @@ export const TunnelSettings: React.FC = () => {
                   disabled={state === 'starting' || state === 'stopping' || isSavingMode}
                 >
                   <RiAddLine className="h-3.5 w-3.5" />
-                  Add
+                  {t('Add')}
                 </Button>
               </div>
 
@@ -1263,7 +1263,7 @@ export const TunnelSettings: React.FC = () => {
 
                           <CollapsibleContent className="pt-1.5">
                             <div className="space-y-1 px-3 pb-2">
-                              <p className="typography-meta text-muted-foreground/70">Hostname: <code>{preset.hostname}</code></p>
+                              <p className="typography-meta text-muted-foreground/70">{t('Hostname:')} <code>{preset.hostname}</code></p>
                               <Input
                                 type="password"
                                 value={rowToken}
@@ -1284,7 +1284,7 @@ export const TunnelSettings: React.FC = () => {
                                     token: tokenToSave,
                                   });
                                 }}
-                                placeholder={hasSavedToken ? 'Saved token available (optional to replace)' : 'Paste token for this tunnel'}
+                                placeholder={hasSavedToken ? t('Saved token available (optional to replace)') : t('Paste token for this tunnel')}
                                 className="h-7"
                                 disabled={state === 'starting' || state === 'stopping'}
                               />
@@ -1303,7 +1303,7 @@ export const TunnelSettings: React.FC = () => {
                                     });
                                   }}
                                 >
-                                  Save token
+                                  {t('Save token')}
                                 </Button>
                               </div>
                             </div>
@@ -1314,7 +1314,7 @@ export const TunnelSettings: React.FC = () => {
                   })}
                 </div>
               ) : (
-                <p className="typography-meta text-muted-foreground/70">No managed remote tunnels saved yet.</p>
+                <p className="typography-meta text-muted-foreground/70">{t('No managed remote tunnels saved yet.')}</p>
               )}
 
               {isAddingPreset && (
@@ -1322,14 +1322,14 @@ export const TunnelSettings: React.FC = () => {
                   <Input
                     value={newPresetName}
                     onChange={(event) => setNewPresetName(event.target.value)}
-                    placeholder="Tunnel name (e.g. Production)"
+                    placeholder={t('Tunnel name (e.g. Production)')}
                     className="h-7"
                     disabled={isSavingMode || state === 'starting' || state === 'stopping'}
                   />
                   <Input
                     value={newPresetHostname}
                     onChange={(event) => setNewPresetHostname(event.target.value)}
-                    placeholder="Hostname (e.g. oc.example.com)"
+                    placeholder={t('Hostname (e.g. oc.example.com)')}
                     className="h-7"
                     disabled={isSavingMode || state === 'starting' || state === 'stopping'}
                   />
@@ -1337,7 +1337,7 @@ export const TunnelSettings: React.FC = () => {
                     type="password"
                     value={newPresetToken}
                     onChange={(event) => setNewPresetToken(event.target.value)}
-                    placeholder="Token"
+                    placeholder={t('Token')}
                     className="h-7"
                     disabled={isSavingMode || state === 'starting' || state === 'stopping'}
                   />
@@ -1356,7 +1356,7 @@ export const TunnelSettings: React.FC = () => {
                       }}
                       disabled={isSavingMode || state === 'starting' || state === 'stopping'}
                     >
-                      Save
+                      {t('Save')}
                     </Button>
                     <Button
                       variant="ghost"
@@ -1370,14 +1370,14 @@ export const TunnelSettings: React.FC = () => {
                       }}
                       disabled={isSavingMode || state === 'starting' || state === 'stopping'}
                     >
-                      Cancel
+                      {t('Cancel')}
                     </Button>
                   </div>
                 </div>
               )}
 
               <div className="flex items-center gap-1.5">
-                <p className="typography-meta text-muted-foreground/80">Tokens are saved per tunnel and reused from disk</p>
+                <p className="typography-meta text-muted-foreground/80">{t('Tokens are saved per tunnel and reused from disk')}</p>
                 <Tooltip delayDuration={700}>
                   <TooltipTrigger asChild>
                     <button
@@ -1389,7 +1389,7 @@ export const TunnelSettings: React.FC = () => {
                     </button>
                   </TooltipTrigger>
                   <TooltipContent sideOffset={8} className="max-w-xs">
-                    Tokens are saved in ~/.config/openchamber/cloudflare-managed-remote-tunnels.json.
+                    {t('Tokens are saved in ~/.config/openchamber/cloudflare-managed-remote-tunnels.json.')}
                   </TooltipContent>
                 </Tooltip>
               </div>
@@ -1403,7 +1403,7 @@ export const TunnelSettings: React.FC = () => {
           {tunnelMode === 'managed-local' && (
             <div className="space-y-2 rounded-lg border border-[var(--interactive-border)] bg-[var(--surface-elevated)] p-3">
               <div className="space-y-1.5">
-                <p className="typography-ui-label text-foreground">Configuration file</p>
+                <p className="typography-ui-label text-foreground">{t('Configuration file')}</p>
                 <input
                   ref={managedLocalConfigFileInputRef}
                   type="file"
