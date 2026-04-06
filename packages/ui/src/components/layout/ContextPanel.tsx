@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiArrowLeftRightLine, RiChat4Line, RiCloseLine, RiDonutChartFill, RiFileTextLine, RiFullscreenExitLine, RiFullscreenLine } from '@remixicon/react';
 
 import { FileTypeIcon } from '@/components/icons/FileTypeIcon';
@@ -156,6 +157,7 @@ const truncateTabLabel = (value: string, maxChars: number): string => {
 };
 
 export const ContextPanel: React.FC = () => {
+  const { t } = useTranslation();
   const effectiveDirectory = useEffectiveDirectory() ?? '';
   const directoryKey = React.useMemo(() => normalizeDirectoryKey(effectiveDirectory), [effectiveDirectory]);
 
@@ -403,9 +405,9 @@ export const ContextPanel: React.FC = () => {
       label,
       icon: getTabIcon(tab),
       title: tabPathLabel ? `${rawLabel}: ${tabPathLabel}` : rawLabel,
-      closeLabel: `Close ${label} tab`,
+      closeLabel: t('Close {{label}} tab', { label }),
     };
-  }), [effectiveDirectory, tabs]);
+  }), [effectiveDirectory, t, tabs]);
 
   const activeNonChatContent = activeTab?.mode === 'diff'
     ? <DiffView hideStackedFileSidebar stackedDefaultCollapsedAll hideFileSelector pinSelectedFileHeaderToTopOnNavigate showOpenInEditorAction />
@@ -461,8 +463,8 @@ export const ContextPanel: React.FC = () => {
           size="sm"
           onClick={handleToggleExpanded}
           className="h-7 w-7 p-0"
-          title={isExpanded ? 'Collapse panel' : 'Expand panel'}
-          aria-label={isExpanded ? 'Collapse panel' : 'Expand panel'}
+          title={isExpanded ? t('Collapse panel') : t('Expand panel')}
+          aria-label={isExpanded ? t('Collapse panel') : t('Expand panel')}
         >
           {isExpanded ? <RiFullscreenExitLine className="h-3.5 w-3.5" /> : <RiFullscreenLine className="h-3.5 w-3.5" />}
         </Button>
