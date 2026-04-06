@@ -131,7 +131,7 @@ export const KeyboardShortcutsSettings: React.FC = () => {
     <div className="mb-8">
       <div className="mb-1 px-1">
         <div className="flex items-center gap-2">
-          <h3 className="typography-ui-header font-medium text-foreground">Keyboard Shortcuts</h3>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Keyboard Shortcuts')}</h3>
           <Button
             type="button"
             variant="outline"
@@ -145,14 +145,14 @@ export const KeyboardShortcutsSettings: React.FC = () => {
               setWarningText('');
             }}
           >
-            Reset All
+            {t('Reset All')}
           </Button>
           <Tooltip delayDuration={1000}>
             <TooltipTrigger asChild>
               <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
             </TooltipTrigger>
             <TooltipContent sideOffset={8} className="max-w-xs">
-              Capture a new key combo, save it, and bindings will update immediately.
+              {t('Capture a new key combo, save it, and bindings will update immediately.')}
             </TooltipContent>
           </Tooltip>
         </div>
@@ -163,11 +163,11 @@ export const KeyboardShortcutsSettings: React.FC = () => {
           {pendingOverwrite && (
             <div className="rounded-lg border border-[var(--status-warning-border)] bg-[var(--status-warning-background)] p-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <span className="typography-meta text-foreground">
-                This combo is already used by another shortcut. Overwrite and clear that other mapping?
+                {t('This combo is already used by another shortcut. Overwrite and clear that other mapping?')}
               </span>
               <div className="flex gap-2 shrink-0">
-                <Button type="button" size="xs" className="!font-normal" onClick={confirmOverwrite}>Overwrite</Button>
-                <Button type="button" size="xs" className="!font-normal" variant="ghost" onClick={() => setPendingOverwrite(null)}>Cancel</Button>
+                <Button type="button" size="xs" className="!font-normal" onClick={confirmOverwrite}>{t('Overwrite')}</Button>
+                <Button type="button" size="xs" className="!font-normal" variant="ghost" onClick={() => setPendingOverwrite(null)}>{t('Cancel')}</Button>
               </div>
             </div>
           )}
@@ -199,7 +199,7 @@ export const KeyboardShortcutsSettings: React.FC = () => {
               <div className="flex min-w-0 flex-1 items-center gap-2 sm:w-fit sm:flex-initial">
                 <Input
                   readOnly
-                  value={capturingActionId === action.id ? 'Press keys...' : formatShortcutForDisplay(displayCombo)}
+                  value={capturingActionId === action.id ? t('Press keys...') : formatShortcutForDisplay(displayCombo)}
                   onFocus={() => {
                     setCapturingActionId(action.id);
                     setErrorText('');
@@ -241,17 +241,17 @@ export const KeyboardShortcutsSettings: React.FC = () => {
                   onClick={() => {
                     const next = draftByAction[action.id];
                     if (!next) {
-                      setErrorText('Capture a shortcut first.');
+                      setErrorText(t('Capture a shortcut first.'));
                       return;
                     }
                     saveCombo(action.id, next);
                   }}
                   disabled={!hasDraft}
                 >
-                  Save
+                  {t('Save')}
                 </Button>
                 <Button type="button" size="xs" className="!font-normal" variant="ghost" onClick={() => resetOne(action.id)}>
-                  Reset
+                  {t('Reset')}
                 </Button>
               </div>
             </div>

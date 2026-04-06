@@ -884,8 +884,8 @@ export const RemoteInstancesPage: React.FC = () => {
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
             <div className="w-56 shrink-0">
               <HintLabel
-                label="Mode"
-                hint="Managed installs/updates and starts OpenChamber remotely. External assumes it is already running."
+                label={t('Mode')}
+                hint={t('Managed installs/updates and starts OpenChamber remotely. External assumes it is already running.')}
               />
             </div>
             <Select
@@ -901,11 +901,11 @@ export const RemoteInstancesPage: React.FC = () => {
               }
             >
               <SelectTrigger className="h-7 w-fit min-w-[140px]">
-                <SelectValue placeholder="Select mode" />
+                <SelectValue placeholder={t('Select mode')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="managed">Managed (auto start)</SelectItem>
-                <SelectItem value="external">External (already running)</SelectItem>
+                <SelectItem value="managed">{t('Managed (auto start)')}</SelectItem>
+                <SelectItem value="external">{t('External (already running)')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -913,8 +913,8 @@ export const RemoteInstancesPage: React.FC = () => {
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
             <div className="w-56 shrink-0">
               <HintLabel
-                label="Preferred remote port"
-                hint="Port OpenChamber should use on the remote host. Leave empty to let the runtime choose."
+                label={t('Preferred remote port')}
+                hint={t('Port OpenChamber should use on the remote host. Leave empty to let the runtime choose.')}
               />
             </div>
             <NumberInput
@@ -950,8 +950,8 @@ export const RemoteInstancesPage: React.FC = () => {
             <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
               <div className="w-56 shrink-0">
                 <HintLabel
-                  label="Install method"
-                  hint="How OpenChamber gets installed/updated remotely when mode is Managed."
+                  label={t('Install method')}
+                  hint={t('How OpenChamber gets installed/updated remotely when mode is Managed.')}
                 />
               </div>
               <Select
@@ -970,7 +970,7 @@ export const RemoteInstancesPage: React.FC = () => {
                 }
               >
                 <SelectTrigger className="h-7 w-fit min-w-[140px]">
-                  <SelectValue placeholder="Select install method" />
+                  <SelectValue placeholder={t('Select install method')} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="bun">bun</SelectItem>
@@ -986,8 +986,8 @@ export const RemoteInstancesPage: React.FC = () => {
             <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
               <div className="w-56 shrink-0">
                 <HintLabel
-                  label="Keep server running"
-                  hint="If enabled, OpenChamber daemon is left running remotely when you disconnect."
+                  label={t('Keep server running')}
+                  hint={t('If enabled, OpenChamber daemon is left running remotely when you disconnect.')}
                 />
               </div>
               <div className="flex w-full items-center gap-2 md:max-w-xs">
@@ -1011,15 +1011,15 @@ export const RemoteInstancesPage: React.FC = () => {
 
       <div className="mb-8 border-t border-[var(--surface-subtle)] pt-8">
         <div className="mb-1 px-1 space-y-0.5">
-          <h3 className="typography-ui-header font-medium text-foreground">Main tunnel</h3>
-          <p className="typography-meta text-muted-foreground">Primary local URL that points to the remote OpenChamber server.</p>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Main tunnel')}</h3>
+          <p className="typography-meta text-muted-foreground">{t('Primary local URL that points to the remote OpenChamber server.')}</p>
         </div>
         <section className="px-2 pb-2 pt-0 space-y-3">
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
             <div className="w-56 shrink-0">
               <HintLabel
-                label="Bind host"
-                hint="Network interface for the main local URL. Use 127.0.0.1/localhost for local-only access."
+                label={t('Bind host')}
+                hint={t('Network interface for the main local URL. Use 127.0.0.1/localhost for local-only access.')}
               />
             </div>
             <Select
@@ -1041,7 +1041,7 @@ export const RemoteInstancesPage: React.FC = () => {
               }}
             >
               <SelectTrigger className="h-7 w-fit min-w-[140px]">
-                <SelectValue placeholder="Select bind host" />
+                <SelectValue placeholder={t('Select bind host')} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="127.0.0.1">127.0.0.1</SelectItem>
@@ -1054,8 +1054,8 @@ export const RemoteInstancesPage: React.FC = () => {
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
             <div className="w-56 shrink-0">
               <HintLabel
-                label="Preferred local port"
-                hint="Preferred local port for the main OpenChamber tunnel. Leave empty for auto-select."
+                label={t('Preferred local port')}
+                hint={t('Preferred local port for the main OpenChamber tunnel. Leave empty for auto-select.')}
               />
             </div>
             <div className="flex w-full items-center gap-2 md:max-w-sm">
@@ -1091,7 +1091,7 @@ export const RemoteInstancesPage: React.FC = () => {
                 variant="outline"
                 size="xs"
                 className="!font-normal h-7 w-7 px-0"
-                title="Pick random port"
+                title={t('Pick random port')}
                 onClick={() =>
                   updateDraft((current) => ({
                     ...current,

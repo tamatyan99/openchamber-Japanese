@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiErrorWarningLine, RiRestartLine } from '@remixicon/react';
 import { Button } from './button';
 import { Card, CardContent, CardHeader, CardTitle } from './card';
@@ -58,44 +59,69 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
       }
 
       return (
-        <div className="p-4 flex items-center justify-center min-h-screen">
-          <Card className="w-full max-w-md">
-            <CardHeader className="text-center">
-              <CardTitle className="flex items-center justify-center gap-2 text-destructive">
-                <RiErrorWarningLine className="h-5 w-5" />
-                Something went wrong
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground text-center">
-                The application encountered an unexpected error. This has been logged for debugging.
-              </p>
-
-              {this.state.error && (
-                <details className="text-xs font-mono bg-muted p-3 rounded">
-                  <summary className="cursor-pointer hover:bg-interactive-hover/80">Error details</summary>
-                  <pre className="mt-2 overflow-x-auto">
-                    {this.state.error.toString()}
-                    {this.state.errorInfo?.componentStack ? `\n\nComponent stack:${this.state.errorInfo.componentStack}` : ''}
-                  </pre>
-                </details>
-              )}
-
-              <div className="flex gap-2">
-                <Button onClick={this.handleReset} variant="outline" className="flex-1">
-                  <RiRestartLine className="h-4 w-4 mr-2" />
-                  Try again
-                </Button>
-                <Button onClick={this.handleCopy} variant="outline" className="flex-1">
-                  {this.state.copied ? 'Copied' : 'Copy'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <ErrorBoundaryFallback
+          error={this.state.error}
+          errorInfo={this.state.errorInfo}
+          copied={this.state.copied}
+          onReset={this.handleReset}
+          onCopy={this.handleCopy}
+        />
       );
     }
 
     return this.props.children;
   }
+}
+
+function ErrorBoundaryFallback({
+  error,
+  errorInfo,
+  copied,
+  onReset,
+  onCopy,
+}: {
+  error?: Error;
+  errorInfo?: React.ErrorInfo;
+  copied?: boolean;
+  onReset: () => void;
+  onCopy: () => void;
+}) {
+  const { t } = useTranslation();
+  return (
+    <div className="p-4 flex items-center justify-center min-h-screen">
+      <Card className="w-full max-w-md">
+        <CardHeader className="text-center">
+          <CardTitle className="flex items-center justify-center gap-2 text-destructive">
+            <RiErrorWarningLine className="h-5 w-5" />
+            {t('Something went wrong')}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="text-sm text-muted-foreground text-center">
+            {t('The application encountered an unexpected error. This has been logged for debugging.')}
+          </p>
+
+          {error && (
+            <details className="text-xs font-mono bg-muted p-3 rounded">
+              <summary className="cursor-pointer hover:bg-interactive-hover/80">{t('Error details')}</summary>
+              <pre className="mt-2 overflow-x-auto">
+                {error.toString()}
+                {errorInfo?.componentStack ? `\n\nComponent stack:${errorInfo.componentStack}` : ''}
+              </pre>
+            </details>
+          )}
+
+          <div className="flex gap-2">
+            <Button onClick={onReset} variant="outline" className="flex-1">
+              <RiRestartLine className="h-4 w-4 mr-2" />
+              {t('Try again')}
+            </Button>
+            <Button onClick={onCopy} variant="outline" className="flex-1">
+              {copied ? t('Copied') : t('Copy')}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }

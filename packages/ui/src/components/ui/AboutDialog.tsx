@@ -148,13 +148,13 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
               )}
             >
               {copiedDiagnostics
-                ? 'Diagnostics copied'
+                ? t('Diagnostics copied')
                 : isPreparingDiagnostics
-                  ? 'Preparing diagnostics...'
-                  : 'Copy diagnostics'}
+                  ? t('Preparing diagnostics...')
+                  : t('Copy diagnostics')}
             </button>
             <p className="typography-micro text-muted-foreground">
-              Includes OpenChamber state, OpenCode health, directories, and projects.
+              {t('Includes OpenChamber state, OpenCode health, directories, and projects.')}
             </p>
           </div>
 
@@ -189,7 +189,7 @@ export const AboutDialog: React.FC<AboutDialogProps> = ({
           </div>
 
           <p className="typography-meta text-muted-foreground/60 pt-2">
-            Made with love to comunity
+            {t('Made with love to comunity')}
           </p>
         </div>
       </DialogContent>
