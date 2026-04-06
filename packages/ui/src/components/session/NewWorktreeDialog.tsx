@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -202,6 +203,7 @@ export function NewWorktreeDialog({
   onOpenChange,
   onWorktreeCreated,
 }: NewWorktreeDialogProps) {
+  const { t } = useTranslation();
   const { github, git } = useRuntimeAPIs();
   const isMobile = useUIStore((state) => state.isMobile);
   const githubAuthStatus = useGitHubAuthStore((state) => state.status);
@@ -518,7 +520,7 @@ export function NewWorktreeDialog({
     const agentName = resolveDefaultAgentName() || configState.currentAgentName || undefined;
 
     if (!providerID || !modelID) {
-      toast.error('No model selected');
+      toast.error(t('No model selected'));
       return;
     }
 
@@ -602,7 +604,7 @@ Do not implement changes until I confirm; end with: "Next actions: <1 sentence>"
         ],
       });
 
-      toast.success('Session created from issue');
+      toast.success(t('Session created from issue'));
       return;
     }
 
@@ -678,7 +680,7 @@ Nice-to-have:
         ],
       });
 
-      toast.success('Session created from PR');
+      toast.success(t('Session created from PR'));
     }
   }, [
     applySessionModelAndAgentDefaults,
@@ -800,11 +802,11 @@ Nice-to-have:
       let worktreeError: string | null = null;
       
       if (!normalizedBranch) {
-        branchError = 'Branch name is required';
+        branchError = t('Branch name is required');
       }
-      
+
       if (!normalizedWorktree) {
-        worktreeError = 'Worktree directory is required';
+        worktreeError = t('Worktree directory is required');
       }
       
       // Only run server validation if we have values
@@ -876,7 +878,7 @@ Nice-to-have:
   // Handle worktree creation
   const handleCreate = async () => {
     if (!projectRef || !projectDirectory) {
-      toast.error('No active project');
+      toast.error(t('No active project'));
       return;
     }
     
@@ -889,12 +891,12 @@ Nice-to-have:
     const normalizedWorktree = slugifyWorktreeName(worktreeName);
     
     if (!normalizedBranch) {
-      toast.error('Branch name is required');
+      toast.error(t('Branch name is required'));
       return;
     }
     
     if (!normalizedWorktree) {
-      toast.error('Worktree directory is required');
+      toast.error(t('Worktree directory is required'));
       return;
     }
 
@@ -985,7 +987,7 @@ Nice-to-have:
         localStorage.setItem(LAST_SOURCE_BRANCH_KEY, newBranchState.sourceBranch);
       }
       
-      toast.success('Worktree created', {
+      toast.success(t('Worktree created'), {
         description: `${metadata.branch || metadata.name}${sourceLabel ? ` from ${sourceLabel}` : ''} - bootstrapping in background`,
       });
 
@@ -999,15 +1001,15 @@ Nice-to-have:
           pr: linkedPrState,
           includeDiff: includePrDiff,
         }).catch((error) => {
-          const message = error instanceof Error ? error.message : 'Failed to send GitHub context';
-          toast.error('Failed to send GitHub context', { description: message });
+          const message = error instanceof Error ? error.message : t('Failed to send GitHub context');
+          toast.error(t('Failed to send GitHub context'), { description: message });
         });
       } else {
         onWorktreeCreated?.(metadata.path);
       }
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to create worktree';
-      toast.error('Failed to create worktree', { description: message });
+      const message = error instanceof Error ? error.message : t('Failed to create worktree');
+      toast.error(t('Failed to create worktree'), { description: message });
     } finally {
       setIsCreating(false);
     }
@@ -1127,7 +1129,7 @@ Nice-to-have:
       {isMobile ? (
         <MobileOverlayPanel
           open={open}
-          title="New Worktree"
+          title={t('New Worktree')}
           onClose={() => onOpenChange(false)}
           footer={footerContent}
         >
@@ -1135,8 +1137,8 @@ Nice-to-have:
           <div className="w-full mb-4">
             <SortableTabsStrip
               items={[
-                { id: 'new-branch', label: 'New Branch', icon: <RiGitBranchLine className="h-3.5 w-3.5" /> },
-                { id: 'existing-branch', label: 'Existing Branch', icon: <RiGitRepositoryLine className="h-3.5 w-3.5" /> },
+                { id: 'new-branch', label: t('New Branch'), icon: <RiGitBranchLine className="h-3.5 w-3.5" /> },
+                { id: 'existing-branch', label: t('Existing Branch'), icon: <RiGitRepositoryLine className="h-3.5 w-3.5" /> },
               ]}
               activeId={mode}
               onSelect={(id) => handleModeChange(id as Mode)}
@@ -1621,7 +1623,7 @@ Nice-to-have:
               <div className="flex items-center gap-3">
                 <DialogTitle className="flex items-center gap-2 shrink-0">
                   <RiGitBranchLine className="h-5 w-5" />
-                  New Worktree
+                  {t('New Worktree')}
                 </DialogTitle>
                 
                 {/* Mode Selection - using SortableTabsStrip */}

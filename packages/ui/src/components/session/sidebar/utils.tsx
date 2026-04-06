@@ -2,7 +2,15 @@ import React from 'react';
 import type { Session } from '@opencode-ai/sdk/v2';
 import type { SessionSummaryMeta } from './types';
 
-const formatDateLabel = (value: string | number) => {
+interface DateLabelTranslations {
+  today?: string;
+  yesterday?: string;
+  justNow?: string;
+  minAgo?: (n: number) => string;
+  hAgo?: (n: number) => string;
+}
+
+const formatDateLabel = (value: string | number, translations?: DateLabelTranslations) => {
   const targetDate = new Date(value);
   const today = new Date();
   const isSameDay = (a: Date, b: Date) =>
@@ -14,10 +22,10 @@ const formatDateLabel = (value: string | number) => {
   yesterday.setDate(today.getDate() - 1);
 
   if (isSameDay(targetDate, today)) {
-    return 'Today';
+    return translations?.today ?? 'Today';
   }
   if (isSameDay(targetDate, yesterday)) {
-    return 'Yesterday';
+    return translations?.yesterday ?? 'Yesterday';
   }
   const formatted = targetDate.toLocaleDateString('en-US', {
     month: 'short',
@@ -27,7 +35,7 @@ const formatDateLabel = (value: string | number) => {
   return formatted.replace(',', '');
 };
 
-export const formatSessionDateLabel = (updatedMs: number): string => {
+export const formatSessionDateLabel = (updatedMs: number, translations?: DateLabelTranslations): string => {
   const today = new Date();
   const updatedDate = new Date(updatedMs);
   const isSameDay = (a: Date, b: Date) =>
@@ -37,12 +45,14 @@ export const formatSessionDateLabel = (updatedMs: number): string => {
 
   if (isSameDay(updatedDate, today)) {
     const diff = Date.now() - updatedMs;
-    if (diff < 60_000) return 'Just now';
-    if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}min ago`;
-    return `${Math.floor(diff / 3_600_000)}h ago`;
+    if (diff < 60_000) return translations?.justNow ?? 'Just now';
+    const mins = Math.floor(diff / 60_000);
+    if (diff < 3_600_000) return translations?.minAgo ? translations.minAgo(mins) : `${mins}min ago`;
+    const hrs = Math.floor(diff / 3_600_000);
+    return translations?.hAgo ? translations.hAgo(hrs) : `${hrs}h ago`;
   }
 
-  return formatDateLabel(updatedMs);
+  return formatDateLabel(updatedMs, translations);
 };
 
 export const formatSessionCompactDateLabel = (updatedMs: number): string => {
@@ -157,21 +167,21 @@ export const dedupeSessionsById = (sessions: Session[]): Session[] => {
 
 export const getArchivedScopeKey = (projectRoot: string): string => `__archived__:${projectRoot}`;
 
-export const resolveArchivedFolderName = (session: Session, projectRoot: string | null): string => {
+export const resolveArchivedFolderName = (session: Session, projectRoot: string | null, translations?: { unassigned?: string; projectRoot?: string }): string => {
   const sessionDirectory = normalizePath((session as Session & { directory?: string | null }).directory ?? null);
   const projectWorktree = normalizePath((session as Session & { project?: { worktree?: string | null } | null }).project?.worktree ?? null);
   const resolved = sessionDirectory ?? projectWorktree;
   if (!resolved) {
-    return 'unassigned';
+    return translations?.unassigned ?? 'unassigned';
   }
   if (projectRoot && resolved === projectRoot) {
-    return 'project root';
+    return translations?.projectRoot ?? 'project root';
   }
   const source = projectRoot && resolved.startsWith(`${projectRoot}/`)
     ? resolved.slice(projectRoot.length + 1)
     : resolved;
   const segments = source.split('/').filter(Boolean);
-  return segments[segments.length - 1] ?? 'unassigned';
+  return segments[segments.length - 1] ?? (translations?.unassigned ?? 'unassigned');
 };
 
 export const isSessionRelatedToProject = (

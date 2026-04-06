@@ -237,7 +237,13 @@ function SessionNodeItemComponent(props: Props): React.ReactNode {
   const sessionSummary = resolvedSession.summary as SessionSummaryMeta | undefined;
   const sessionDiffStats = resolveSessionDiffStats(sessionSummary);
   const sessionTimestamp = resolvedSession.time?.updated || resolvedSession.time?.created || Date.now();
-  const sessionUpdatedLabel = formatSessionDateLabel(sessionTimestamp);
+  const sessionUpdatedLabel = formatSessionDateLabel(sessionTimestamp, {
+    today: t('Today'),
+    yesterday: t('Yesterday'),
+    justNow: t('Just now'),
+    minAgo: (n) => t('{{n}}min ago', { n }),
+    hAgo: (n) => t('{{n}}h ago', { n }),
+  });
   const sessionCompactUpdatedLabel = formatSessionCompactDateLabel(sessionTimestamp);
   const isMenuOpen = openSidebarMenuKey === menuInstanceKey;
 

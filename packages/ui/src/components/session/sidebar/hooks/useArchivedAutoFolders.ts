@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Session } from '@opencode-ai/sdk/v2';
 import type { WorktreeMetadata } from '@/types/worktree';
 import { dedupeSessionsById, getArchivedScopeKey, isSessionRelatedToProject, normalizePath, resolveArchivedFolderName } from '../utils';
@@ -58,6 +59,7 @@ const getArchivedSessionsForProject = (
 };
 
 export const useArchivedAutoFolders = (args: Args): void => {
+  const { t } = useTranslation();
   const {
     normalizedProjects,
     sessions,
@@ -90,7 +92,7 @@ export const useArchivedAutoFolders = (args: Args): void => {
       const folderByName = new Map(existingFolders.map((folder) => [folder.name.toLowerCase(), folder]));
 
       projectArchivedSessions.forEach((session) => {
-        const folderName = resolveArchivedFolderName(session, project.normalizedPath);
+        const folderName = resolveArchivedFolderName(session, project.normalizedPath, { unassigned: t('unassigned'), projectRoot: t('project root') });
         const key = folderName.toLowerCase();
         let folder = folderByName.get(key);
         if (!folder) {
