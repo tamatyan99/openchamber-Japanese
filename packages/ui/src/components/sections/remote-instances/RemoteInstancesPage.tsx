@@ -1202,7 +1202,7 @@ export const RemoteInstancesPage: React.FC = () => {
 
             const isForwardOpen = Boolean(expandedForwards[forward.id]);
 
-            const typeLabel = forward.type === 'local' ? 'Local (-L)' : forward.type === 'remote' ? 'Remote (-R)' : 'Dynamic (-D)';
+            const typeLabel = forward.type === 'local' ? t('Local (-L)') : forward.type === 'remote' ? t('Remote (-R)') : t('Dynamic (-D)');
 
             return (
               <Collapsible
@@ -1265,9 +1265,9 @@ export const RemoteInstancesPage: React.FC = () => {
                           <SelectValue placeholder={t('Type')} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="local">Local (-L)</SelectItem>
-                          <SelectItem value="remote">Remote (-R)</SelectItem>
-                          <SelectItem value="dynamic">Dynamic (-D)</SelectItem>
+                          <SelectItem value="local">{t('Local (-L)')}</SelectItem>
+                          <SelectItem value="remote">{t('Remote (-R)')}</SelectItem>
+                          <SelectItem value="dynamic">{t('Dynamic (-D)')}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -1362,27 +1362,27 @@ export const RemoteInstancesPage: React.FC = () => {
                           <>
                             <RiComputerLine className="h-3.5 w-3.5" />
                             <span className="font-mono text-foreground">{localEndpoint}</span>
-                            <span>(local SOCKS5)</span>
+                            <span>{t('(local SOCKS5)')}</span>
                           </>
                         ) : forward.type === 'remote' ? (
                           <>
                             <RiServerLine className="h-3.5 w-3.5" />
                             <span className="font-mono text-foreground">{remoteEndpoint}</span>
-                            <span>(remote)</span>
+                            <span>{t('(remote)')}</span>
                             <RiArrowRightLine className="h-3.5 w-3.5" />
                             <RiComputerLine className="h-3.5 w-3.5" />
                             <span className="font-mono text-foreground">{localEndpoint}</span>
-                            <span>(local)</span>
+                            <span>{t('(local)')}</span>
                           </>
                         ) : (
                           <>
                             <RiComputerLine className="h-3.5 w-3.5" />
                             <span className="font-mono text-foreground">{localEndpoint}</span>
-                            <span>(local)</span>
+                            <span>{t('(local)')}</span>
                             <RiArrowRightLine className="h-3.5 w-3.5" />
                             <RiServerLine className="h-3.5 w-3.5" />
                             <span className="font-mono text-foreground">{remoteEndpoint}</span>
-                            <span>(remote)</span>
+                            <span>{t('(remote)')}</span>
                           </>
                         )}
                       </div>
@@ -1396,13 +1396,13 @@ export const RemoteInstancesPage: React.FC = () => {
                           onClick={() => {
                             void openExternalUrl(localEndpointUrl).then((opened) => {
                               if (!opened) {
-                                toast.error('Failed to open local endpoint');
+                                toast.error(t('Failed to open local endpoint'));
                               }
                             });
                           }}
                         >
                           <RiExternalLinkLine className="h-3.5 w-3.5" />
-                          Open local
+                          {t('Open local')}
                         </Button>
                       ) : null}
                     </div>
@@ -1430,20 +1430,20 @@ export const RemoteInstancesPage: React.FC = () => {
             }}
           >
             <RiAddLine className="h-3.5 w-3.5" />
-            Add forward
+            {t('Add forward')}
           </Button>
         </section>
       </div>
 
       <div className="mb-8 border-t border-[var(--surface-subtle)] pt-8">
         <div className="mb-1 px-1 space-y-0.5">
-          <h3 className="typography-ui-header font-medium text-foreground">Import from SSH config</h3>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Import from SSH config')}</h3>
         </div>
         <section className="px-2 pb-2 pt-0">
         {isImportsLoading ? (
-          <p className="typography-meta text-muted-foreground">Loading SSH hosts...</p>
+          <p className="typography-meta text-muted-foreground">{t('Loading SSH hosts...')}</p>
         ) : importCandidates.length === 0 ? (
-          <p className="typography-meta text-muted-foreground">No SSH hosts available.</p>
+          <p className="typography-meta text-muted-foreground">{t('No SSH hosts available.')}</p>
         ) : (
           <div>
             {importCandidates.slice(0, 8).map((candidate, index) => (
@@ -1465,7 +1465,7 @@ export const RemoteInstancesPage: React.FC = () => {
                   className="!font-normal"
                   onClick={() => void handleImportCandidate(candidate.host, candidate.pattern)}
                 >
-                  Import
+                  {t('Import')}
                 </Button>
               </div>
             ))}
@@ -1477,7 +1477,7 @@ export const RemoteInstancesPage: React.FC = () => {
       <div className="sticky bottom-0 z-10 -mx-3 sm:-mx-6 bg-[var(--surface-background)] border-t border-[var(--interactive-border)] px-3 sm:px-6 py-3">
         <div className="flex items-center gap-2">
           <Button type="button" size="xs" className="!font-normal" onClick={() => void handleSave()} disabled={!hasChanges || isSaving}>
-            Save changes
+            {t('Save changes')}
           </Button>
           {status?.localUrl ? (
             <>

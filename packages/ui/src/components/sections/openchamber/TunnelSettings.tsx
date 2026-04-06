@@ -812,7 +812,7 @@ export const TunnelSettings: React.FC = () => {
     } catch {
       setState('error');
       setErrorMessage('Failed to stop tunnel');
-      toast.error('Failed to stop tunnel');
+      toast.error(t('Failed to stop tunnel'));
     }
   }, []);
 
@@ -824,10 +824,10 @@ export const TunnelSettings: React.FC = () => {
     try {
       await navigator.clipboard.writeText(tunnelInfo.connectUrl);
       setCopied(true);
-      toast.success('Connect link copied');
+      toast.success(t('Connect link copied'));
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      toast.error('Failed to copy URL');
+      toast.error(t('Failed to copy URL'));
     }
   }, [tunnelInfo?.connectUrl]);
 
@@ -868,7 +868,7 @@ export const TunnelSettings: React.FC = () => {
         managedRemoteTunnelPresets: presets,
       });
     } catch {
-      toast.error('Failed to save selected managed remote tunnel');
+      toast.error(t('Failed to save selected managed remote tunnel'));
     }
   }, []);
 
@@ -889,20 +889,20 @@ export const TunnelSettings: React.FC = () => {
     const token = newPresetToken.trim();
 
     if (!name) {
-      toast.error('Tunnel name is required');
+      toast.error(t('Tunnel name is required'));
       return;
     }
     if (!hostname) {
-      toast.error('Managed remote tunnel hostname is required');
+      toast.error(t('Managed remote tunnel hostname is required'));
       return;
     }
     if (!token) {
-      toast.error('Managed remote tunnel token is required');
+      toast.error(t('Managed remote tunnel token is required'));
       return;
     }
 
     if (managedRemoteTunnelPresets.some((preset) => preset.hostname === hostname)) {
-      toast.error('This hostname already exists');
+      toast.error(t('This hostname already exists'));
       return;
     }
 
@@ -937,7 +937,7 @@ export const TunnelSettings: React.FC = () => {
       hostname: nextPreset.hostname,
       token,
     });
-    toast.success('Managed remote tunnel saved');
+    toast.success(t('Managed remote tunnel saved'));
   }, [managedRemoteTunnelPresets, newPresetHostname, newPresetName, newPresetToken, persistManagedRemoteTunnelToken, saveTunnelSettings, sessionTokensByPresetId]);
 
   const handleRemovePreset = React.useCallback(async (presetId: string) => {
@@ -978,7 +978,7 @@ export const TunnelSettings: React.FC = () => {
       managedRemoteTunnelPresetTokens: nextTokenMap,
     });
 
-    toast.success('Managed remote tunnel removed');
+    toast.success(t('Managed remote tunnel removed'));
   }, [managedRemoteTunnelPresets, saveTunnelSettings, selectedPresetId, sessionTokensByPresetId]);
 
   const primaryCtaClass = 'gap-2 border-[var(--primary-base)] bg-[var(--primary-base)] text-[var(--primary-foreground)] hover:bg-[var(--primary-hover)] hover:text-[var(--primary-foreground)]';
@@ -994,15 +994,15 @@ export const TunnelSettings: React.FC = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="typography-ui-header font-semibold text-foreground">Remote Tunnel</h3>
+        <h3 className="typography-ui-header font-semibold text-foreground">{t('Remote Tunnel')}</h3>
         <p className="typography-meta mt-0 text-muted-foreground/70">
-          Configure secure remote access with quick links or your own managed remote Cloudflare tunnel.
+          {t('Configure secure remote access with quick links or your own managed remote Cloudflare tunnel.')}
         </p>
         <p className="typography-meta mt-0 text-muted-foreground/60">
-          Secure Tunnel access is enforced server-side.
+          {t('Secure Tunnel access is enforced server-side.')}
         </p>
         <p className="typography-meta mt-0 text-muted-foreground/60">
-          Connect links are one-time and are revoked when tunnel stops or Connect link TTL expired.
+          {t('Connect links are one-time and are revoked when tunnel stops or Connect link TTL expired.')}
         </p>
       </div>
 
@@ -1011,7 +1011,7 @@ export const TunnelSettings: React.FC = () => {
           <div className="rounded-lg border border-[var(--status-info-border)] bg-[var(--status-info-background)]/30 p-3">
             <div className="mb-2 flex items-center gap-2">
               <RiInformationLine className="size-4 text-[var(--status-info)]" />
-              <p className="typography-ui-label text-foreground">Redeemed access links</p>
+              <p className="typography-ui-label text-foreground">{t('Redeemed access links')}</p>
             </div>
             <div className="space-y-1">
               {renderedSessionRecords.map((record) => {
@@ -1057,8 +1057,8 @@ export const TunnelSettings: React.FC = () => {
           <div className="flex items-start gap-2 rounded-lg border border-[var(--status-warning)]/30 bg-[var(--status-warning)]/5 p-3">
             <RiErrorWarningLine className="mt-0.5 size-4 shrink-0 text-[var(--status-warning)]" />
             <div className="space-y-1">
-              <p className="typography-meta font-medium text-foreground">cloudflared not found</p>
-              <p className="typography-meta text-muted-foreground/70">Install it to enable remote tunnel access:</p>
+              <p className="typography-meta font-medium text-foreground">{t('cloudflared not found')}</p>
+              <p className="typography-meta text-muted-foreground/70">{t('Install it to enable remote tunnel access:')}</p>
               <code className="typography-code block rounded bg-muted/50 px-2 py-1 text-xs text-foreground">
                 brew install cloudflared
               </code>
@@ -1071,7 +1071,7 @@ export const TunnelSettings: React.FC = () => {
         <section className="space-y-4 px-2 pb-2 pt-0">
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <p className="typography-ui-label text-foreground">Provider</p>
+              <p className="typography-ui-label text-foreground">{t('Provider')}</p>
               <Select
                 value={tunnelProvider}
                 onValueChange={(value) => {
@@ -1080,7 +1080,7 @@ export const TunnelSettings: React.FC = () => {
                 disabled={isSavingMode || state === 'starting' || state === 'stopping'}
               >
                 <SelectTrigger className="max-w-[16rem]">
-                  <SelectValue placeholder="Select provider" />
+                  <SelectValue placeholder={t('Select provider')} />
                 </SelectTrigger>
                 <SelectContent>
                   {providerCapabilities.length > 0

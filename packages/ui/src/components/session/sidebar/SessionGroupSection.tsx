@@ -672,12 +672,12 @@ export function SessionGroupSection(props: Props): React.ReactNode {
                     openNewSessionDraft({ directoryOverride: group.directory });
                   }}
                   className="inline-flex h-6 w-6 items-center justify-center rounded-md text-muted-foreground hover:text-foreground hover:bg-interactive-hover/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                   aria-label={`New draft session in ${group.label}`}
+                   aria-label={t('New draft session in {{label}}', { label: group.label })}
                  >
                    <RiAddLine className="h-4 w-4" />
                  </button>
                </TooltipTrigger>
-               <TooltipContent side="bottom" sideOffset={4}><p>New draft session</p></TooltipContent>
+               <TooltipContent side="bottom" sideOffset={4}><p>{t('New draft session')}</p></TooltipContent>
              </Tooltip>
            </div>
          ) : null}
