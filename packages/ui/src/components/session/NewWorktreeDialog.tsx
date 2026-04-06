@@ -1153,7 +1153,7 @@ Nice-to-have:
             {mode === 'existing-branch' ? (
               <div className="space-y-1.5">
                 <label className="typography-ui-label text-foreground block font-semibold">
-                  Select Branch
+                  {t('Select Branch')}
                 </label>
                 <div className="flex items-center gap-2">
                   <Button
@@ -1163,7 +1163,7 @@ Nice-to-have:
                     className="flex-1 justify-between h-9"
                   >
                     <span className={existingBranchState.selectedBranch ? 'text-foreground' : 'text-muted-foreground'}>
-                      {existingBranchState.selectedBranch || 'Choose a branch...'}
+                      {existingBranchState.selectedBranch || t('Choose a branch...')}
                     </span>
                     <RiGitBranchLine className="h-4 w-4 text-muted-foreground" />
                   </Button>
@@ -1173,7 +1173,7 @@ Nice-to-have:
                     className="h-8 w-8 px-0 shrink-0"
                     onClick={handleFetchBranches}
                     disabled={!canFetchBranches || isLoadingBranches}
-                    title="Fetch branches"
+                    title={t('Fetch branches')}
                   >
                     {isLoadingBranches ? <RiLoader4Line className="size-4 animate-spin" /> : <RiRefreshLine className="size-4" />}
                   </Button>
@@ -1182,30 +1182,30 @@ Nice-to-have:
                 {/* Mobile Branch Picker Overlay */}
                 <MobileOverlayPanel
                   open={existingBranchPickerOpen}
-                  title="Select Branch"
+                  title={t('Select Branch')}
                   onClose={() => setExistingBranchPickerOpen(false)}
                 >
                   <div className="space-y-4" ref={existingBranchMobileListWrapperRef}>
                     <Input
                       value={existingBranchQuery}
                       onChange={(e) => setExistingBranchQuery(e.target.value)}
-                      placeholder="Search branches..."
+                      placeholder={t('Search branches...')}
                       className="h-8"
                     />
                     {isLoadingBranches ? (
                       <div className="px-2 py-8 text-center typography-small text-muted-foreground">
-                        Loading branches...
+                        {t('Loading branches...')}
                       </div>
                     ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
                       <div className="px-2 py-8 text-center typography-small text-muted-foreground">
-                        No branches found
+                        {t('No branches found')}
                       </div>
                     ) : (
                       <div className="space-y-4">
                         {hasExistingBranchQuery && hasExistingBranchMatches && (
                           <div className="space-y-2">
                             <div className="typography-small font-semibold text-foreground px-2">
-                              Matching branches
+                              {t('Matching branches')}
                             </div>
                             <div className="space-y-1">
                               {existingBranchRankedGroups.matching.map((branch) => (
@@ -1453,23 +1453,23 @@ Nice-to-have:
                     <Input
                       value={sourceBranchQuery}
                       onChange={(e) => setSourceBranchQuery(e.target.value)}
-                      placeholder="Search branches..."
+                      placeholder={t('Search branches...')}
                       className="h-8"
                     />
                     {isLoadingBranches ? (
                       <div className="px-2 py-8 text-center typography-small text-muted-foreground">
-                        Loading branches...
+                        {t('Loading branches...')}
                       </div>
                     ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
                       <div className="px-2 py-8 text-center typography-small text-muted-foreground">
-                        No branches found
+                        {t('No branches found')}
                       </div>
                     ) : (
                       <div className="space-y-4">
                         {hasSourceBranchQuery && hasSourceBranchMatches && (
                           <div className="space-y-2">
                             <div className="typography-small font-semibold text-foreground px-2">
-                              Matching branches
+                              {t('Matching branches')}
                             </div>
                             <div className="space-y-1">
                               {sourceBranchRankedGroups.matching.map((branch) => (
@@ -1655,7 +1655,7 @@ Nice-to-have:
                       <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="sm" className="h-9 min-w-[220px] max-w-full justify-between gap-2">
                           <span className={cn('truncate', existingBranchState.selectedBranch ? 'text-foreground' : 'text-muted-foreground')}>
-                            {existingBranchState.selectedBranch || 'Choose a branch...'}
+                            {existingBranchState.selectedBranch || t('Choose a branch...')}
                           </span>
                           <RiArrowDownSLine className="h-4 w-4 shrink-0 text-muted-foreground" />
                         </Button>
@@ -1663,21 +1663,21 @@ Nice-to-have:
                       <DropdownMenuContent align="start" className="w-[320px] p-0" ref={existingBranchDropdownContentRef}>
                         <Command shouldFilter={false}>
                         <CommandInput
-                          placeholder="Search branches..."
+                          placeholder={t('Search branches...')}
                           value={existingBranchQuery}
                           onValueChange={setExistingBranchQuery}
                         />
                         <CommandList disableHorizontal>
                           {isLoadingBranches ? (
                             <div className="px-2 py-4 text-center typography-small text-muted-foreground">
-                              Loading branches...
+                              {t('Loading branches...')}
                             </div>
                           ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
                             <CommandEmpty>No branches found</CommandEmpty>
                           ) : (
                             <>
                               {hasExistingBranchQuery && hasExistingBranchMatches && (
-                                <CommandGroup heading="Matching branches">
+                                <CommandGroup heading={t('Matching branches')}>
                                   {existingBranchRankedGroups.matching.map((branch) => (
                                     <CommandItem
                                       key={`${branch.source}-${branch.value}`}
@@ -1767,7 +1767,7 @@ Nice-to-have:
                       className="h-8 w-8 px-0 shrink-0"
                       onClick={handleFetchBranches}
                       disabled={!canFetchBranches || isLoadingBranches}
-                      title="Fetch branches"
+                      title={t('Fetch branches')}
                     >
                       {isLoadingBranches ? <RiLoader4Line className="size-4 animate-spin" /> : <RiRefreshLine className="size-4" />}
                     </Button>
@@ -1903,21 +1903,21 @@ Nice-to-have:
                     <DropdownMenuContent align="start" className="w-[320px] p-0" ref={sourceBranchDropdownContentRef}>
                       <Command shouldFilter={false}>
                         <CommandInput
-                          placeholder="Search branches..."
+                          placeholder={t('Search branches...')}
                           value={sourceBranchQuery}
                           onValueChange={setSourceBranchQuery}
                         />
                         <CommandList disableHorizontal>
                           {isLoadingBranches ? (
                             <div className="px-2 py-4 text-center typography-small text-muted-foreground">
-                              Loading branches...
+                              {t('Loading branches...')}
                             </div>
                           ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
                             <CommandEmpty>No branches found</CommandEmpty>
                           ) : (
                             <>
                               {hasSourceBranchQuery && hasSourceBranchMatches && (
-                                <CommandGroup heading="Matching branches">
+                                <CommandGroup heading={t('Matching branches')}>
                                   {sourceBranchRankedGroups.matching.map((branch) => (
                                     <CommandItem
                                       key={`${branch.source}-${branch.value}`}
