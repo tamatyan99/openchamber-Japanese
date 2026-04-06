@@ -1111,12 +1111,12 @@ export const RemoteInstancesPage: React.FC = () => {
 
       <div className="mb-8 border-t border-[var(--surface-subtle)] pt-8">
         <div className="mb-1 px-1 space-y-0.5">
-          <h3 className="typography-ui-header font-medium text-foreground">Authentication</h3>
-          <p className="typography-meta text-muted-foreground">Optional credentials for SSH and remote UI.</p>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Authentication')}</h3>
+          <p className="typography-meta text-muted-foreground">{t('Optional credentials for SSH and remote UI.')}</p>
         </div>
         <section className="px-2 pb-2 pt-0 space-y-3">
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
-            <span className="typography-ui-label text-foreground w-56 shrink-0">SSH password (optional)</span>
+            <span className="typography-ui-label text-foreground w-56 shrink-0">{t('SSH password (optional)')}</span>
             <Input
               className="h-7 md:max-w-sm"
               type="password"
@@ -1134,12 +1134,12 @@ export const RemoteInstancesPage: React.FC = () => {
                   },
                 }))
               }
-              placeholder="Password or key passphrase"
+              placeholder={t('Password or key passphrase')}
             />
           </div>
 
           <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
-            <span className="typography-ui-label text-foreground w-56 shrink-0">OpenChamber UI password (optional)</span>
+            <span className="typography-ui-label text-foreground w-56 shrink-0">{t('OpenChamber UI password (optional)')}</span>
             <Input
               className="h-7 md:max-w-sm"
               type="password"
@@ -1157,7 +1157,7 @@ export const RemoteInstancesPage: React.FC = () => {
                   },
                 }))
               }
-              placeholder="Protect remote UI with password"
+              placeholder={t('Protect remote UI with password')}
             />
           </div>
         </section>
@@ -1165,12 +1165,12 @@ export const RemoteInstancesPage: React.FC = () => {
 
       <div className="mb-8 border-t border-[var(--surface-subtle)] pt-8">
         <div className="mb-1 px-1 space-y-0.5">
-          <h3 className="typography-ui-header font-medium text-foreground">Port Forwards</h3>
-          <p className="typography-meta text-muted-foreground">Optional extra SSH forwards in addition to the primary OpenChamber tunnel.</p>
+          <h3 className="typography-ui-header font-medium text-foreground">{t('Port Forwards')}</h3>
+          <p className="typography-meta text-muted-foreground">{t('Optional extra SSH forwards in addition to the primary OpenChamber tunnel.')}</p>
         </div>
         <section className="px-2 pb-2 pt-0 space-y-2">
           {draft.portForwards.length === 0 ? (
-            <p className="typography-micro text-muted-foreground/80">No extra forwards configured yet.</p>
+            <p className="typography-micro text-muted-foreground/80">{t('No extra forwards configured yet.')}</p>
           ) : null}
 
           {draft.portForwards.map((forward, index) => {
@@ -1183,14 +1183,14 @@ export const RemoteInstancesPage: React.FC = () => {
               }));
             };
 
-            const localLabel = forward.type === 'remote' ? 'Local target' : 'Local listen';
+            const localLabel = forward.type === 'remote' ? t('Local target') : t('Local listen');
             const localHint = forward.type === 'remote'
-              ? 'Local host and port on your machine that receives traffic from remote -R listener.'
-              : 'Local host and port where this forward listens on your machine.';
-            const remoteLabel = forward.type === 'remote' ? 'Remote listen' : 'Remote target';
+              ? t('Local host and port on your machine that receives traffic from remote -R listener.')
+              : t('Local host and port where this forward listens on your machine.');
+            const remoteLabel = forward.type === 'remote' ? t('Remote listen') : t('Remote target');
             const remoteHint = forward.type === 'remote'
-              ? 'Remote host and port where SSH creates the -R listener.'
-              : 'Remote host and port that receives traffic from local -L listener.';
+              ? t('Remote host and port where SSH creates the -R listener.')
+              : t('Remote host and port that receives traffic from local -L listener.');
 
             const localEndpoint = formatEndpoint(forward.localHost || 'localhost', forward.localPort);
             const remoteEndpoint = formatEndpoint(forward.remoteHost || 'localhost', forward.remotePort);
@@ -1225,7 +1225,7 @@ export const RemoteInstancesPage: React.FC = () => {
                     </CollapsibleTrigger>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Switch checked={forward.enabled} onCheckedChange={(checked) => updateForward((item) => ({ ...item, enabled: checked }))} aria-label="Enable forward" />
+                    <Switch checked={forward.enabled} onCheckedChange={(checked) => updateForward((item) => ({ ...item, enabled: checked }))} aria-label={t('Enable forward')} />
                     <Button
                       type="button"
                       variant="ghost"
@@ -1248,8 +1248,8 @@ export const RemoteInstancesPage: React.FC = () => {
                     <div className="flex flex-col gap-1.5 py-1.5 md:flex-row md:items-center md:gap-8">
                       <div className="w-56 shrink-0">
                         <HintLabel
-                          label="Forward type"
-                          hint="Local (-L): laptop -> remote service. Remote (-R): remote machine -> this laptop. Dynamic (-D): local SOCKS5 proxy."
+                          label={t('Forward type')}
+                          hint={t('Local (-L): laptop -> remote service. Remote (-R): remote machine -> this laptop. Dynamic (-D): local SOCKS5 proxy.')}
                         />
                       </div>
                       <Select
@@ -1262,7 +1262,7 @@ export const RemoteInstancesPage: React.FC = () => {
                         }
                       >
                         <SelectTrigger className="h-7 w-fit min-w-[140px]">
-                          <SelectValue placeholder="Type" />
+                          <SelectValue placeholder={t('Type')} />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="local">Local (-L)</SelectItem>

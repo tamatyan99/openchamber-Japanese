@@ -459,6 +459,7 @@ interface FilesViewProps {
 }
 
 export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
+  const { t } = useTranslation();
   const { files, runtime } = useRuntimeAPIs();
   const { currentTheme, availableThemes, lightThemeId, darkThemeId } = useThemeSystem();
   const { isMobile, screenWidth } = useDeviceInfo();
@@ -2247,8 +2248,8 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
               variant="ghost"
               size="sm"
               className="h-6 w-6 p-0 text-muted-foreground opacity-80 hover:opacity-100"
-              title="Open in desktop app"
-              aria-label="Open in desktop app"
+              title={t('Open in desktop app')}
+              aria-label={t('Open in desktop app')}
             >
               <RiFileTransferLine className="h-4 w-4" />
             </Button>
@@ -2270,7 +2271,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
                 onClick={() => void loadOpenInApps(true)}
               >
                 <RiRefreshLine className="h-4 w-4" />
-                <span className="typography-ui-label text-foreground">Refresh Apps</span>
+                <span className="typography-ui-label text-foreground">{t('Refresh Apps')}</span>
               </DropdownMenuItem>
             ) : null}
           </DropdownMenuContent>
@@ -2286,7 +2287,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
                 'h-6 w-6 p-0 transition-opacity',
                 wrapLines ? 'text-foreground opacity-100' : 'text-muted-foreground opacity-65 hover:opacity-100'
               )}
-              title={wrapLines ? 'Disable line wrap' : 'Enable line wrap'}
+              title={wrapLines ? t('Disable line wrap') : t('Enable line wrap')}
             >
               <RiTextWrap className="size-4" />
             </Button>
@@ -2299,7 +2300,7 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
                   'h-6 w-6 p-0 transition-opacity',
                   isSearchOpen ? 'text-foreground opacity-100' : 'text-muted-foreground opacity-65 hover:opacity-100'
                 )}
-                title="Find in file"
+                title={t('Find in file')}
               >
                 <RiSearchLine className="size-4" />
               </Button>
@@ -2351,12 +2352,12 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
                   setCopiedContent(false);
                 }, 1200);
               } else {
-                toast.error('Copy failed');
+                toast.error(t('Copy failed'));
               }
             }}
             className="h-6 w-6 p-0"
-            title="Copy file contents"
-            aria-label="Copy file contents"
+            title={t('Copy file contents')}
+            aria-label={t('Copy file contents')}
           >
             {copiedContent ? (
               <RiCheckLine className="h-4 w-4 text-[color:var(--status-success)]" />
@@ -2402,8 +2403,8 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
             size="sm"
             onClick={() => setIsFullscreen(false)}
             className="h-6 w-6 p-0"
-            title="Exit fullscreen"
-            aria-label="Exit fullscreen"
+            title={t('Exit fullscreen')}
+            aria-label={t('Exit fullscreen')}
           >
             <RiFullscreenExitLine className="h-4 w-4" />
           </Button>
@@ -2439,9 +2440,9 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
       }}>
         <DialogContent showCloseButton={false} className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Unsaved changes</DialogTitle>
+            <DialogTitle>{t('Unsaved changes')}</DialogTitle>
             <DialogDescription>
-              Save your edits before continuing?
+              {t('Save your edits before continuing?')}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -2451,9 +2452,9 @@ export const FilesView: React.FC<FilesViewProps> = ({ mode = 'full' }) => {
               disabled={isSaving}
               className="border-[var(--status-success-border)] bg-[var(--status-success-background)] text-[var(--status-success)] hover:bg-[rgb(var(--status-success)/0.2)]"
             >
-              Save changes
+              {t('Save changes')}
             </Button>
-            <Button variant="destructive" onClick={discardAndContinue}>Discard</Button>
+            <Button variant="destructive" onClick={discardAndContinue}>{t('Discard')}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

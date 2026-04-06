@@ -566,7 +566,7 @@ export const TunnelSettings: React.FC = () => {
         setManagedRemoteTunnelPresets(payload.managedRemoteTunnelPresets);
       }
     } catch {
-      toast.error('Failed to save tunnel settings');
+      toast.error(t('Failed to save tunnel settings'));
     } finally {
       setIsSavingMode(false);
     }
@@ -580,7 +580,7 @@ export const TunnelSettings: React.FC = () => {
         tunnelSessionTtlMs: nextSessionTtlMs,
       });
     } catch {
-      toast.error('Failed to save tunnel TTL settings');
+      toast.error(t('Failed to save tunnel TTL settings'));
     } finally {
       setIsSavingTtl(false);
     }
@@ -611,7 +611,7 @@ export const TunnelSettings: React.FC = () => {
         return next;
       });
     } catch {
-      toast.error('Failed to save managed remote tunnel token');
+      toast.error(t('Failed to save managed remote tunnel token'));
     }
   }, [sessionTokensByPresetId]);
 
@@ -698,7 +698,7 @@ export const TunnelSettings: React.FC = () => {
         if (!selectedPreset) {
           setState('idle');
           setManagedRemoteValidationError('Select or add a managed remote tunnel first');
-          toast.error('Select or add a managed remote tunnel first');
+          toast.error(t('Select or add a managed remote tunnel first'));
           return;
         }
 
@@ -732,7 +732,7 @@ export const TunnelSettings: React.FC = () => {
         if (tunnelMode === 'managed-remote' && typeof data.error === 'string' && data.error.includes('Managed remote tunnel token is required')) {
           setState('idle');
           setManagedRemoteValidationError('Managed remote tunnel token is required before starting');
-          toast.error('Add a managed remote tunnel token before starting');
+          toast.error(t('Add a managed remote tunnel token before starting'));
           return;
         }
         setState('error');
@@ -745,7 +745,7 @@ export const TunnelSettings: React.FC = () => {
       if (!startedUrl) {
         setState('error');
         setErrorMessage('Tunnel started but no public URL was returned');
-        toast.error('Tunnel started but no public URL was returned');
+        toast.error(t('Tunnel started but no public URL was returned'));
         return;
       }
 
@@ -775,12 +775,12 @@ export const TunnelSettings: React.FC = () => {
         const invalidatedSessionCount = typeof data.invalidatedSessionCount === 'number' ? data.invalidatedSessionCount : 0;
         toast.warning(`Replaced previous tunnel: revoked ${revokedBootstrapCount} link${revokedBootstrapCount === 1 ? '' : 's'}, invalidated ${invalidatedSessionCount} session${invalidatedSessionCount === 1 ? '' : 's'}.`);
       } else {
-        toast.success('Tunnel link ready');
+        toast.success(t('Tunnel link ready'));
       }
     } catch {
       setState('error');
       setErrorMessage('Failed to start tunnel');
-      toast.error('Failed to start tunnel');
+      toast.error(t('Failed to start tunnel'));
     }
   }, [
     managedRemoteTunnelPresets,
@@ -808,7 +808,7 @@ export const TunnelSettings: React.FC = () => {
       setActiveTunnelMode(null);
       setQrDataUrl(null);
       setState('idle');
-      toast.success('Tunnel stopped');
+      toast.success(t('Tunnel stopped'));
     } catch {
       setState('error');
       setErrorMessage('Failed to stop tunnel');

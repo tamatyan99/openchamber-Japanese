@@ -269,7 +269,7 @@ export function SidebarHeader(props: Props): React.ReactNode {
                     type="button"
                     onClick={() => setSessionSearchQuery('')}
                     className="absolute right-1 top-1/2 inline-flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground hover:bg-interactive-hover/60 hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-                    aria-label="Clear search"
+                    aria-label={t('Clear search')}
                   >
                     <RiCloseLine className="h-3.5 w-3.5" />
                   </button>
