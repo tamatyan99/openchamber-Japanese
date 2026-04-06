@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import type { UsageWindow } from '@/types';
 import { formatPercent, formatWindowLabel, calculatePace, calculateExpectedUsagePercent } from '@/lib/quota';
 import { UsageProgressBar } from './UsageProgressBar';
@@ -23,9 +24,10 @@ export const UsageCard: React.FC<UsageCardProps> = ({
   toggleEnabled = false,
   onToggle,
 }) => {
+  const { t } = useTranslation();
   const displayMode = useQuotaStore((state) => state.displayMode);
   const displayPercent = displayMode === 'remaining' ? window.remainingPercent : window.usedPercent;
-  const barLabel = displayMode === 'remaining' ? 'remaining' : 'used';
+  const barLabel = displayMode === 'remaining' ? t('remaining') : t('used');
   const percentLabel = window.valueLabel ?? formatPercent(displayPercent);
   const resetLabel = window.resetAfterFormatted ?? window.resetAtFormatted ?? '';
   const windowLabel = formatWindowLabel(title);
@@ -50,7 +52,7 @@ export const UsageCard: React.FC<UsageCardProps> = ({
             <Checkbox
               checked={toggleEnabled}
               onChange={(checked) => onToggle?.(checked)}
-              ariaLabel="Show in dropdown"
+              ariaLabel={t('Show in dropdown')}
             />
           )}
           <div className="min-w-0 flex flex-col">
@@ -74,7 +76,7 @@ export const UsageCard: React.FC<UsageCardProps> = ({
         />
         <div className="mt-1 flex items-center justify-between">
           <span className="typography-micro text-muted-foreground">
-            {resetLabel ? `Resets ${resetLabel}` : ''}
+            {resetLabel ? t('Resets {{resetLabel}}', { resetLabel }) : ''}
           </span>
           <span className="typography-micro text-muted-foreground">
             {barLabel}

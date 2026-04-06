@@ -308,10 +308,10 @@ const DiffViewModeSelector = React.memo<DiffViewModeSelectorProps>(({ mode, onMo
                         <DropdownMenuRadioItem key={option.value} value={option.value}>
                             <div className="flex flex-col gap-0.5">
                                 <span className="typography-meta text-foreground">
-                                    {option.label}
+                                    {t(option.label)}
                                 </span>
                                 <span className="typography-micro text-muted-foreground">
-                                    {option.description}
+                                    {t(option.description)}
                                 </span>
                             </div>
                         </DropdownMenuRadioItem>
@@ -394,6 +394,7 @@ const ImageDiffViewer = React.memo<ImageDiffViewerProps>(({
     isVisible,
     renderSideBySide,
 }) => {
+    const { t } = useTranslation();
     const hasOriginal = diff.original.length > 0;
     const hasModified = diff.modified.length > 0;
 
@@ -415,10 +416,10 @@ const ImageDiffViewer = React.memo<ImageDiffViewerProps>(({
             <div className={containerClass}>
                 {hasOriginal && (
                     <div className={imageContainerClass}>
-                        <span className="typography-meta text-muted-foreground font-medium">Original</span>
+                        <span className="typography-meta text-muted-foreground font-medium">{t('Original')}</span>
                         <img
                             src={diff.original}
-                            alt={`Original: ${filePath}`}
+                            alt={`${t('Original')}: ${filePath}`}
                             className={renderSideBySide ? "max-w-full max-h-[calc(100%-2rem)] object-contain" : "max-w-full object-contain"}
                             style={{ imageRendering: 'auto' }}
                         />
@@ -427,11 +428,11 @@ const ImageDiffViewer = React.memo<ImageDiffViewerProps>(({
                 {hasModified && (
                     <div className={imageContainerClass}>
                         <span className="typography-meta text-muted-foreground font-medium">
-                            {hasOriginal ? 'Modified' : 'New'}
+                            {hasOriginal ? t('Modified') : t('New')}
                         </span>
                         <img
                             src={diff.modified}
-                            alt={`Modified: ${filePath}`}
+                            alt={`${t('Modified')}: ${filePath}`}
                             className={renderSideBySide ? "max-w-full max-h-[calc(100%-2rem)] object-contain" : "max-w-full object-contain"}
                             style={{ imageRendering: 'auto' }}
                         />
@@ -469,10 +470,10 @@ const InlineImageDiffViewer = React.memo<InlineImageDiffViewerProps>(({
             <div className={containerClass}>
                 {hasOriginal && (
                     <div className={imageContainerClass}>
-                        <span className="typography-meta text-muted-foreground font-medium">Original</span>
+                        <span className="typography-meta text-muted-foreground font-medium">{t('Original')}</span>
                         <img
                             src={diff.original}
-                            alt={`Original: ${filePath}`}
+                            alt={`${t('Original')}: ${filePath}`}
                             className={renderSideBySide ? "max-w-full max-h-[70vh] object-contain" : "max-w-full object-contain"}
                             style={{ imageRendering: 'auto' }}
                         />
@@ -481,11 +482,11 @@ const InlineImageDiffViewer = React.memo<InlineImageDiffViewerProps>(({
                 {hasModified && (
                     <div className={imageContainerClass}>
                         <span className="typography-meta text-muted-foreground font-medium">
-                            {hasOriginal ? 'Modified' : 'New'}
+                            {hasOriginal ? t('Modified') : t('New')}
                         </span>
                         <img
                             src={diff.modified}
-                            alt={`Modified: ${filePath}`}
+                            alt={`${t('Modified')}: ${filePath}`}
                             className={renderSideBySide ? "max-w-full max-h-[70vh] object-contain" : "max-w-full object-contain"}
                             style={{ imageRendering: 'auto' }}
                         />
@@ -633,6 +634,7 @@ const MultiFileDiffEntry = React.memo<MultiFileDiffEntryProps>(({
     isOpeningInEditor = false,
     onOpenInEditor,
 }) => {
+    const { t } = useTranslation();
     const { git } = useRuntimeAPIs();
     const cachedDiff = useGitStore(
         React.useCallback((state) => {
@@ -840,7 +842,7 @@ const MultiFileDiffEntry = React.memo<MultiFileDiffEntryProps>(({
                                 variant="ghost"
                                 size="sm"
                                 className="h-5 w-5 p-0 opacity-70 hover:opacity-100"
-                                title="Open this file in editor at change"
+                                title={t('Open this file in editor at change')}
                                 onClick={(event) => {
                                     event.stopPropagation();
                                     onOpenInEditor(file.path, diffData);
@@ -1561,7 +1563,7 @@ export const DiffView: React.FC<DiffViewProps> = ({
                 {showFileSidebar && (
                     <section className="hidden lg:flex w-72 flex-col rounded-xl border border-border/60 bg-background/70 overflow-hidden">
                         <div className="flex items-center justify-between px-3 py-1.5 border-b border-border/40">
-                            <span className="typography-ui-header font-semibold text-foreground">Files</span>
+                            <span className="typography-ui-header font-semibold text-foreground">{t('Files')}</span>
                             <span className="typography-meta text-muted-foreground">{changedFiles.length}</span>
                         </div>
                         <FileList
@@ -1736,7 +1738,7 @@ export const DiffView: React.FC<DiffViewProps> = ({
                             void openSelectedFileInEditorAtChange();
                         }}
                         disabled={isOpeningSelectedInEditor}
-                        title="Open this file at first changed line"
+                        title={t('Open this file at first changed line')}
                     >
                         {isOpeningSelectedInEditor ? (
                             <RiLoader4Line className="size-3.5 animate-spin" />

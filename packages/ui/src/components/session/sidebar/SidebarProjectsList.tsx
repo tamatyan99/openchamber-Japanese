@@ -224,7 +224,7 @@ export function SidebarProjectsList(props: Props): React.ReactNode {
                             <DragOverlay dropAnimation={null} />
                           </DndContext>
                         ) : (
-                          <div className="py-1 text-left typography-micro text-muted-foreground">No sessions yet.</div>
+                          <div className="py-1 text-left typography-micro text-muted-foreground">{t('No sessions yet.')}</div>
                         )}
                       </div>
                     ) : null}

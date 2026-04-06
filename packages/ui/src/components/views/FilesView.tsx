@@ -407,13 +407,13 @@ const FileRow: React.FC<FileRowProps> = ({
                 e.stopPropagation();
                 void copyTextToClipboard(node.path).then((result) => {
                   if (result.ok) {
-                    toast.success('Path copied');
+                    toast.success(t('Path copied'));
                     return;
                   }
-                  toast.error('Copy failed');
+                  toast.error(t('Copy failed'));
                 });
               }}>
-                <RiFileCopyLine className="mr-2 h-4 w-4" /> Copy Path
+                <RiFileCopyLine className="mr-2 h-4 w-4" /> {t('Copy Path')}
               </DropdownMenuItem>
               {canReveal && (
                 <DropdownMenuItem onClick={(e) => { e.stopPropagation(); onRevealPath(node.path); }}>

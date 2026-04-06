@@ -96,7 +96,7 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
                 </span>
               </TooltipTrigger>
               <TooltipContent side="bottom">
-                Auto-refresh usage data at set interval
+                {t('Auto-refresh usage data at set interval')}
               </TooltipContent>
             </Tooltip>
             <Select
@@ -105,7 +105,7 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
               disabled={!usageAutoRefresh}
             >
               <SelectTrigger className="w-fit">
-                <SelectValue placeholder="Interval" />
+                <SelectValue placeholder={t('Interval')} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="30000">30s</SelectItem>
@@ -117,8 +117,8 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
               variant="ghost"
               className="h-7 w-7 px-0 text-muted-foreground"
               onClick={() => fetchAllQuotas()}
-              aria-label="Refresh usage"
-              title="Refresh usage"
+              aria-label={t('Refresh usage')}
+              title={t('Refresh usage')}
               disabled={isLoading}
             >
               <RiRefreshLine className={cn('h-3.5 w-3.5', isLoading && 'animate-spin')} />
@@ -126,14 +126,14 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
           </div>
         </div>
         <div className="mt-2 flex items-center justify-between gap-2">
-          <span className="typography-micro text-muted-foreground">Display</span>
+          <span className="typography-micro text-muted-foreground">{t('Display')}</span>
           <Select value={usageDisplayMode} onValueChange={handleUsageDisplayModeChange}>
             <SelectTrigger className="w-fit">
-              <SelectValue placeholder="Display mode" />
+              <SelectValue placeholder={t('Display mode')} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="usage">Usage</SelectItem>
-              <SelectItem value="remaining">Quota remaining</SelectItem>
+              <SelectItem value="usage">{t('Usage')}</SelectItem>
+              <SelectItem value="remaining">{t('Quota remaining')}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -177,7 +177,7 @@ export const UsageSidebar: React.FC<UsageSidebarProps> = ({ onItemSelect }) => {
                   {provider.name}
                 </span>
               {!configured && (
-                <span className="typography-micro text-muted-foreground/60 flex-shrink-0">Not set</span>
+                <span className="typography-micro text-muted-foreground/60 flex-shrink-0">{t('Not set')}</span>
               )}
             </button>
           </div>

@@ -488,10 +488,10 @@ export const AgentsSidebar: React.FC<AgentsSidebarProps> = ({ onItemSelect }) =>
               variant="ghost"
               onClick={() => setRenameDialogAgent(null)}
             >
-              Cancel
+              {t('Cancel')}
             </Button>
             <Button size="sm" onClick={handleRenameAgent}>
-              Rename
+              {t('Rename')}
             </Button>
           </DialogFooter>
         </DialogContent>
