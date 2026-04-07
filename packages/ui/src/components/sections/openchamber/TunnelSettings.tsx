@@ -1383,7 +1383,7 @@ export const TunnelSettings: React.FC = () => {
                     <button
                       type="button"
                       className="rounded p-0.5 text-muted-foreground/70 hover:text-foreground"
-                      aria-label="Managed remote tunnel token info"
+                      aria-label={t('Managed remote tunnel token info')}
                     >
                       <RiInformationLine className="h-3.5 w-3.5" />
                     </button>
@@ -1430,7 +1430,7 @@ export const TunnelSettings: React.FC = () => {
                     variant="outline"
                     size="xs"
                     className="h-7 w-7 p-0"
-                    aria-label="Browse config file"
+                    aria-label={t('Browse config file')}
                     onClick={() => {
                       void handleBrowseManagedLocalConfig();
                     }}
@@ -1443,7 +1443,7 @@ export const TunnelSettings: React.FC = () => {
                       variant="ghost"
                       size="xs"
                       className="h-7 w-7 p-0"
-                      aria-label="Clear config file"
+                      aria-label={t('Clear config file')}
                       onClick={() => {
                         void handleManagedLocalConfigClear();
                       }}

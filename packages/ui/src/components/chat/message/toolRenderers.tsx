@@ -1,4 +1,5 @@
 import { RiCheckLine } from '@remixicon/react';
+import i18n from '@/i18n';
 
 import { cn } from '@/lib/utils';
 import { typography } from '@/lib/typography';
@@ -385,7 +386,7 @@ export const renderTodoOutput = (output: string, options?: { unstyled?: boolean 
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--foreground)' }} />
-                            <span className="typography-meta font-semibold text-foreground uppercase tracking-wide">In Progress</span>
+                            <span className="typography-meta font-semibold text-foreground uppercase tracking-wide">{i18n.t('In Progress')}</span>
                         </div>
                         <div className="space-y-1.5 pl-4">
                             {todosByStatus.in_progress.map((todo, idx) => (

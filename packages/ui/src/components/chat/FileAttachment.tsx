@@ -1,4 +1,5 @@
 import React, { useRef, memo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiAttachment2, RiCloseLine, RiFileImageLine, RiFileLine, RiFilePdfLine, RiGithubLine, RiGitPullRequestLine } from '@remixicon/react';
 import { useInputStore } from '@/sync/input-store';
 import type { AttachedFile } from '@/sync/session-ui-store';
@@ -13,6 +14,7 @@ import { FileTypeIcon } from '@/components/icons/FileTypeIcon';
 import type { ToolPopupContent } from './message/types';
 
 export const FileAttachmentButton = memo(() => {
+  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addAttachedFile = useInputStore((state) => state.addAttachedFile);
   const isMobile = useUIStore((state) => state.isMobile);
@@ -103,13 +105,13 @@ export const FileAttachmentButton = memo(() => {
               'hover:bg-muted text-muted-foreground',
               buttonSizeClass
             )}
-            aria-label="Attach files"
+            aria-label={t('Attach files')}
           >
             <RiAttachment2 className={iconSizeClass} />
           </button>
         </TooltipTrigger>
         <TooltipContent side="top">
-          <p>Attach files</p>
+          <p>{t('Attach files')}</p>
         </TooltipContent>
       </Tooltip>
     </>

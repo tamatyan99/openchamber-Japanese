@@ -580,7 +580,7 @@ const SkillsInstalledPage: React.FC = () => {
                 <Input
                   value={newFileName}
                   onChange={(e) => setNewFileName(e.target.value)}
-                  placeholder="example.md or docs/reference.txt"
+                  placeholder={t('example.md or docs/reference.txt')}
                   className="text-foreground placeholder:text-muted-foreground focus-visible:ring-[var(--primary-base)]"
                   disabled={editingFilePath !== null}
                 />

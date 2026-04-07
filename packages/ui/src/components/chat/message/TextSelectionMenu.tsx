@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { createPortal } from 'react-dom';
 import { useSessionUIStore } from '@/sync/session-ui-store';
 import { useInputStore } from '@/sync/input-store';
@@ -187,6 +188,7 @@ const rangeToMarkdown = (range: Range, plainText: string): string => {
 };
 
 export const TextSelectionMenu: React.FC<TextSelectionMenuProps> = ({ containerRef }) => {
+  const { t } = useTranslation();
   const [position, setPosition] = React.useState<MenuPosition>({ x: 0, y: 0, show: false });
   const [selectedText, setSelectedText] = React.useState('');
   const [selectedTextMarkdown, setSelectedTextMarkdown] = React.useState('');
@@ -490,7 +492,7 @@ export const TextSelectionMenu: React.FC<TextSelectionMenuProps> = ({ containerR
           type="button"
         >
           <RiAddLine className="h-5 w-5" />
-          <span>Add to chat</span>
+          <span>{t('Add to chat')}</span>
         </button>
         
         <button
@@ -579,7 +581,7 @@ export const TextSelectionMenu: React.FC<TextSelectionMenuProps> = ({ containerR
             'hover:bg-[var(--interactive-hover)]',
             'transition-colors duration-150'
           )}
-          title="Create new session with selection"
+          title={t('Create new session with selection')}
           type="button"
         >
           <RiChatNewLine className="h-4 w-4" />

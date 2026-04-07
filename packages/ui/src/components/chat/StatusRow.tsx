@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import { useSessionUIStore } from '@/sync/session-ui-store';
 import {
   RiArrowDownSLine,
@@ -151,6 +152,7 @@ export const StatusRow: React.FC<StatusRowProps> = ({
   showTodos = true,
   agentName,
 }) => {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = React.useState(false);
   const currentSessionId = useSessionUIStore((state) => state.currentSessionId);
   const todosRecord = useDirectorySync((state) => state.todo);
@@ -243,7 +245,7 @@ export const StatusRow: React.FC<StatusRowProps> = ({
           {activeTodo.content}
         </span>
       ) : (
-        <span className="typography-ui-label">Tasks</span>
+        <span className="typography-ui-label">{t('Tasks')}</span>
       )}
       <span className="typography-meta">
         {statusSummary.active} active · {statusSummary.left} left

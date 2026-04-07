@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Dialog,
   DialogContent,
@@ -11,6 +12,7 @@ import { useUIStore } from '@/stores/useUIStore';
 import { copyTextToClipboard } from '@/lib/clipboard';
 
 export const OpenCodeStatusDialog: React.FC = () => {
+  const { t } = useTranslation();
   const isOpenCodeStatusDialogOpen = useUIStore((state) => state.isOpenCodeStatusDialogOpen);
   const setOpenCodeStatusDialogOpen = useUIStore((state) => state.setOpenCodeStatusDialogOpen);
   const openCodeStatusText = useUIStore((state) => state.openCodeStatusText);
@@ -32,7 +34,7 @@ export const OpenCodeStatusDialog: React.FC = () => {
     <Dialog open={isOpenCodeStatusDialogOpen} onOpenChange={setOpenCodeStatusDialogOpen}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle>OpenCode Status</DialogTitle>
+          <DialogTitle>{t('OpenCode Status')}</DialogTitle>
           <DialogDescription>
             Diagnostic snapshot for support and debugging.
           </DialogDescription>

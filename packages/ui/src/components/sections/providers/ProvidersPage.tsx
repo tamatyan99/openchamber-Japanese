@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { ScrollableOverlay } from '@/components/ui/ScrollableOverlay';
 import { ProviderLogo } from '@/components/ui/ProviderLogo';
 import { useConfigStore } from '@/stores/useConfigStore';
@@ -139,6 +140,7 @@ const parseProvidersPayload = (payload: unknown): ProviderOption[] => {
 };
 
 export const ProvidersPage: React.FC = () => {
+  const { t } = useTranslation();
   const providers = useConfigStore((state) => state.providers);
   const selectedProviderId = useConfigStore((state) => state.selectedProviderId);
   const setSelectedProvider = useConfigStore((state) => state.setSelectedProvider);
@@ -510,7 +512,7 @@ export const ProvidersPage: React.FC = () => {
       <div className="flex h-full items-center justify-center">
         <div className="text-center text-muted-foreground">
           <RiStackLine className="mx-auto mb-3 h-12 w-12 opacity-50" />
-          <p className="typography-body">No providers detected</p>
+          <p className="typography-body">{t('No providers detected')}</p>
           <p className="typography-meta mt-1 opacity-75">Check your OpenCode configuration</p>
         </div>
       </div>
@@ -527,18 +529,18 @@ export const ProvidersPage: React.FC = () => {
 
           <div className="mb-8">
             <div className="mb-1 px-1">
-              <h2 className="typography-ui-header font-medium text-foreground">Select Provider</h2>
+              <h2 className="typography-ui-header font-medium text-foreground">{t('Select Provider')}</h2>
             </div>
 
             <section className="px-2 pb-2 pt-0">
               <div className="flex flex-wrap items-center gap-2 py-1.5">
-                <span className="typography-ui-label text-foreground">Provider</span>
+                <span className="typography-ui-label text-foreground">{t('Provider')}</span>
                   {availableLoading ? (
                     <p className="typography-meta text-muted-foreground">Loading...</p>
                   ) : availableError ? (
                     <p className="typography-meta text-muted-foreground">{availableError}</p>
                   ) : unconnectedProviders.length === 0 ? (
-                    <p className="typography-meta text-muted-foreground">All providers connected.</p>
+                    <p className="typography-meta text-muted-foreground">{t('All providers connected.')}</p>
                   ) : (
                     <DropdownMenu open={providerDropdownOpen} onOpenChange={(open) => {
                       setProviderDropdownOpen(open);
@@ -622,7 +624,7 @@ export const ProvidersPage: React.FC = () => {
           {candidateProviderId && (
             <div className="mb-8">
               <div className="mb-1 px-1">
-                <h2 className="typography-ui-header font-medium text-foreground">Authentication</h2>
+                <h2 className="typography-ui-header font-medium text-foreground">{t('Authentication')}</h2>
               </div>
 
               {authLoading ? (
@@ -714,7 +716,7 @@ export const ProvidersPage: React.FC = () => {
                               {oauthDetails[codeKey]?.userCode && (
                                 <div className="flex items-center gap-2 mt-2">
                                   <Input value={oauthDetails[codeKey]?.userCode} readOnly className="font-mono text-center tracking-widest" />
-                                  <Button variant="outline" size="xs" className="!font-normal" onClick={() => handleCopyOAuthCode(oauthDetails[codeKey]?.userCode ?? '')}>Copy Code</Button>
+                                  <Button variant="outline" size="xs" className="!font-normal" onClick={() => handleCopyOAuthCode(oauthDetails[codeKey]?.userCode ?? '')}>{t('Copy Code')}</Button>
                                 </div>
                               )}
 
@@ -722,7 +724,7 @@ export const ProvidersPage: React.FC = () => {
                                 <div className="flex items-center gap-2 mt-2">
                                   <Input value={oauthDetails[codeKey]?.url} readOnly className="text-xs text-muted-foreground" />
                                   <div className="flex gap-1 shrink-0">
-                                    <Button variant="outline" size="xs" className="!font-normal" onClick={() => openExternalUrl(oauthDetails[codeKey]?.url ?? '')}>Open</Button>
+                                    <Button variant="outline" size="xs" className="!font-normal" onClick={() => openExternalUrl(oauthDetails[codeKey]?.url ?? '')}>{t('Open')}</Button>
                                     <Button variant="outline" size="xs" className="!font-normal" onClick={() => handleCopyOAuthLink(oauthDetails[codeKey]?.url ?? '')}>Copy</Button>
                                   </div>
                                 </div>
@@ -738,7 +740,7 @@ export const ProvidersPage: React.FC = () => {
                                         [codeKey]: event.target.value,
                                       }))
                                     }
-                                    placeholder="Paste authorization code"
+                                    placeholder={t('Paste authorization code')}
                                     className="font-mono text-xs"
                                   />
                                   <Button
@@ -771,8 +773,8 @@ export const ProvidersPage: React.FC = () => {
       <div className="flex h-full items-center justify-center">
         <div className="text-center text-muted-foreground">
           <RiStackLine className="mx-auto mb-3 h-12 w-12 opacity-50" />
-          <p className="typography-body">Select a provider from the sidebar</p>
-          <p className="typography-meta mt-1 opacity-75">Review details and configure auth</p>
+          <p className="typography-body">{t('Select a provider from the sidebar')}</p>
+          <p className="typography-meta mt-1 opacity-75">{t('Review details and configure auth')}</p>
         </div>
       </div>
     );
@@ -810,7 +812,7 @@ export const ProvidersPage: React.FC = () => {
         {/* Authentication */}
         <div className="mb-8">
           <div className="mb-1 px-1 flex items-center justify-between gap-2">
-            <h3 className="typography-ui-header font-medium text-foreground">Authentication</h3>
+            <h3 className="typography-ui-header font-medium text-foreground">{t('Authentication')}</h3>
             <Button
               variant="outline"
               size="xs"
@@ -907,7 +909,7 @@ export const ProvidersPage: React.FC = () => {
                           {oauthDetails[codeKey]?.userCode && (
                             <div className="flex items-center gap-2 mt-2">
                               <Input value={oauthDetails[codeKey]?.userCode} readOnly className="font-mono text-center tracking-widest" />
-                              <Button variant="outline" size="xs" className="!font-normal" onClick={() => handleCopyOAuthCode(oauthDetails[codeKey]?.userCode ?? '')}>Copy Code</Button>
+                              <Button variant="outline" size="xs" className="!font-normal" onClick={() => handleCopyOAuthCode(oauthDetails[codeKey]?.userCode ?? '')}>{t('Copy Code')}</Button>
                             </div>
                           )}
 
@@ -915,7 +917,7 @@ export const ProvidersPage: React.FC = () => {
                             <div className="flex items-center gap-2 mt-2">
                               <Input value={oauthDetails[codeKey]?.url} readOnly className="text-xs text-muted-foreground" />
                               <div className="flex gap-1 shrink-0">
-                                <Button variant="outline" size="xs" className="!font-normal" onClick={() => openExternalUrl(oauthDetails[codeKey]?.url ?? '')}>Open</Button>
+                                <Button variant="outline" size="xs" className="!font-normal" onClick={() => openExternalUrl(oauthDetails[codeKey]?.url ?? '')}>{t('Open')}</Button>
                                 <Button variant="outline" size="xs" className="!font-normal" onClick={() => handleCopyOAuthLink(oauthDetails[codeKey]?.url ?? '')}>Copy</Button>
                               </div>
                             </div>
@@ -931,7 +933,7 @@ export const ProvidersPage: React.FC = () => {
                                     [codeKey]: event.target.value,
                                   }))
                                 }
-                                placeholder="Paste authorization code"
+                                placeholder={t('Paste authorization code')}
                                 className="font-mono text-xs"
                               />
                               <Button
@@ -957,7 +959,7 @@ export const ProvidersPage: React.FC = () => {
         {/* Connection Details */}
         <div className="mb-8">
           <div className="mb-1 px-1">
-            <h3 className="typography-ui-header font-medium text-foreground">Connection Details</h3>
+            <h3 className="typography-ui-header font-medium text-foreground">{t('Connection Details')}</h3>
           </div>
 
           <section className="px-2 pb-2 pt-0">
@@ -973,7 +975,7 @@ export const ProvidersPage: React.FC = () => {
                     ].filter(Boolean).join(', ')}
                   </span>
                 ) : (
-                  <span className="typography-meta text-muted-foreground">No active configuration source</span>
+                  <span className="typography-meta text-muted-foreground">{t('No active configuration source')}</span>
                 )}
               </div>
 
@@ -1038,7 +1040,7 @@ export const ProvidersPage: React.FC = () => {
             </div>
 
             {filteredModels.length === 0 ? (
-              <p className="typography-meta text-muted-foreground py-4 text-center">No models match this filter.</p>
+              <p className="typography-meta text-muted-foreground py-4 text-center">{t('No models match this filter.')}</p>
             ) : (
               <div className="divide-y divide-[var(--surface-subtle)]">
                 {filteredModels.map((model) => {

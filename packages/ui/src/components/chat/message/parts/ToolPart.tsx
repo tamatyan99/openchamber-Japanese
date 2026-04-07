@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RuntimeAPIContext } from '@/contexts/runtimeAPIContext';
 import { RiArrowDownSLine, RiArrowRightSLine, RiExternalLinkLine } from '@remixicon/react';
 import { File as PierreFile, PatchDiff } from '@pierre/diffs/react';
@@ -1450,6 +1451,7 @@ const ToolExpandedContent: React.FC<ToolExpandedContentProps> = React.memo(({
     currentDirectory,
     onShowPopup,
 }) => {
+    const { t } = useTranslation();
     const { pierreTheme, pierreThemeType } = usePierreThemeConfig();
     const [diffViewMode, setDiffViewMode] = React.useState<DiffViewMode>('unified');
     const stateWithData = state as ToolStateWithMetadata;
@@ -1665,7 +1667,7 @@ const ToolExpandedContent: React.FC<ToolExpandedContentProps> = React.memo(({
         }
 
         return renderScrollableBlock(
-            <div className="typography-meta text-muted-foreground/70">No output produced</div>,
+            <div className="typography-meta text-muted-foreground/70">{t('No output produced')}</div>,
             { maxHeightClass: 'max-h-60' }
         );
     };

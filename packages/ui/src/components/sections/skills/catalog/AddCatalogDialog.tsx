@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from '@/components/ui';
 
 import {
@@ -77,6 +78,7 @@ interface AddCatalogDialogProps {
 }
 
 export const AddCatalogDialog: React.FC<AddCatalogDialogProps> = ({ open, onOpenChange }) => {
+  const { t } = useTranslation();
   const { scanRepo, loadCatalog, isScanning } = useSkillsCatalogStore();
   const defaultGitIdentityId = useGitIdentitiesStore((s) => s.defaultGitIdentityId);
   const loadDefaultGitIdentityId = useGitIdentitiesStore((s) => s.loadDefaultGitIdentityId);
@@ -232,7 +234,7 @@ export const AddCatalogDialog: React.FC<AddCatalogDialogProps> = ({ open, onOpen
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-xl" keyboardAvoid>
         <DialogHeader>
-          <DialogTitle>Add skills catalog</DialogTitle>
+          <DialogTitle>{t('Add skills catalog')}</DialogTitle>
           <DialogDescription>
             Add a Git repository as a new catalog source. OpenChamber will scan it for folders containing <code className="font-mono">SKILL.md</code>.
           </DialogDescription>
@@ -240,12 +242,12 @@ export const AddCatalogDialog: React.FC<AddCatalogDialogProps> = ({ open, onOpen
 
         <div className="space-y-4">
           <div className="space-y-2">
-            <label className="typography-ui-label text-foreground">Catalog name</label>
-            <Input value={label} onChange={(e) => setLabel(e.target.value)} placeholder="e.g. Team Skills" />
+            <label className="typography-ui-label text-foreground">{t('Catalog name')}</label>
+            <Input value={label} onChange={(e) => setLabel(e.target.value)} placeholder={t('e.g. Team Skills')} />
           </div>
 
           <div className="space-y-2">
-            <label className="typography-ui-label text-foreground">Repository</label>
+            <label className="typography-ui-label text-foreground">{t('Repository')}</label>
             <Input
               value={source}
               onChange={(e) => {
@@ -253,7 +255,7 @@ export const AddCatalogDialog: React.FC<AddCatalogDialogProps> = ({ open, onOpen
                 setScanOk(false);
                 setScanCount(null);
               }}
-              placeholder="owner/repo or git@github.com:owner/repo.git"
+              placeholder={t('owner/repo or git@github.com:owner/repo.git')}
             />
             <p className="typography-micro text-muted-foreground">
               Public repos work everywhere. Private repos require SSH identity (Desktop/Web only).
@@ -261,7 +263,7 @@ export const AddCatalogDialog: React.FC<AddCatalogDialogProps> = ({ open, onOpen
           </div>
 
           <div className="space-y-2">
-            <label className="typography-ui-label text-foreground">Optional subpath</label>
+            <label className="typography-ui-label text-foreground">{t('Optional subpath')}</label>
             <Input
               value={subpath}
               onChange={(e) => {
@@ -269,14 +271,14 @@ export const AddCatalogDialog: React.FC<AddCatalogDialogProps> = ({ open, onOpen
                 setScanOk(false);
                 setScanCount(null);
               }}
-              placeholder="e.g. skills"
+              placeholder={t('e.g. skills')}
             />
           </div>
 
           {identityOptions.length > 0 && !isVSCodeRuntime() ? (
             <div className="space-y-2">
               <div>
-                <span className="typography-ui-label text-[var(--status-warning)]">Authentication required</span>
+                <span className="typography-ui-label text-[var(--status-warning)]">{t('Authentication required')}</span>
                 <span className="typography-meta text-muted-foreground ml-2">Select a Git identity (SSH key)</span>
               </div>
               <Select value={gitIdentityId || ''} onValueChange={(v) => setGitIdentityId(v)}>

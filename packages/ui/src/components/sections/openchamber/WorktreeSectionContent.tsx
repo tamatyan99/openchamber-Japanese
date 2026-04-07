@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiAddLine, RiCloseLine, RiDeleteBinLine, RiInformationLine } from '@remixicon/react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,6 +21,7 @@ export interface WorktreeSectionContentProps {
 }
 
 export const WorktreeSectionContent: React.FC<WorktreeSectionContentProps> = ({ projectRef: projectRefProp = null }) => {
+  const { t } = useTranslation();
   const { isMobile } = useDeviceInfo();
   const activeProject = useProjectsStore((state) => state.getActiveProject());
 
@@ -270,7 +272,7 @@ export const WorktreeSectionContent: React.FC<WorktreeSectionContentProps> = ({ 
       <div className="space-y-2">
         <div className="mb-1 px-1">
           <div className="flex items-center gap-2">
-            <h3 className="typography-ui-header font-normal text-foreground">Setup commands</h3>
+            <h3 className="typography-ui-header font-normal text-foreground">{t('Setup commands')}</h3>
             <Tooltip delayDuration={1000}>
               <TooltipTrigger asChild>
                 <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
@@ -326,7 +328,7 @@ export const WorktreeSectionContent: React.FC<WorktreeSectionContentProps> = ({ 
       <div className="space-y-2 border-t border-border/40 pt-4">
         <div className="mb-1 px-1">
           <div className="flex items-center gap-2">
-            <h3 className="typography-ui-header font-normal text-foreground">Existing worktrees</h3>
+            <h3 className="typography-ui-header font-normal text-foreground">{t('Existing worktrees')}</h3>
             <Tooltip delayDuration={1000}>
               <TooltipTrigger asChild>
                 <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />

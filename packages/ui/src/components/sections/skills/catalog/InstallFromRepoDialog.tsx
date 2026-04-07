@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from '@/components/ui';
 
 import {
@@ -45,6 +46,7 @@ interface InstallFromRepoDialogProps {
 type IdentityOption = { id: string; name: string };
 
 export const InstallFromRepoDialog: React.FC<InstallFromRepoDialogProps> = ({ open, onOpenChange }) => {
+  const { t } = useTranslation();
   const { scanRepo, installSkills, isScanning, isInstalling } = useSkillsCatalogStore();
   const installedSkills = useSkillsStore((s) => s.skills);
   const defaultGitIdentityId = useGitIdentitiesStore((s) => s.defaultGitIdentityId);
@@ -280,7 +282,7 @@ export const InstallFromRepoDialog: React.FC<InstallFromRepoDialogProps> = ({ op
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-3xl max-h-[85vh] flex flex-col">
           <DialogHeader className="flex-shrink-0">
-            <DialogTitle>Install from Git repository</DialogTitle>
+            <DialogTitle>{t('Install from Git repository')}</DialogTitle>
             <DialogDescription>
               Scan a repository for folders containing <code className="font-mono">SKILL.md</code>, then install selected skills.
             </DialogDescription>
@@ -324,7 +326,7 @@ export const InstallFromRepoDialog: React.FC<InstallFromRepoDialogProps> = ({ op
               </div>
 
               <div className="space-y-2">
-                <label className="typography-ui-label font-medium text-foreground">Target location</label>
+                <label className="typography-ui-label font-medium text-foreground">{t('Target location')}</label>
                 <Select
                   value={locationValueFrom(scope, targetSource)}
                   onValueChange={(v) => {
@@ -413,8 +415,8 @@ export const InstallFromRepoDialog: React.FC<InstallFromRepoDialogProps> = ({ op
             {items.length === 0 ? (
               <div className="flex h-full items-center justify-center text-center text-muted-foreground">
                 <div>
-                  <p className="typography-body">No scan results yet</p>
-                  <p className="typography-meta mt-1 opacity-75">Scan a repository to discover skills</p>
+                  <p className="typography-body">{t('No scan results yet')}</p>
+                  <p className="typography-meta mt-1 opacity-75">{t('Scan a repository to discover skills')}</p>
                 </div>
               </div>
             ) : (
@@ -427,8 +429,8 @@ export const InstallFromRepoDialog: React.FC<InstallFromRepoDialogProps> = ({ op
                     className="max-w-sm"
                   />
                   <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" onClick={() => toggleAll(true)}>Select all</Button>
-                    <Button variant="outline" size="sm" onClick={() => toggleAll(false)}>Select none</Button>
+                    <Button variant="outline" size="sm" onClick={() => toggleAll(true)}>{t('Select all')}</Button>
+                    <Button variant="outline" size="sm" onClick={() => toggleAll(false)}>{t('Select none')}</Button>
                   </div>
                 </div>
 

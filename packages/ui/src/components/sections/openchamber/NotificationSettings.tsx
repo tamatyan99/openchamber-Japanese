@@ -808,7 +808,7 @@ export const NotificationSettings: React.FC = () => {
                           onClick={() => setSummaryThreshold(DEFAULT_SUMMARY_THRESHOLD)}
                           disabled={summaryThreshold === DEFAULT_SUMMARY_THRESHOLD}
                           className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                          aria-label="Reset threshold"
+                          aria-label={t('Reset threshold')}
                           title="Reset"
                         >
                           <RiRestartLine className="h-3.5 w-3.5" />
@@ -835,7 +835,7 @@ export const NotificationSettings: React.FC = () => {
                           onClick={() => setSummaryLength(DEFAULT_SUMMARY_LENGTH)}
                           disabled={summaryLength === DEFAULT_SUMMARY_LENGTH}
                           className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                          aria-label="Reset summary length"
+                          aria-label={t('Reset summary length')}
                           title="Reset"
                         >
                           <RiRestartLine className="h-3.5 w-3.5" />
@@ -864,7 +864,7 @@ export const NotificationSettings: React.FC = () => {
                         onClick={() => setMaxLastMessageLength(DEFAULT_MAX_LAST_MESSAGE_LENGTH)}
                         disabled={maxLastMessageLength === DEFAULT_MAX_LAST_MESSAGE_LENGTH}
                         className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                        aria-label="Reset max message length"
+                        aria-label={t('Reset max message length')}
                         title="Reset"
                       >
                         <RiRestartLine className="h-3.5 w-3.5" />

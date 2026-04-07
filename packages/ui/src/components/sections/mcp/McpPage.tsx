@@ -274,7 +274,7 @@ const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
             <Input
               value={entry.key}
               onChange={(e) => updateRow(idx, 'key', e.target.value.toUpperCase().replace(/[^A-Z0-9_]/g, '_'))}
-              placeholder="API_KEY"
+              placeholder={t('API_KEY')}
               className="w-36 shrink-0 font-mono typography-meta uppercase"
               spellCheck={false}
             />

@@ -596,8 +596,8 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
 
   const emptyState = (
     <div className="py-6 text-center text-muted-foreground">
-      <p className="typography-ui-label font-semibold">No sessions yet</p>
-      <p className="typography-meta mt-1">Create your first session to start coding.</p>
+      <p className="typography-ui-label font-semibold">{t('No sessions yet')}</p>
+      <p className="typography-meta mt-1">{t('Create your first session to start coding.')}</p>
     </div>
   );
 
@@ -927,7 +927,7 @@ export const SessionSidebar: React.FC<SessionSidebarProps> = ({
 
   const searchEmptyState = (
     <div className="py-6 text-center text-muted-foreground">
-      <p className="typography-ui-label font-semibold">No matching sessions</p>
+      <p className="typography-ui-label font-semibold">{t('No matching sessions')}</p>
       <p className="typography-meta mt-1">Try a different title, branch, folder, or path.</p>
     </div>
   );

@@ -99,7 +99,7 @@ export const SessionRetentionSettings: React.FC = () => {
               min={MIN_DAYS}
               max={MAX_DAYS}
               step={1}
-              aria-label="Retention period in days"
+              aria-label={t('Retention period in days')}
               className="w-20 tabular-nums"
             />
             <span className="typography-ui-label text-muted-foreground">{t('days')}</span>
@@ -109,7 +109,7 @@ export const SessionRetentionSettings: React.FC = () => {
               onClick={() => setAutoDeleteAfterDays(DEFAULT_RETENTION_DAYS)}
               disabled={autoDeleteAfterDays === DEFAULT_RETENTION_DAYS}
               className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-              aria-label="Reset retention period"
+              aria-label={t('Reset retention period')}
               title="Reset"
             >
               <RiRestartLine className="h-3.5 w-3.5" />

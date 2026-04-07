@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -65,6 +66,7 @@ const loadSettings = async (): Promise<DesktopSettings | null> => {
 };
 
 export const SkillsCatalogPage: React.FC<SkillsCatalogPageProps> = ({ mode, onModeChange, showModeTabs = true }) => {
+  const { t } = useTranslation();
   const {
     sources,
     itemsBySource,
@@ -173,7 +175,7 @@ export const SkillsCatalogPage: React.FC<SkillsCatalogPageProps> = ({ mode, onMo
         {/* Source & Search */}
         <div className="mb-8">
           <div className="mb-1 px-1">
-            <h3 className="typography-ui-header font-medium text-foreground">Source Repository</h3>
+            <h3 className="typography-ui-header font-medium text-foreground">{t('Source Repository')}</h3>
           </div>
 
           <section className="px-2 pb-2 pt-0 space-y-0">
@@ -183,7 +185,7 @@ export const SkillsCatalogPage: React.FC<SkillsCatalogPageProps> = ({ mode, onMo
                 onValueChange={(v) => setSelectedSource(v)}
               >
                 <SelectTrigger className="w-fit">
-                  <SelectValue placeholder="Select source" />
+                  <SelectValue placeholder={t('Select source')} />
                 </SelectTrigger>
                 <SelectContent align="start">
                   {sources.map((src) => (
@@ -253,7 +255,7 @@ export const SkillsCatalogPage: React.FC<SkillsCatalogPageProps> = ({ mode, onMo
         {/* Error State */}
         {lastCatalogError && (
           <div className="mb-8 rounded-lg border border-[var(--status-error-border)] bg-[var(--status-error-background)] px-4 py-3">
-            <div className="typography-ui-label font-medium text-[var(--status-error)]">Catalog error</div>
+            <div className="typography-ui-label font-medium text-[var(--status-error)]">{t('Catalog error')}</div>
             <div className="typography-meta text-[var(--status-error)]/80 mt-1">{lastCatalogError.message}</div>
           </div>
         )}
@@ -264,7 +266,7 @@ export const SkillsCatalogPage: React.FC<SkillsCatalogPageProps> = ({ mode, onMo
             {filtered.length === 0 && !isLoadingSource ? (
               <div className="py-8 text-center text-muted-foreground">
                 <p className="typography-body">No skills found</p>
-                <p className="typography-meta mt-1 opacity-75">Try a different search or refresh the catalog</p>
+                <p className="typography-meta mt-1 opacity-75">{t('Try a different search or refresh the catalog')}</p>
               </div>
             ) : isLoadingSource ? (
               <div className="py-8 text-center text-muted-foreground">
@@ -298,7 +300,7 @@ export const SkillsCatalogPage: React.FC<SkillsCatalogPageProps> = ({ mode, onMo
                           {item.description ? (
                             <div className="typography-meta text-muted-foreground mt-0.5 line-clamp-2">{item.description}</div>
                           ) : (
-                            <div className="typography-meta text-muted-foreground/50 mt-0.5 italic">No description provided</div>
+                            <div className="typography-meta text-muted-foreground/50 mt-0.5 italic">{t('No description provided')}</div>
                           )}
 
                           {item.clawdhub && (
