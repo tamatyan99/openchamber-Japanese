@@ -125,6 +125,7 @@ All scripts are in `package.json`.
 - Chat UI: `packages/ui/src/components/chat/` and `packages/ui/src/components/chat/message/`
 - Theme + typography: `packages/ui/src/lib/theme/`, `packages/ui/src/lib/typography.ts`
 - Terminal UI: `packages/ui/src/components/terminal/` (uses `ghostty-web`)
+- i18n: `packages/ui/src/i18n/` (init, useLanguage hook, locale JSON files)
 
 ## External / system integrations (active)
 
@@ -159,6 +160,7 @@ All scripts are in `package.json`.
 - Styling: Tailwind v4, typography via `packages/ui/src/lib/typography.ts`, theme vars via `packages/ui/src/lib/theme/`.
 - Shared UI patterns: reuse shared primitives before introducing feature-local markup patterns.
 - Toasts: use the wrapper from `@/components/ui`; do not import `sonner` directly in feature code.
+- i18n: all user-visible strings must be wrapped with `t()` from `react-i18next`. Use i18next interpolation (`t('Key {{name}}', { name })`) — never fragment concatenation. Add keys to both `en.json` and `ja.json`. See `CLAUDE.md` for details.
 - No new deps unless asked.
 - Never add secrets or log sensitive data.
 

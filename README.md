@@ -34,6 +34,26 @@
 - **Remote access**: Use OpenCode from anywhere via browser
 - **Familiarity**: A visual alternative for developers who prefer GUI workflows
 
+## Japanese Language Support (日本語対応)
+
+This fork adds full Japanese localization to OpenChamber. All UI strings (~1,800 keys) are translated.
+
+**Switch language:** Settings > Appearance > Language
+
+Built with [i18next](https://www.i18next.com/) + [react-i18next](https://react.i18next.com/). Uses English strings as translation keys for fork-friendly merge conflict resolution.
+
+### Syncing with upstream
+
+```bash
+git remote add upstream https://github.com/btriapitsyn/openchamber.git  # first time only
+git fetch upstream && git merge upstream/main
+# Resolve conflicts (t() wrapper diffs are predictable)
+bun scripts/find-untranslated.ts   # detect new untranslated strings
+# Add translations to packages/ui/src/i18n/locales/ja.json
+```
+
+See [CLAUDE.md](./CLAUDE.md) for detailed i18n architecture and translation guidelines.
+
 ## Features
 
 ### Core (all app versions)
