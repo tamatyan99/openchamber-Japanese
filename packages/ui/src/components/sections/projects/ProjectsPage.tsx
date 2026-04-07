@@ -398,7 +398,7 @@ export const ProjectsPage: React.FC = () => {
                   <Input
                     value={iconBackground ?? ''}
                     onChange={(event) => setIconBackground(event.target.value)}
-                    placeholder="#000000"
+                    placeholder={t('#000000')}
                     className="h-7 w-[8rem]"
                   />
                   <Button

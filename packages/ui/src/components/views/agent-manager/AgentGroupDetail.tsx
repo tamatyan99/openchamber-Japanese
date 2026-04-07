@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiGitBranchLine,
   RiArrowDownSLine,
@@ -52,6 +53,7 @@ export const AgentGroupDetail: React.FC<AgentGroupDetailProps> = ({
   group,
   className,
 }) => {
+  const { t } = useTranslation();
   const selectedSessionId = useAgentGroupsStore((s) => s.selectedSessionId);
   const selectSession = useAgentGroupsStore((s) => s.selectSession);
   const deleteGroupSessions = useAgentGroupsStore((s) => s.deleteGroupSessions);
@@ -243,7 +245,7 @@ export const AgentGroupDetail: React.FC<AgentGroupDetailProps> = ({
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon" className="flex-shrink-0" aria-label="Worktree actions">
+                <Button variant="outline" size="icon" className="flex-shrink-0" aria-label={t('Worktree actions')}>
                   <RiMore2Line className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
@@ -289,8 +291,8 @@ export const AgentGroupDetail: React.FC<AgentGroupDetailProps> = ({
             </DialogTitle>
             <DialogDescription>
               {worktreeDialog?.kind === 'remove'
-                ? <>Remove <span className="text-foreground font-medium">{worktreeDialog?.label}</span>? This deletes all sessions in that worktree and removes the worktree itself.</>
-                : <>Keep <span className="text-foreground font-medium">{worktreeDialog?.label}</span> and remove the other worktrees in <span className="text-foreground font-medium">{group.name}</span>.</>}
+                ? <>{t('Remove')} <span className="text-foreground font-medium">{worktreeDialog?.label}</span>? This deletes all sessions in that worktree and removes the worktree itself.</>
+                : <>{t('Keep')} <span className="text-foreground font-medium">{worktreeDialog?.label}</span> and remove the other worktrees in <span className="text-foreground font-medium">{group.name}</span>.</>}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

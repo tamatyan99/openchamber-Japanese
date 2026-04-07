@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { CodeMirrorEditor } from '@/components/ui/CodeMirrorEditor';
 import { PreviewToggleButton } from './PreviewToggleButton';
 import { SimpleMarkdownRenderer } from '@/components/chat/MarkdownRenderer';
@@ -81,6 +82,7 @@ type SelectedLineRange = {
 };
 
 export const PlanView: React.FC = () => {
+  const { t } = useTranslation();
   const currentSessionId = useSessionUIStore((state) => state.currentSessionId);
   const sessions = useSessions();
   const homeDirectory = useDirectoryStore((state) => state.homeDirectory);
@@ -383,7 +385,7 @@ export const PlanView: React.FC = () => {
     <div className="relative flex h-full min-h-0 min-w-0 w-full flex-col overflow-hidden bg-background">
       <div className="flex min-w-0 items-center gap-2 border-b border-border/40 px-3 py-1.5 flex-shrink-0">
         <div className="min-w-0 flex-1">
-          <div className="typography-ui-label font-medium truncate">Plan</div>
+          <div className="typography-ui-label font-medium truncate">{t('Plan')}</div>
           {resolvedPath ? (
             <div className="typography-meta text-muted-foreground truncate" title={displayPath ?? resolvedPath}>
               {displayPath ?? resolvedPath}
@@ -466,7 +468,7 @@ export const PlanView: React.FC = () => {
                     <ErrorBoundary
                       fallback={
                         <div className="rounded-md border border-destructive/20 bg-destructive/10 px-3 py-2">
-                          <div className="mb-1 font-medium text-destructive">Preview unavailable</div>
+                          <div className="mb-1 font-medium text-destructive">{t('Preview unavailable')}</div>
                           <div className="text-sm text-muted-foreground">
                             Switch to edit mode to fix the issue.
                           </div>

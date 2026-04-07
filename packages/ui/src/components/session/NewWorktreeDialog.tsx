@@ -1673,7 +1673,7 @@ Nice-to-have:
                               {t('Loading branches...')}
                             </div>
                           ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
-                            <CommandEmpty>No branches found</CommandEmpty>
+                            <CommandEmpty>{t('No branches found')}</CommandEmpty>
                           ) : (
                             <>
                               {hasExistingBranchQuery && hasExistingBranchMatches && (
@@ -1913,7 +1913,7 @@ Nice-to-have:
                               {t('Loading branches...')}
                             </div>
                           ) : localBranches.length === 0 && remoteBranches.length === 0 ? (
-                            <CommandEmpty>No branches found</CommandEmpty>
+                            <CommandEmpty>{t('No branches found')}</CommandEmpty>
                           ) : (
                             <>
                               {hasSourceBranchQuery && hasSourceBranchMatches && (

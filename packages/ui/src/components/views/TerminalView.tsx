@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiAddLine, RiArrowDownLine, RiArrowGoBackLine, RiArrowLeftLine, RiArrowRightLine, RiArrowUpLine, RiCloseLine, RiCommandLine } from '@remixicon/react';
 
 import { useSessionUIStore } from '@/sync/session-ui-store';
@@ -81,6 +82,7 @@ const getSequenceForKey = (key: MobileKey, modifier: Modifier | null): string | 
 };
 
 export const TerminalView: React.FC = () => {
+    const { t } = useTranslation();
     const { terminal, runtime } = useRuntimeAPIs();
     const { currentTheme } = useThemeSystem();
     const { monoFont } = useFontPreferences();
@@ -869,7 +871,7 @@ export const TerminalView: React.FC = () => {
     if (!effectiveDirectory) {
         return (
             <div className="flex h-full flex-col items-center justify-center gap-2 p-4 text-center text-sm text-muted-foreground">
-                <p>No working directory available for this session.</p>
+                <p>{t('No working directory available for this session.')}</p>
                 <button
                     onClick={handleRestart}
                     className="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90"
@@ -918,8 +920,8 @@ export const TerminalView: React.FC = () => {
                 onClick={() => handleModifierToggle('ctrl')}
                 disabled={quickKeysDisabled}
             >
-                <span className="text-xs font-medium">Ctrl</span>
-                <span className="sr-only">Control modifier</span>
+                <span className="text-xs font-medium">{t('Ctrl')}</span>
+                <span className="sr-only">{t('Control modifier')}</span>
             </Button>
             <Button
                 type="button"
@@ -935,7 +937,7 @@ export const TerminalView: React.FC = () => {
                 disabled={quickKeysDisabled}
             >
                 <RiCommandLine size={16} />
-                <span className="sr-only">Command modifier</span>
+                <span className="sr-only">{t('Command modifier')}</span>
             </Button>
             <Button
                 type="button"
@@ -946,7 +948,7 @@ export const TerminalView: React.FC = () => {
                 disabled={quickKeysDisabled}
             >
                 <RiArrowUpLine size={16} />
-                <span className="sr-only">Arrow up</span>
+                <span className="sr-only">{t('Arrow up')}</span>
             </Button>
             <Button
                 type="button"
@@ -957,7 +959,7 @@ export const TerminalView: React.FC = () => {
                 disabled={quickKeysDisabled}
             >
                 <RiArrowLeftLine size={16} />
-                <span className="sr-only">Arrow left</span>
+                <span className="sr-only">{t('Arrow left')}</span>
             </Button>
             <Button
                 type="button"
@@ -968,7 +970,7 @@ export const TerminalView: React.FC = () => {
                 disabled={quickKeysDisabled}
             >
                 <RiArrowDownLine size={16} />
-                <span className="sr-only">Arrow down</span>
+                <span className="sr-only">{t('Arrow down')}</span>
             </Button>
             <Button
                 type="button"
@@ -979,7 +981,7 @@ export const TerminalView: React.FC = () => {
                 disabled={quickKeysDisabled}
             >
                 <RiArrowRightLine size={16} />
-                <span className="sr-only">Arrow right</span>
+                <span className="sr-only">{t('Arrow right')}</span>
             </Button>
             <Button
                 type="button"
@@ -990,7 +992,7 @@ export const TerminalView: React.FC = () => {
                 disabled={quickKeysDisabled}
             >
                 <RiArrowGoBackLine size={16} />
-                <span className="sr-only">Enter</span>
+                <span className="sr-only">{t('Enter')}</span>
             </Button>
         </>
     );

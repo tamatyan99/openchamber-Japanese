@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiArrowDownSLine, RiArrowUpSLine } from '@remixicon/react';
 
 import { Button } from '@/components/ui/button';
@@ -17,6 +18,7 @@ const JsonTreeView = React.memo(function JsonTreeView({
   maxHeight = '100%',
   initiallyExpandedDepth = 2,
 }: JsonTreeViewProps) {
+  const { t } = useTranslation();
   const viewerRef = React.useRef<{ expandAll: () => void; collapseAll: () => void }>(null);
   const [parseError, setParseError] = React.useState<string | null>(null);
 
@@ -48,7 +50,7 @@ const JsonTreeView = React.memo(function JsonTreeView({
     return (
       <div className={className}>
         <div className="rounded-md border border-[var(--interactive-border)] bg-[var(--syntax-base-background)] p-4">
-          <div className="mb-1 font-medium text-[var(--surface-foreground)]">Invalid JSON</div>
+          <div className="mb-1 font-medium text-[var(--surface-foreground)]">{t('Invalid JSON')}</div>
           <div className="font-mono text-xs text-[var(--surface-mutedForeground)]">{parseError}</div>
         </div>
       </div>

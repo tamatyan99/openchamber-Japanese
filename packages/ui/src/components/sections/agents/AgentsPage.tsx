@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { NumberInput } from '@/components/ui/number-input';
@@ -181,6 +182,7 @@ const buildPermissionConfigWithGlobal = (
 
 
 export const AgentsPage: React.FC = () => {
+  const { t } = useTranslation();
   const { isMobile } = useDeviceInfo();
   const { selectedAgentName, getAgentByName, createAgent, updateAgent, agents, agentDraft, setAgentDraft } = useAgentsStore();
 
@@ -585,7 +587,7 @@ export const AgentsPage: React.FC = () => {
       <div className="flex h-full items-center justify-center">
         <div className="text-center text-muted-foreground">
           <RiRobot2Line className="mx-auto mb-3 h-12 w-12 opacity-50" />
-          <p className="typography-body">Select an agent from the sidebar</p>
+          <p className="typography-body">{t('Select an agent from the sidebar')}</p>
           <p className="typography-meta mt-1 opacity-75">or create a new one</p>
         </div>
       </div>
@@ -621,7 +623,7 @@ export const AgentsPage: React.FC = () => {
             {isNewAgent && (
               <div className="flex flex-col gap-2 py-1.5 sm:flex-row sm:items-center sm:gap-8">
                 <div className="flex min-w-0 flex-col sm:w-56 shrink-0">
-                  <span className="typography-ui-label text-foreground">Agent Name</span>
+                  <span className="typography-ui-label text-foreground">{t('Agent Name')}</span>
                 </div>
                 <div className="flex min-w-0 flex-1 items-center gap-2 sm:w-fit sm:flex-initial">
                   <div className="flex items-center">
@@ -635,7 +637,7 @@ export const AgentsPage: React.FC = () => {
                   </div>
                   <Select value={draftScope} onValueChange={(v) => setDraftScope(v as AgentScope)}>
                     <SelectTrigger className="w-fit min-w-[100px]">
-                      <SelectValue placeholder="Scope" />
+                      <SelectValue placeholder={t('Scope')} />
                     </SelectTrigger>
                     <SelectContent align="end">
                       <SelectItem value="user">
@@ -672,7 +674,7 @@ export const AgentsPage: React.FC = () => {
             <div className="pb-1.5 pt-0.5">
               <div className="flex min-w-0 flex-col gap-1.5">
                 <div className="flex items-center gap-1.5">
-                  <span className="typography-ui-label text-foreground">Mode</span>
+                  <span className="typography-ui-label text-foreground">{t('Mode')}</span>
                   <Tooltip delayDuration={1000}>
                     <TooltipTrigger asChild>
                       <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
@@ -761,7 +763,7 @@ export const AgentsPage: React.FC = () => {
             <div className={cn("py-1.5", isMobile ? "flex flex-col gap-3" : "flex items-center gap-8")}>
               <div className={cn("flex min-w-0 flex-col", isMobile ? "w-full" : "sm:w-56 shrink-0")}>
                 <div className="flex items-center gap-1.5">
-                  <span className="typography-ui-label text-foreground">Temperature</span>
+                  <span className="typography-ui-label text-foreground">{t('Temperature')}</span>
                   <Tooltip delayDuration={1000}>
                     <TooltipTrigger asChild>
                       <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
@@ -793,8 +795,8 @@ export const AgentsPage: React.FC = () => {
                     variant="ghost"
                     onClick={() => setTemperature(undefined)}
                     className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                    aria-label="Clear temperature override"
-                    title="Clear"
+                    aria-label={t('Clear temperature override')}
+                    title={t('Clear')}
                   >
                     <RiCloseLine className="h-3.5 w-3.5" />
                   </Button>
@@ -805,7 +807,7 @@ export const AgentsPage: React.FC = () => {
             <div className={cn("py-1.5", isMobile ? "flex flex-col gap-3" : "flex items-center gap-8")}>
               <div className={cn("flex min-w-0 flex-col", isMobile ? "w-full" : "sm:w-56 shrink-0")}>
                 <div className="flex items-center gap-1.5">
-                  <span className="typography-ui-label text-foreground">Top P</span>
+                  <span className="typography-ui-label text-foreground">{t('Top P')}</span>
                   <Tooltip delayDuration={1000}>
                     <TooltipTrigger asChild>
                       <RiInformationLine className="h-3.5 w-3.5 text-muted-foreground/60 cursor-help" />
@@ -837,8 +839,8 @@ export const AgentsPage: React.FC = () => {
                     variant="ghost"
                     onClick={() => setTopP(undefined)}
                     className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                    aria-label="Clear top p override"
-                    title="Clear"
+                    aria-label={t('Clear top p override')}
+                    title={t('Clear')}
                   >
                     <RiCloseLine className="h-3.5 w-3.5" />
                   </Button>
@@ -861,7 +863,7 @@ export const AgentsPage: React.FC = () => {
             <Textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder="You are an expert coding assistant..."
+              placeholder={t('You are an expert coding assistant...')}
               rows={8}
               className="w-full font-mono typography-meta min-h-[120px] max-h-[60vh] bg-transparent resize-y"
             />
@@ -914,7 +916,7 @@ export const AgentsPage: React.FC = () => {
             <div className="space-y-6 px-2">
               <div className="flex items-center justify-between gap-4 py-1.5">
                 <div className="flex items-center gap-2">
-                  <span className="typography-ui-label text-foreground">Global Default</span>
+                  <span className="typography-ui-label text-foreground">{t('Global Default')}</span>
                   <span className="typography-micro text-muted-foreground/70 font-mono">*</span>
                 </div>
                 <Select
@@ -925,9 +927,9 @@ export const AgentsPage: React.FC = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="allow">Allow</SelectItem>
+                    <SelectItem value="allow">{t('Allow')}</SelectItem>
                     <SelectItem value="ask">Ask</SelectItem>
-                    <SelectItem value="deny">Deny</SelectItem>
+                    <SelectItem value="deny">{t('Deny')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -956,7 +958,7 @@ export const AgentsPage: React.FC = () => {
                       <div className="space-y-1 pl-2 mt-1">
                         <div className="flex flex-wrap items-center justify-between gap-2 py-0.5">
                           <div className="flex items-center gap-2">
-                            <span className="typography-micro text-muted-foreground">Pattern</span>
+                            <span className="typography-micro text-muted-foreground">{t('Pattern')}</span>
                             <span className="typography-micro font-mono text-foreground bg-[var(--surface-muted)] px-1 rounded">*</span>
                             {wildcardOverride && (
                               <Button size="sm"
@@ -1001,7 +1003,7 @@ export const AgentsPage: React.FC = () => {
                           return (
                             <div key={ruleKey} className="flex flex-wrap items-center justify-between gap-2 py-0.5 border-t border-[var(--surface-subtle)]">
                               <div className="flex items-center gap-2">
-                                <span className="typography-micro text-muted-foreground">Pattern</span>
+                                <span className="typography-micro text-muted-foreground">{t('Pattern')}</span>
                                 <span className="typography-micro font-mono text-foreground bg-[var(--surface-muted)] px-1 rounded">{rule.pattern}</span>
                                 {isAdded && <span className="typography-micro text-[var(--status-success)]">New</span>}
                                 {isModified && <span className="typography-micro text-[var(--status-warning)]">Modified</span>}
@@ -1038,7 +1040,7 @@ export const AgentsPage: React.FC = () => {
               </div>
 
               <div className="border-t border-[var(--surface-subtle)] pt-3">
-                <h4 className="typography-ui-label text-foreground mb-2">Add Custom Rule</h4>
+                <h4 className="typography-ui-label text-foreground mb-2">{t('Add Custom Rule')}</h4>
                 <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2">
                   <Select value={pendingRuleName} onValueChange={setPendingRuleName}>
                     <SelectTrigger className="w-full sm:w-[160px]">

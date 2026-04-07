@@ -535,7 +535,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                         <button
                                             type="button"
                                             className="flex items-center justify-center rounded-md p-1 text-muted-foreground/70 hover:text-foreground"
-                                            aria-label="Theme import info"
+                                            aria-label={t('Theme import info')}
                                         >
                                             <RiInformationLine className="h-3.5 w-3.5" />
                                         </button>
@@ -587,7 +587,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                             }}
                                             className="h-7"
                                             maxLength={64}
-                                            aria-label="PWA install app name"
+                                            aria-label={t('PWA install app name')}
                                         />
                                         <Button size="sm"
                                             type="button"
@@ -597,7 +597,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 void applyPwaInstallName('');
                                             }}
                                             className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                                            aria-label="Reset install app name"
+                                            aria-label={t('Reset install app name')}
                                             title="Reset"
                                         >
                                             <RiRestartLine className="h-3.5 w-3.5" />
@@ -637,7 +637,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                             onClick={() => setFontSize(100)}
                                             disabled={fontSize === 100}
                                             className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                                            aria-label="Reset font size"
+                                            aria-label={t('Reset font size')}
                                             title="Reset"
                                         >
                                             <RiRestartLine className="h-3.5 w-3.5" />
@@ -666,7 +666,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                             onClick={() => setTerminalFontSize(13)}
                                             disabled={terminalFontSize === 13}
                                             className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                                            aria-label="Reset terminal font size"
+                                            aria-label={t('Reset terminal font size')}
                                             title="Reset"
                                         >
                                             <RiRestartLine className="h-3.5 w-3.5" />
@@ -695,7 +695,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                             onClick={() => setPadding(100)}
                                             disabled={padding === 100}
                                             className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                                            aria-label="Reset spacing"
+                                            aria-label={t('Reset spacing')}
                                             title="Reset"
                                         >
                                             <RiRestartLine className="h-3.5 w-3.5" />
@@ -734,7 +734,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                             onClick={() => setInputBarOffset(0)}
                                             disabled={inputBarOffset === 0}
                                             className="h-7 w-7 px-0 text-muted-foreground hover:text-foreground"
-                                            aria-label="Reset input bar offset"
+                                            aria-label={t('Reset input bar offset')}
                                             title="Reset"
                                         >
                                             <RiRestartLine className="h-3.5 w-3.5" />

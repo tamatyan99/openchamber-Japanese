@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSessionUIStore } from '@/sync/session-ui-store';
 import { useSelectionStore } from '@/sync/selection-store';
 import { useSessions, useAllSessionStatuses } from '@/sync/sync-context';
@@ -959,6 +960,7 @@ function ProjectBar({
   onRemoveProject,
   homeDirectory
 }: ProjectBarProps) {
+  const { t } = useTranslation();
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const [editPanelOpen, setEditPanelOpen] = React.useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
@@ -1013,7 +1015,7 @@ function ProjectBar({
   if (projects.length === 0) {
     return (
       <div className="flex items-center gap-2 px-2 py-1 border-b border-[var(--interactive-border)] bg-transparent">
-        <span className="text-[11px] text-[var(--surface-mutedForeground)]">No projects</span>
+        <span className="text-[11px] text-[var(--surface-mutedForeground)]">{t('No projects')}</span>
         <button
           type="button"
           onClick={onAddProject}
@@ -1103,7 +1105,7 @@ function ProjectBar({
       <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle>Remove Project</DialogTitle>
+            <DialogTitle>{t('Remove Project')}</DialogTitle>
             <DialogDescription>
               Are you sure you want to remove <span className="font-medium text-foreground">{projectToDelete?.label || formatDirectoryName(projectToDelete?.path || '', homeDirectory)}</span>?
             </DialogDescription>
@@ -1288,6 +1290,7 @@ function ExpandedView({
   homeDirectory: string | null;
   childIndicators?: Array<{ session: Session; isRunning: boolean }>;
 }) {
+  const { t } = useTranslation();
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [collapsedHeight, setCollapsedHeight] = React.useState<number | null>(null);
   const [hasMeasured, setHasMeasured] = React.useState(false);
@@ -1405,7 +1408,7 @@ function ExpandedView({
       >
         {displaySessions.length === 0 ? (
           <div className="flex items-center justify-center py-3 text-[11px] text-[var(--surface-mutedForeground)]">
-            <span>No sessions in this project</span>
+            <span>{t('No sessions in this project')}</span>
           </div>
         ) : (
           displaySessions.map((session) => (

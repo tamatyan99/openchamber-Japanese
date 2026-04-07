@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { RiArrowLeftSLine, RiArrowRightSLine, RiBrainAi3Line, RiCloseLine, RiFileImageLine, RiFileList2Line, RiFilePdfLine, RiFileSearchLine, RiFolder6Line, RiGitBranchLine, RiGlobalLine, RiListCheck3, RiLoader4Line, RiPencilAiLine, RiSearchLine, RiTaskLine, RiTerminalBoxLine, RiToolsLine } from '@remixicon/react';
 import { File as PierreFile, PatchDiff } from '@pierre/diffs/react';
@@ -434,7 +435,7 @@ const ImagePreviewDialog: React.FC<{
                         onMouseDown={(event) => event.stopPropagation()}
                         onClick={showPrevious}
                         className="absolute left-3 top-1/2 -translate-y-1/2 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-black/25 text-foreground/90 backdrop-blur-sm hover:bg-black/35 focus:outline-none focus:ring-2 focus:ring-primary/60"
-                        aria-label="Previous image"
+                        aria-label={t('Previous image')}
                     >
                         <RiArrowLeftSLine className="h-6 w-6" />
                     </button>
@@ -443,7 +444,7 @@ const ImagePreviewDialog: React.FC<{
                         onMouseDown={(event) => event.stopPropagation()}
                         onClick={showNext}
                         className="absolute right-3 top-1/2 -translate-y-1/2 z-10 h-10 w-10 flex items-center justify-center rounded-full bg-black/25 text-foreground/90 backdrop-blur-sm hover:bg-black/35 focus:outline-none focus:ring-2 focus:ring-primary/60"
-                        aria-label="Next image"
+                        aria-label={t('Next image')}
                     >
                         <RiArrowRightSLine className="h-6 w-6" />
                     </button>
@@ -983,6 +984,7 @@ const MermaidPreviewDialog: React.FC<{
 };
 
 const ToolOutputDialog: React.FC<ToolOutputDialogProps> = ({ popup, onOpenChange, syntaxTheme, isMobile }) => {
+    const { t } = useTranslation();
     const [diffViewMode, setDiffViewMode] = React.useState<DiffViewMode>('unified');
     const pierreThemeConfig = usePierreThemeConfig();
 
@@ -1214,8 +1216,8 @@ const ToolOutputDialog: React.FC<ToolOutputDialogProps> = ({ popup, onOpenChange
                         </div>
                     ) : (
                         <div className="p-8 text-muted-foreground typography-ui-header">
-                            <div className="mb-2">Command completed successfully</div>
-                            <div className="typography-meta">No output was produced</div>
+                            <div className="mb-2">{t('Command completed successfully')}</div>
+                            <div className="typography-meta">{t('No output was produced')}</div>
                         </div>
                     )}
                     </div>

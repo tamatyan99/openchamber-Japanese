@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSessionUIStore } from '@/sync/session-ui-store';
 import { useConfigStore } from '@/stores/useConfigStore';
 import { useFireworksCelebration } from '@/contexts/FireworksContext';
@@ -225,6 +226,7 @@ const normalizePath = (value?: string | null): string =>
   (value || '').replace(/\\/g, '/').replace(/\/+$/, '');
 
 export const GitView: React.FC = () => {
+  const { t } = useTranslation();
   const { git } = useRuntimeAPIs();
   const currentDirectory = useEffectiveDirectory();
   const [worktreeBootstrapStatus, setWorktreeBootstrapStatus] = React.useState<'pending' | 'ready' | 'failed' | null>(null);
@@ -2082,7 +2084,7 @@ export const GitView: React.FC = () => {
                       onOperationComplete={handleOperationComplete}
                     />
                   ) : (
-                    <p className="typography-meta text-muted-foreground">Branch actions unavailable.</p>
+                    <p className="typography-meta text-muted-foreground">{t('Branch actions unavailable.')}</p>
                   )}
                 </div>
               ) : null}
@@ -2172,7 +2174,7 @@ export const GitView: React.FC = () => {
       <Dialog open={isGitmojiPickerOpen} onOpenChange={setIsGitmojiPickerOpen}>
         <DialogContent className="max-w-md p-0 overflow-hidden">
           <DialogHeader className="px-4 pt-4">
-            <DialogTitle>Pick a gitmoji</DialogTitle>
+            <DialogTitle>{t('Pick a gitmoji')}</DialogTitle>
           </DialogHeader>
           <Command className="h-[420px]">
             <CommandInput
@@ -2181,7 +2183,7 @@ export const GitView: React.FC = () => {
               onValueChange={setGitmojiSearch}
             />
             <CommandList>
-              <CommandEmpty>No gitmojis found.</CommandEmpty>
+              <CommandEmpty>{t('No gitmojis found.')}</CommandEmpty>
               <CommandGroup>
                 {(gitmojiEmojis.length === 0
                   ? []

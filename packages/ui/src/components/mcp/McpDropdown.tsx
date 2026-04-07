@@ -1,6 +1,7 @@
 import React from 'react';
 import type { McpStatus } from '@opencode-ai/sdk/v2';
 import { RiRefreshLine } from '@remixicon/react';
+import { useTranslation } from 'react-i18next';
 
 import {
   DropdownMenu,
@@ -184,6 +185,7 @@ export const McpDropdownContent: React.FC<McpDropdownContentProps> = ({ active, 
 };
 
 export const McpDropdown: React.FC<McpDropdownProps> = ({ headerIconButtonClass }) => {
+  const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
   const [tooltipOpen, setTooltipOpen] = React.useState(false);
   const blockTooltipRef = React.useRef(false);
@@ -325,7 +327,7 @@ export const McpDropdown: React.FC<McpDropdownProps> = ({ headerIconButtonClass 
   const triggerButton = (
     <button
       type="button"
-      aria-label="MCP servers"
+      aria-label={t('MCP servers')}
       className={cn(headerIconButtonClass, 'relative')}
       onClick={isMobile ? () => setOpen(true) : undefined}
     >
@@ -342,7 +344,7 @@ export const McpDropdown: React.FC<McpDropdownProps> = ({ headerIconButtonClass 
                   ? 'bg-status-success'
                   : 'bg-muted-foreground/40'
           )}
-          aria-label="MCP status"
+          aria-label={t('MCP status')}
         />
       )}
     </button>

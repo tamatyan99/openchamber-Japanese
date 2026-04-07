@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { RiArrowRightSLine, RiCheckLine, RiCloseLine, RiEditLine, RiListCheck3, RiQuestionLine } from '@remixicon/react';
 import { Checkbox } from '@/components/ui/checkbox';
 
@@ -16,6 +17,7 @@ type TabKey = string;
 const SUMMARY_TAB = 'summary';
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
+  const { t } = useTranslation();
   const respondToQuestion = sessionActions.respondToQuestion;
     const rejectQuestion = sessionActions.rejectQuestion;;
   const sessions = useSessions();
@@ -196,7 +198,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
           <div className="px-2 py-1.5 border-b border-border/20">
             <div className="flex items-center gap-2">
               <RiQuestionLine className="h-3.5 w-3.5 text-primary" />
-              <span className="typography-meta font-medium text-muted-foreground">Input needed</span>
+              <span className="typography-meta font-medium text-muted-foreground">{t('Input needed')}</span>
               {isFromSubagent ? (
                 <span className="typography-micro text-muted-foreground px-1.5 py-0.5 rounded bg-foreground/5">
                   From subagent
@@ -272,7 +274,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
                 <div className="typography-meta font-medium text-foreground mb-1.5">{activeQuestion.question}</div>
 
                 {isMultiple ? (
-                  <div className="typography-micro text-muted-foreground mb-1.5">Select multiple</div>
+                  <div className="typography-micro text-muted-foreground mb-1.5">{t('Select multiple')}</div>
                 ) : null}
 
                 <div className="space-y-0.5">
@@ -371,7 +373,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({ question }) => {
                           el.style.height = `${Math.min(Math.max(el.scrollHeight, minHeight), maxHeight)}px`;
                           setCustomText((prev) => ({ ...prev, [activeIndex]: el.value }));
                         }}
-                        placeholder="Your answer"
+                        placeholder={t('Your answer')}
                         disabled={isResponding}
                         rows={2}
                         className="w-full bg-transparent border border-border/30 focus:border-primary rounded px-2 py-1 outline-none typography-meta text-foreground placeholder:text-muted-foreground/50 transition-colors resize-none overflow-hidden"

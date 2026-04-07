@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { toast } from '@/components/ui';
 
 import {
@@ -38,6 +39,7 @@ interface InstallSkillDialogProps {
 }
 
 export const InstallSkillDialog: React.FC<InstallSkillDialogProps> = ({ open, onOpenChange, item }) => {
+  const { t } = useTranslation();
   const { installSkills, isInstalling } = useSkillsCatalogStore();
   const [scope, setScope] = React.useState<'user' | 'project'>('user');
   const [targetSource, setTargetSource] = React.useState<'opencode' | 'agents'>('opencode');
@@ -158,7 +160,7 @@ export const InstallSkillDialog: React.FC<InstallSkillDialogProps> = ({ open, on
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-md" keyboardAvoid>
           <DialogHeader>
-            <DialogTitle>Install skill</DialogTitle>
+            <DialogTitle>{t('Install skill')}</DialogTitle>
             <DialogDescription>
               Install <span className="font-semibold text-foreground">{item.skillName}</span> into one of four target locations.
             </DialogDescription>
@@ -166,7 +168,7 @@ export const InstallSkillDialog: React.FC<InstallSkillDialogProps> = ({ open, on
 
           <div className="mt-2 space-y-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="typography-ui-label text-foreground">Destination</span>
+              <span className="typography-ui-label text-foreground">{t('Destination')}</span>
               <Select
                 value={locationValueFrom(scope, targetSource)}
                 onValueChange={(v) => {
@@ -201,7 +203,7 @@ export const InstallSkillDialog: React.FC<InstallSkillDialogProps> = ({ open, on
               <div className="flex flex-wrap items-center gap-2">
                 <span className="typography-ui-label text-foreground">Project</span>
                 {projects.length === 0 ? (
-                  <span className="typography-meta text-muted-foreground">No projects available</span>
+                  <span className="typography-meta text-muted-foreground">{t('No projects available')}</span>
                 ) : (
                   <Select
                     value={resolvedTargetProjectId ?? ''}

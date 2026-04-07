@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     Dialog,
     DialogContent,
@@ -44,6 +45,7 @@ export const TimelineDialog: React.FC<TimelineDialogProps> = ({
     onScrollByTurnOffset,
     onResumeToLatest,
 }) => {
+    const { t } = useTranslation();
     const currentSessionId = useSessionUIStore((state) => state.currentSessionId);
     const messages = useSessionMessageRecords(currentSessionId ?? '');
     const revertToMessage = useSessionUIStore((state) => state.revertToMessage);
@@ -216,7 +218,7 @@ export const TimelineDialog: React.FC<TimelineDialogProps> = ({
                     </div>
                     <div className="flex flex-col gap-1.5 typography-meta text-muted-foreground">
                         <div className="flex items-center gap-2">
-                            <span>Click on a message to scroll to it in the conversation</span>
+                            <span>{t('Click on a message to scroll to it in the conversation')}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <RiArrowGoBackLine className="h-4 w-4 flex-shrink-0" />
@@ -224,7 +226,7 @@ export const TimelineDialog: React.FC<TimelineDialogProps> = ({
                         </div>
                         <div className="flex items-center gap-2">
                             <RiGitBranchLine className="h-4 w-4 flex-shrink-0" />
-                            <span>Create a new session starting from here</span>
+                            <span>{t('Create a new session starting from here')}</span>
                         </div>
                     </div>
                 </div>

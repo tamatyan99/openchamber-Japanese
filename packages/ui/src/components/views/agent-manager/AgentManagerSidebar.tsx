@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiAddLine,
   RiArrowDownSLine,
@@ -51,6 +52,7 @@ interface AgentGroupItemProps {
 }
 
 const AgentGroupItem: React.FC<AgentGroupItemProps> = ({ group, isSelected, isBusy, onSelect }) => {
+  const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [confirmOpen, setConfirmOpen] = React.useState(false);
   const [isDeleting, setIsDeleting] = React.useState(false);
@@ -111,7 +113,7 @@ const AgentGroupItem: React.FC<AgentGroupItemProps> = ({ group, isSelected, isBu
                     'opacity-0 group-hover:opacity-100',
                     menuOpen && 'opacity-100',
                   )}
-                  aria-label="Group menu"
+                  aria-label={t('Group menu')}
                   onClick={(e) => e.stopPropagation()}
                 >
                   <RiMore2Line className="h-3.5 w-3.5" />
@@ -137,7 +139,7 @@ const AgentGroupItem: React.FC<AgentGroupItemProps> = ({ group, isSelected, isBu
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <DialogContent className="max-w-md" keyboardAvoid>
           <DialogHeader>
-            <DialogTitle>Delete agent group</DialogTitle>
+            <DialogTitle>{t('Delete agent group')}</DialogTitle>
             <DialogDescription>
               Delete <span className="text-foreground font-medium">{group.name}</span>? This removes all worktrees and sessions in this group.
             </DialogDescription>
@@ -171,6 +173,7 @@ export const AgentManagerSidebar: React.FC<AgentManagerSidebarProps> = ({
   onGroupSelect,
   onNewAgent,
 }) => {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = React.useState('');
   const [showAll, setShowAll] = React.useState(false);
   const isLoading = useAgentGroupsStore((s) => s.isLoading);
@@ -223,7 +226,7 @@ export const AgentManagerSidebar: React.FC<AgentManagerSidebarProps> = ({
           onClick={onNewAgent}
         >
           <RiAddLine className="h-4 w-4" />
-          <span className="typography-ui-label">New Agent Group</span>
+          <span className="typography-ui-label">{t('New Agent Group')}</span>
         </Button>
       </div>
 

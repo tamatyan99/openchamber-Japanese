@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui';
 import { getRegisteredRuntimeAPIs } from '@/contexts/runtimeAPIRegistry';
@@ -33,6 +34,7 @@ type DeviceFlowCompleteResponse =
   | { connected: false; status?: string; error?: string };
 
 export const GitHubSettings: React.FC = () => {
+  const { t } = useTranslation();
   const { isMobile } = useDeviceInfo();
   const runtimeGitHub = getRegisteredRuntimeAPIs()?.github;
   const status = useGitHubAuthStore((state) => state.status);
@@ -292,7 +294,7 @@ export const GitHubSettings: React.FC = () => {
         ) : (
           <div className="flex items-center justify-between gap-4 px-4 py-4">
             <div className="flex min-w-0 flex-col">
-              <span className="typography-ui-label text-foreground">Not Connected</span>
+              <span className="typography-ui-label text-foreground">{t('Not Connected')}</span>
             </div>
             <Button size="sm" variant="default" onClick={startConnect} disabled={isBusy}>
               Connect GitHub
@@ -302,7 +304,7 @@ export const GitHubSettings: React.FC = () => {
 
         {accounts.length > 1 && (
           <div className="mt-2 border-t border-[var(--surface-subtle)] pt-2 px-2 pb-1">
-            <div className="typography-micro text-muted-foreground mb-2 px-1">Other Accounts</div>
+            <div className="typography-micro text-muted-foreground mb-2 px-1">{t('Other Accounts')}</div>
             <div className="space-y-1">
               {accounts.map((account) => {
                 const accountUser = account.user;
@@ -338,7 +340,7 @@ export const GitHubSettings: React.FC = () => {
                       </div>
                     </div>
                     {isCurrent ? (
-                      <span className="typography-micro text-[var(--primary-base)] bg-[var(--primary-base)]/10 px-1.5 py-0.5 rounded">Active</span>
+                      <span className="typography-micro text-[var(--primary-base)] bg-[var(--primary-base)]/10 px-1.5 py-0.5 rounded">{t('Active')}</span>
                     ) : (
                       <Button size="sm"
                         variant="ghost"
@@ -373,7 +375,7 @@ export const GitHubSettings: React.FC = () => {
       {flow && (
         <div className="mt-4 rounded-lg bg-[var(--surface-elevated)]/70 p-4 border border-[var(--interactive-border)]">
           <div className="space-y-1">
-            <h4 className="typography-ui-label text-foreground">Authorize OpenChamber</h4>
+            <h4 className="typography-ui-label text-foreground">{t('Authorize OpenChamber')}</h4>
             <p className="typography-meta text-muted-foreground">
               In GitHub, enter the following code to authorize this device:
             </p>

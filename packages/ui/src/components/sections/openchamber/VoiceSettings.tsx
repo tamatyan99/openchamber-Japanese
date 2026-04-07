@@ -466,7 +466,7 @@ export const VoiceSettings: React.FC = () => {
                                                     ))}
                                                 </SelectContent>
                                             </Select>
-                                            <Button size="xs" variant="ghost" onClick={previewOpenAIVoice} title="Preview">
+                                            <Button size="xs" variant="ghost" onClick={previewOpenAIVoice} title={t('Preview')}>
                                                 {isOpenAIPreviewPlaying ? <RiStopLine className="w-3.5 h-3.5" /> : <RiPlayLine className="w-3.5 h-3.5" />}
                                             </Button>
                                         </>
@@ -484,7 +484,7 @@ export const VoiceSettings: React.FC = () => {
                                                     ))}
                                                 </SelectContent>
                                             </Select>
-                                            <Button size="xs" variant="ghost" onClick={previewVoice} title="Preview">
+                                            <Button size="xs" variant="ghost" onClick={previewVoice} title={t('Preview')}>
                                                 {isPreviewPlaying ? <RiStopLine className="w-3.5 h-3.5" /> : <RiPlayLine className="w-3.5 h-3.5" />}
                                             </Button>
                                         </>
@@ -494,7 +494,7 @@ export const VoiceSettings: React.FC = () => {
                                         <>
                                             <Select value={browserVoice || '__auto__'} onValueChange={(value) => setBrowserVoice(value === '__auto__' ? '' : value)}>
                                                 <SelectTrigger className="w-fit max-w-[200px]">
-                                                    <SelectValue placeholder="Auto" />
+                                                    <SelectValue placeholder={t('Auto')} />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="__auto__">{t('Auto')}</SelectItem>
@@ -503,7 +503,7 @@ export const VoiceSettings: React.FC = () => {
                                                     ))}
                                                 </SelectContent>
                                             </Select>
-                                            <Button size="xs" variant="ghost" onClick={previewBrowserVoice} title="Preview">
+                                            <Button size="xs" variant="ghost" onClick={previewBrowserVoice} title={t('Preview')}>
                                                 {isBrowserPreviewPlaying ? <RiStopLine className="w-3.5 h-3.5" /> : <RiPlayLine className="w-3.5 h-3.5" />}
                                             </Button>
                                         </>
@@ -636,7 +636,7 @@ export const VoiceSettings: React.FC = () => {
                 {voiceModeEnabled && isSupported && (
                     <div className="mt-2 px-2">
                         <p className="typography-meta text-muted-foreground">
-                            {t('Press')} <kbd className="px-1 py-0.5 mx-0.5 rounded border border-[var(--interactive-border)] bg-background typography-mono text-[10px]">Shift</kbd> + <kbd className="px-1 py-0.5 mx-0.5 rounded border border-[var(--interactive-border)] bg-background typography-mono text-[10px]">Click</kbd> {t('on the mic button to toggle continuous mode')}
+                            {t('Press')} <kbd className="px-1 py-0.5 mx-0.5 rounded border border-[var(--interactive-border)] bg-background typography-mono text-[10px]">{t('Shift')}</kbd> + <kbd className="px-1 py-0.5 mx-0.5 rounded border border-[var(--interactive-border)] bg-background typography-mono text-[10px]">{t('Click')}</kbd> {t('on the mic button to toggle continuous mode')}
                         </p>
                     </div>
                 )}

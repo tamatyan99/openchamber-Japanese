@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   DndContext,
   DragOverlay,
@@ -96,6 +97,7 @@ export const SortableTabsStrip: React.FC<SortableTabsStripProps> = ({
   activePillLowercase = true,
   className,
 }) => {
+  const { t } = useTranslation();
   const isMobile = useUIStore((state) => state.isMobile);
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const [overflow, setOverflow] = React.useState<{ left: boolean; right: boolean }>({ left: false, right: false });
@@ -326,7 +328,7 @@ export const SortableTabsStrip: React.FC<SortableTabsStripProps> = ({
         )}
         style={isScrollable ? { scrollbarWidth: 'none', msOverflowStyle: 'none' } : undefined}
         role="tablist"
-        aria-label="Tabs"
+        aria-label={t("Tabs")}
       >
         {usesActivePillIndicator && pillRect ? (
           <div

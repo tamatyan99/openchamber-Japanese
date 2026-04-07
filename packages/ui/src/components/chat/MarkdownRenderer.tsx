@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { renderMermaidASCII, renderMermaidSVG } from 'beautiful-mermaid';
 import ReactMarkdown from 'react-markdown';
 import type { Components } from 'react-markdown';
@@ -322,6 +323,7 @@ const TableWrapper: React.FC<{ children?: React.ReactNode; className?: string }>
 };
 
 const MermaidBlock: React.FC<{ source: string; mode: 'svg' | 'ascii' }> = ({ source, mode }) => {
+  const { t } = useTranslation();
   const currentTheme = useCurrentMermaidTheme();
   const { isMobile } = useDeviceInfo();
   const [copied, setCopied] = React.useState(false);
@@ -458,7 +460,7 @@ const MermaidBlock: React.FC<{ source: string; mode: 'svg' | 'ascii' }> = ({ sou
         <button
           onClick={handleCopyMermaidSource}
           className="p-1 rounded hover:bg-interactive-hover/60 text-muted-foreground hover:text-foreground transition-colors"
-          title="Copy source"
+          title={t('Copy source')}
         >
           {copied ? <RiCheckLine className="size-3.5" /> : <RiFileCopyLine className="size-3.5" />}
         </button>

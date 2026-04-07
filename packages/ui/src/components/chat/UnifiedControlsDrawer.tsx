@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { MobileOverlayPanel } from '@/components/ui/MobileOverlayPanel';
 import { ProviderLogo } from '@/components/ui/ProviderLogo';
 import { cn } from '@/lib/utils';
@@ -43,6 +44,7 @@ export const UnifiedControlsDrawer: React.FC<UnifiedControlsDrawerProps> = ({
     onOpenModel,
     onOpenEffort,
 }) => {
+    const { t } = useTranslation();
     const providers = useConfigStore((state) => state.providers);
     const currentProviderId = useConfigStore((state) => state.currentProviderId);
     const currentModelId = useConfigStore((state) => state.currentModelId);
@@ -156,7 +158,7 @@ export const UnifiedControlsDrawer: React.FC<UnifiedControlsDrawerProps> = ({
     };
 
     return (
-        <MobileOverlayPanel open={open} onClose={onClose} title="Controls">
+        <MobileOverlayPanel open={open} onClose={onClose} title={t('Controls')}>
             <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-2">
                     <div className="typography-meta font-semibold uppercase tracking-wide text-muted-foreground">
@@ -204,7 +206,7 @@ export const UnifiedControlsDrawer: React.FC<UnifiedControlsDrawerProps> = ({
                             type="button"
                             onClick={onOpenModel}
                             className="flex min-h-[44px] w-full items-center justify-center border-t border-border/30 px-3 py-2 typography-meta font-medium text-muted-foreground"
-                            aria-label="More models"
+                            aria-label={t('More models')}
                         >
                             ...
                         </button>
@@ -241,7 +243,7 @@ export const UnifiedControlsDrawer: React.FC<UnifiedControlsDrawerProps> = ({
                                     type="button"
                                     onClick={onOpenEffort}
                                     className="inline-flex items-center rounded-full border border-border/40 px-2.5 py-1 typography-meta font-medium text-muted-foreground hover:bg-interactive-hover/50"
-                                    aria-label="More effort options"
+                                    aria-label={t('More effort options')}
                                 >
                                     ...
                                 </button>

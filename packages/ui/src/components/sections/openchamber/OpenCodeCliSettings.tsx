@@ -109,7 +109,7 @@ export const OpenCodeCliSettings: React.FC = () => {
             <Input
               value={value}
               onChange={(e) => setValue(e.target.value)}
-              placeholder="/Users/you/.bun/bin/opencode"
+              placeholder={t('/Users/you/.bun/bin/opencode')}
               disabled={isLoading || isSaving}
               className="h-7 min-w-0 flex-1 font-mono text-xs"
             />
@@ -120,8 +120,8 @@ export const OpenCodeCliSettings: React.FC = () => {
               onClick={handleBrowse}
               disabled={isLoading || isSaving || !isDesktopShell() || !isTauriShell()}
               className="h-7 w-7 p-0"
-              aria-label="Browse for OpenCode binary path"
-              title="Browse"
+              aria-label={t('Browse for OpenCode binary path')}
+              title={t('Browse')}
             >
               <RiFolderLine className="h-4 w-4" />
             </Button>

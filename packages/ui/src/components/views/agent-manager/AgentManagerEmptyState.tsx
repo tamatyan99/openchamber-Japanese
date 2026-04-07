@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiAddCircleLine,
   RiAddLine,
@@ -48,11 +49,12 @@ interface AgentManagerEmptyStateProps {
   isCreating?: boolean;
 }
 
-export const AgentManagerEmptyState: React.FC<AgentManagerEmptyStateProps> = ({ 
+export const AgentManagerEmptyState: React.FC<AgentManagerEmptyStateProps> = ({
   className,
   onCreateGroup,
   isCreating = false,
 }) => {
+  const { t } = useTranslation();
   const [groupName, setGroupName] = React.useState('');
   const [prompt, setPrompt] = React.useState('');
   const [selectedModels, setSelectedModels] = React.useState<ModelSelectionWithId[]>([]);
@@ -289,7 +291,7 @@ export const AgentManagerEmptyState: React.FC<AgentManagerEmptyStateProps> = ({
             id="group-name"
             value={groupName}
             onChange={(e) => setGroupName(e.target.value)}
-            placeholder="e.g. feature-auth, bugfix-login"
+            placeholder={t('e.g. feature-auth, bugfix-login')}
             className="typography-body"
           />
           <p className="typography-micro text-muted-foreground">
@@ -347,7 +349,7 @@ export const AgentManagerEmptyState: React.FC<AgentManagerEmptyStateProps> = ({
                           newCommands[index] = e.target.value;
                           setSetupCommands(newCommands);
                         }}
-                        placeholder="e.g., bun install"
+                        placeholder={t('e.g., bun install')}
                         className="h-8 flex-1 font-mono text-xs"
                       />
                       <button

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   RiChat4Line,
   RiCheckLine,
@@ -278,6 +279,7 @@ export const PullRequestSection: React.FC<{
   remoteBranches?: string[];
   onGeneratedDescription?: () => void;
 }> = ({ directory, branch, baseBranch, trackingBranch, remotes = [], remoteBranches = [], onGeneratedDescription }) => {
+  const { t } = useTranslation();
   const { github } = useRuntimeAPIs();
   const githubAuthStatus = useGitHubAuthStore((state) => state.status);
   const githubAuthChecked = useGitHubAuthStore((state) => state.hasChecked);
@@ -743,7 +745,7 @@ export const PullRequestSection: React.FC<{
 
         {run.job?.steps && run.job.steps.length > 0 ? (
           <div className="space-y-1">
-            <div className="typography-micro text-muted-foreground">Steps</div>
+            <div className="typography-micro text-muted-foreground">{t('Steps')}</div>
             <div className="space-y-1">
               {run.job.steps.map((step, idx) => {
                 const c = (step.conclusion || '').toLowerCase();
@@ -1407,7 +1409,7 @@ export const PullRequestSection: React.FC<{
 
             {error ? (
               <div className="space-y-2">
-                <div className="typography-ui-label text-foreground">PR status unavailable</div>
+                <div className="typography-ui-label text-foreground">{t('PR status unavailable')}</div>
                 <div className="typography-meta text-muted-foreground break-words">{error}</div>
                 {repoUrl ? (
                   <Button variant="outline" size="sm" asChild className="w-fit">
@@ -1505,12 +1507,12 @@ export const PullRequestSection: React.FC<{
                                   className="h-7 w-7 px-0"
                                   onClick={() => updatePr(pr)}
                                   disabled={isUpdating || !editTitle.trim()}
-                                  aria-label="Save PR title and description"
+                                  aria-label={t('Save PR title and description')}
                                 >
                                   {isUpdating ? <RiLoader4Line className="size-4 animate-spin" /> : <RiCheckLine className="size-4" />}
                                 </Button>
                               </TooltipTrigger>
-                              <TooltipContent><p>Save PR title and description</p></TooltipContent>
+                              <TooltipContent><p>{t('Save PR title and description')}</p></TooltipContent>
                             </Tooltip>
                           </>
                         ) : (
@@ -1540,12 +1542,12 @@ export const PullRequestSection: React.FC<{
                               className="h-7 w-7 px-0"
                               onClick={openChecksDialog}
                               disabled={isLoadingCheckDetails}
-                              aria-label="Open checks details"
+                              aria-label={t('Open checks details')}
                             >
                               {isLoadingCheckDetails ? <RiLoader4Line className="size-4 animate-spin" /> : <RiInformationLine className="size-4" />}
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent><p>Open checks details</p></TooltipContent>
+                          <TooltipContent><p>{t('Open checks details')}</p></TooltipContent>
                         </Tooltip>
                       ) : null}
 
@@ -1557,12 +1559,12 @@ export const PullRequestSection: React.FC<{
                               size="sm"
                               className="h-7 w-7 px-0 border-[var(--status-success-border)] bg-[var(--status-success-background)] text-[var(--status-success)]"
                               onClick={sendFailedChecksToChat}
-                              aria-label="Resolve failed checks with agent"
+                              aria-label={t('Resolve failed checks with agent')}
                             >
                               <RiErrorWarningLine className="size-4" />
                             </Button>
                           </TooltipTrigger>
-                          <TooltipContent><p>Resolve failed checks with agent</p></TooltipContent>
+                          <TooltipContent><p>{t('Resolve failed checks with agent')}</p></TooltipContent>
                         </Tooltip>
                       ) : null}
 
@@ -1588,12 +1590,12 @@ export const PullRequestSection: React.FC<{
                             size="sm"
                             className="h-7 w-7 px-0 border-[var(--status-success-border)] bg-[var(--status-success-background)] text-[var(--status-success)]"
                             onClick={sendCommentsToChat}
-                            aria-label="Share comments with agent"
+                            aria-label={t('Share comments with agent')}
                           >
                             <RiAiGenerate2 className="size-4" />
                           </Button>
                         </TooltipTrigger>
-                        <TooltipContent><p>Share comments with agent</p></TooltipContent>
+                        <TooltipContent><p>{t('Share comments with agent')}</p></TooltipContent>
                       </Tooltip>
 
                       {canMerge && pr.draft && pr.state === 'open' ? (
@@ -1627,9 +1629,9 @@ export const PullRequestSection: React.FC<{
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              <SelectItem value="squash">Squash</SelectItem>
-                              <SelectItem value="merge">Merge</SelectItem>
-                              <SelectItem value="rebase">Rebase</SelectItem>
+                              <SelectItem value="squash">{t('Squash')}</SelectItem>
+                              <SelectItem value="merge">{t('Merge')}</SelectItem>
+                              <SelectItem value="rebase">{t('Rebase')}</SelectItem>
                             </SelectContent>
                           </Select>
                           <Tooltip delayDuration={300}>
@@ -1656,7 +1658,7 @@ export const PullRequestSection: React.FC<{
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between gap-2">
                   <div className="min-w-0">
-                    <div className="typography-ui-label text-foreground">Create PR</div>
+                    <div className="typography-ui-label text-foreground">{t('Create PR')}</div>
                     <div className="typography-micro text-muted-foreground truncate">
                       {branch} → {targetBaseBranch}
                     </div>
@@ -1672,7 +1674,7 @@ export const PullRequestSection: React.FC<{
                 </div>
 
                 <label className="space-y-1">
-                  <div className="typography-micro text-muted-foreground">Title</div>
+                  <div className="typography-micro text-muted-foreground">{t('Title')}</div>
                   <Input
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
@@ -1684,7 +1686,7 @@ export const PullRequestSection: React.FC<{
                 </label>
 
                 <label className="space-y-1">
-                  <div className="typography-micro text-muted-foreground">Base branch</div>
+                  <div className="typography-micro text-muted-foreground">{t('Base branch')}</div>
                   {availableBaseBranches.length > 0 ? (
                     <Select value={targetBaseBranch} onValueChange={setTargetBaseBranch}>
                       <SelectTrigger className="h-9">
@@ -1711,7 +1713,7 @@ export const PullRequestSection: React.FC<{
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
                     className="min-h-[110px] bg-background/80"
-                    placeholder="What changed and why"
+                    placeholder={t('What changed and why')}
                     autoCorrect={hasTouchInput ? "on" : "off"}
                     autoCapitalize={hasTouchInput ? "sentences" : "off"}
                     spellCheck={hasTouchInput}
@@ -1789,7 +1791,7 @@ export const PullRequestSection: React.FC<{
                           value={additionalContext}
                           onChange={(e) => setAdditionalContext(e.target.value)}
                           className="min-h-[100px] bg-transparent"
-                          placeholder="Explain why this change is needed...&#10;Mention how to test (commands / steps)...&#10;Call out risks / rollout plan..."
+                          placeholder={t('Explain why this change is needed...\nMention how to test (commands / steps)...\nCall out risks / rollout plan...')}
                         />
                         <p className="typography-micro text-muted-foreground">
                           This text is only used to guide PR generation.
@@ -1803,7 +1805,7 @@ export const PullRequestSection: React.FC<{
                 <MobileOverlayPanel
                   open={isContextSheetOpen}
                   onClose={() => setIsContextSheetOpen(false)}
-                  title="Additional context"
+                  title={t('Additional context')}
                   footer={
                     <Button
                       size="sm"
@@ -1819,7 +1821,7 @@ export const PullRequestSection: React.FC<{
                       value={additionalContext}
                       onChange={(e) => setAdditionalContext(e.target.value)}
                       className="min-h-[200px] bg-transparent"
-                      placeholder="Explain why this change is needed...&#10;Mention how to test (commands / steps)...&#10;Call out risks / rollout plan..."
+                      placeholder={t('Explain why this change is needed...\nMention how to test (commands / steps)...\nCall out risks / rollout plan...')}
                       autoFocus
                     />
                     <p className="typography-micro text-muted-foreground">
@@ -1848,7 +1850,7 @@ export const PullRequestSection: React.FC<{
                     <span className="inline-flex size-4 items-center justify-center">
                       {isCreating ? <RiLoader4Line className="size-4 animate-spin" /> : <RiGitPullRequestLine className="size-4" />}
                     </span>
-                    <span>Create PR</span>
+                    <span>{t('Create PR')}</span>
                   </Button>
                 </div>
               </div>
@@ -1887,7 +1889,7 @@ export const PullRequestSection: React.FC<{
                     );
                   })
                 ) : (
-                  <div className="text-center text-muted-foreground py-8">No check details available.</div>
+                  <div className="text-center text-muted-foreground py-8">{t('No check details available.')}</div>
                 )}
               </div>
             ) : null}
@@ -1948,13 +1950,13 @@ export const PullRequestSection: React.FC<{
                                       size="sm"
                                       className="h-6 px-0 has-[>svg]:px-0 sm:px-2 sm:has-[>svg]:px-2.5 text-[var(--status-success)] hover:bg-[var(--status-success-background)] hover:text-[var(--status-success)] justify-start"
                                       onClick={() => sendSingleCommentToChat(comment)}
-                                      aria-label="Send this comment to agent"
+                                      aria-label={t('Send this comment to agent')}
                                     >
                                       <RiAiGenerate2 className="size-3.5" />
                                       Send to agent
                                     </Button>
                                   </TooltipTrigger>
-                                  <TooltipContent><p>Send this comment to agent</p></TooltipContent>
+                                  <TooltipContent><p>{t('Send this comment to agent')}</p></TooltipContent>
                                 </Tooltip>
                               </div>
                               <div className="typography-micro text-muted-foreground">
@@ -1976,7 +1978,7 @@ export const PullRequestSection: React.FC<{
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center text-muted-foreground py-8">No comments found.</div>
+                  <div className="text-center text-muted-foreground py-8">{t('No comments found.')}</div>
                 )}
               </div>
             ) : null}
