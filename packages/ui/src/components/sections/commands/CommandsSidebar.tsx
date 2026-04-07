@@ -124,9 +124,9 @@ export const CommandsSidebar: React.FC<CommandsSidebarProps> = ({ onItemSelect }
 
     if (success) {
       if (confirmActionType === 'delete') {
-        toast.success(`${t('Command')} "${confirmActionCommand.name}" ${t('deleted successfully')}`);
+        toast.success(t('Command "{{name}}" deleted successfully', { name: confirmActionCommand.name }));
       } else {
-        toast.success(`${t('Command')} "${confirmActionCommand.name}" ${t('reset to default')}`);
+        toast.success(t('Command "{{name}}" reset to default', { name: confirmActionCommand.name }));
       }
       closeConfirmActionDialog();
     } else if (confirmActionType === 'delete') {
@@ -306,8 +306,8 @@ export const CommandsSidebar: React.FC<CommandsSidebarProps> = ({ onItemSelect }
             <DialogTitle>{confirmActionType === 'delete' ? t('Delete Command') : t('Reset Command')}</DialogTitle>
             <DialogDescription>
               {confirmActionType === 'delete'
-                ? `${t('Are you sure you want to delete command')} "${confirmActionCommand?.name}"?`
-                : `${t('Are you sure you want to reset command')} "${confirmActionCommand?.name}" ${t('to its default configuration')}?`}
+                ? t('Are you sure you want to delete command "{{name}}"?', { name: confirmActionCommand?.name })
+                : t('Are you sure you want to reset command "{{name}}" to its default configuration?', { name: confirmActionCommand?.name })}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
