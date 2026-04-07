@@ -531,7 +531,7 @@ export function GitHubIntegrationDialog({
       {isMobile ? (
         <MobileOverlayPanel
           open={open}
-          title="Select from GitHub"
+          title={t('Select from GitHub')}
           onClose={() => onOpenChange(false)}
           footer={!isGitHubConnected ? undefined : footerContent}
           renderHeader={(closeButton) => (

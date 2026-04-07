@@ -206,18 +206,18 @@ export const SessionDialogs: React.FC = () => {
 
         if (deletedIds.length > 0) {
             const successDescription = failedIds.length > 0
-                ? `${failedIds.length} session${failedIds.length === 1 ? '' : 's'} could not be deleted.`
+                ? t('{{n}} session{{s}} could not be deleted.', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' })
                 : payload.dateLabel
-                    ? `Removed all sessions from ${payload.dateLabel}.`
+                    ? t('Removed all sessions from {{dateLabel}}.', { dateLabel: payload.dateLabel })
                     : undefined;
-            toast.success(`Deleted ${deletedIds.length} session${deletedIds.length === 1 ? '' : 's'}`, {
+            toast.success(t('Deleted {{n}} session{{s}}', { n: deletedIds.length, s: deletedIds.length === 1 ? '' : 's' }), {
                 description: renderToastDescription(successDescription),
             });
         }
 
         if (failedIds.length > 0) {
-            toast.error(`Failed to delete ${failedIds.length} session${failedIds.length === 1 ? '' : 's'}`, {
-                description: renderToastDescription('Please try again in a moment.'),
+            toast.error(t('Failed to delete {{n}} session{{s}}', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' }), {
+                description: renderToastDescription(t('Please try again in a moment.')),
             });
         }
     }, [deleteSession, deleteSessions]);
@@ -422,8 +422,8 @@ export const SessionDialogs: React.FC = () => {
                     return;
                 }
                 const shouldRemoveRemote = deleteDialogShouldRemoveRemote && canRemoveRemoteBranches;
-                const archiveNote = shouldRemoveRemote ? 'Worktree and remote branch removed.' : 'Worktree removed.';
-                toast.success('Worktree removed', {
+                const archiveNote = shouldRemoveRemote ? t('Worktree and remote branch removed.') : t('Worktree removed.');
+                toast.success(t('Worktree removed'), {
                     description: renderToastDescription(archiveNote),
                 });
                 closeDeleteDialog();
@@ -442,19 +442,19 @@ export const SessionDialogs: React.FC = () => {
                         deleteLocalBranch,
                     });
                 if (!success) {
-                    toast.error(isWorktreeDelete ? 'Failed to archive session' : 'Failed to delete session');
+                    toast.error(isWorktreeDelete ? t('Failed to archive session') : t('Failed to delete session'));
                     setIsProcessingDelete(false);
                     return;
                 }
                 const archiveNote = !isWorktreeDelete && shouldArchive
                     ? removeRemoteBranch
-                        ? 'Worktree and remote branch removed.'
-                        : 'Attached worktree archived.'
+                        ? t('Worktree and remote branch removed.')
+                        : t('Attached worktree archived.')
                     : undefined;
-                toast.success(isWorktreeDelete ? 'Session archived' : 'Session deleted', {
+                toast.success(isWorktreeDelete ? t('Session archived') : t('Session deleted'), {
                     description: renderToastDescription(archiveNote),
                     action: {
-                        label: 'OK',
+                        label: t('OK'),
                         onClick: () => { },
                     },
                 });
@@ -486,28 +486,34 @@ export const SessionDialogs: React.FC = () => {
                 if (deletedIds.length > 0) {
                     const archiveNote = !isWorktreeDelete && shouldArchive
                         ? removeRemoteBranch
-                            ? 'Archived worktrees and removed remote branches.'
-                            : 'Attached worktrees archived.'
+                            ? t('Archived worktrees and removed remote branches.')
+                            : t('Attached worktrees archived.')
                         : undefined;
                     const successDescription =
                         failedIds.length > 0
-                            ? `${failedIds.length} session${failedIds.length === 1 ? '' : 's'} could not be ${isWorktreeDelete ? 'archived' : 'deleted'}.`
+                            ? isWorktreeDelete
+                                ? t('{{n}} session{{s}} could not be archived.', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' })
+                                : t('{{n}} session{{s}} could not be deleted.', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' })
                             : deleteDialog.dateLabel
-                                ? `Removed all sessions from ${deleteDialog.dateLabel}.`
+                                ? t('Removed all sessions from {{dateLabel}}.', { dateLabel: deleteDialog.dateLabel })
                                 : undefined;
                     const combinedDescription = [successDescription, archiveNote].filter(Boolean).join(' ');
-                    toast.success(`${isWorktreeDelete ? 'Archived' : 'Deleted'} ${deletedIds.length} session${deletedIds.length === 1 ? '' : 's'}`, {
+                    toast.success(isWorktreeDelete
+                        ? t('Archived {{n}} session{{s}}', { n: deletedIds.length, s: deletedIds.length === 1 ? '' : 's' })
+                        : t('Deleted {{n}} session{{s}}', { n: deletedIds.length, s: deletedIds.length === 1 ? '' : 's' }), {
                         description: renderToastDescription(combinedDescription || undefined),
                         action: {
-                            label: 'OK',
+                            label: t('OK'),
                             onClick: () => { },
                         },
                     });
                 }
 
                 if (failedIds.length > 0) {
-                    toast.error(`Failed to ${isWorktreeDelete ? 'archive' : 'delete'} ${failedIds.length} session${failedIds.length === 1 ? '' : 's'}`, {
-                        description: renderToastDescription('Please try again in a moment.'),
+                    toast.error(isWorktreeDelete
+                        ? t('Failed to archive {{n}} session{{s}}', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' })
+                        : t('Failed to delete {{n}} session{{s}}', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' }), {
+                        description: renderToastDescription(t('Please try again in a moment.')),
                     });
                     if (deletedIds.length === 0) {
                         setIsProcessingDelete(false);
@@ -601,7 +607,7 @@ export const SessionDialogs: React.FC = () => {
                 <div className="space-y-2 rounded-lg bg-muted/30 p-3">
                     <div className="flex items-center gap-2">
                         <RiGitBranchLine className="h-4 w-4 text-muted-foreground" />
-                        <span className="typography-meta font-medium text-foreground">Worktree</span>
+                        <span className="typography-meta font-medium text-foreground">{t('Worktree')}</span>
                         {targetWorktree?.label ? (
                             <span className="typography-micro text-muted-foreground/70">{targetWorktree.label}</span>
                         ) : null}

@@ -836,7 +836,7 @@ export const DirectoryTree: React.FC<DirectoryTreeProps> = ({
                   }}
                   onBlur={createDirectory}
                   className="h-6 typography-meta flex-1 selection:bg-interactive-selection selection:text-interactive-selection-foreground"
-                  placeholder="new_directory"
+                  placeholder={t('new_directory')}
                 />
                 <button
                   onClick={(e) => {
@@ -845,7 +845,7 @@ export const DirectoryTree: React.FC<DirectoryTreeProps> = ({
                     createDirectory();
                   }}
                   className="p-1 hover:bg-interactive-hover rounded"
-                  title="Create directory"
+                  title={t('Create directory')}
                 >
                   <RiCheckLine className="h-3 w-3 text-green-600" />
                 </button>
@@ -856,7 +856,7 @@ export const DirectoryTree: React.FC<DirectoryTreeProps> = ({
                     cancelCreatingDirectory();
                   }}
                   className="p-1 hover:bg-interactive-hover rounded"
-                  title="Cancel"
+                  title={t('Cancel')}
                 >
                   <RiCloseLine className="h-3 w-3 text-muted-foreground" />
                 </button>
@@ -958,7 +958,7 @@ export const DirectoryTree: React.FC<DirectoryTreeProps> = ({
             togglePin(path);
           }}
           className="p-1 opacity-0 group-hover:opacity-100 hover:bg-interactive-hover rounded transition-opacity"
-          title="Unpin directory"
+          title={t('Unpin directory')}
         >
           <RiPushpin2Line className="h-3 w-3 text-primary" />
         </button>

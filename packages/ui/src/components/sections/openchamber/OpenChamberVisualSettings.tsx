@@ -453,7 +453,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                 )}
                                                 onClick={() => setThemeMode(option.value)}
                                             >
-                                                {option.label}
+                                                {t(option.label)}
                                             </Button>
                                         ))}
                                     </div>
@@ -818,7 +818,7 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                             )}
                                                         >
                                                             <span className={cn('typography-ui-label', selected ? 'text-foreground' : 'text-muted-foreground')}>
-                                                                {option.label}
+                                                                {t(option.label)}
                                                             </span>
                                                             <div className="mt-2 w-full rounded-md border border-border/60 bg-muted/30 p-2">
                                                                 {option.id === 'live' ? (
@@ -905,10 +905,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                             <Radio
                                                                 checked={selected}
                                                                 onChange={() => handleActivityRenderModeChange(option.id)}
-                                                                ariaLabel={`Activity default mode: ${option.label}`}
+                                                                ariaLabel={`${t('Activity default mode')}: ${t(option.label)}`}
                                                             />
                                                             <span className={cn('typography-ui-label font-normal', selected ? 'text-foreground' : 'text-foreground/50')}>
-                                                                {option.label}
+                                                                {t(option.label)}
                                                             </span>
                                                         </div>
                                                     );
@@ -989,10 +989,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                             <Radio
                                                                 checked={selected}
                                                                 onChange={() => handleUserMessageRenderingModeChange(option.id)}
-                                                                ariaLabel={`User message rendering: ${option.label}`}
+                                                                ariaLabel={`${t('User message rendering')}: ${t(option.label)}`}
                                                             />
                                                             <span className={cn('typography-ui-label font-normal', selected ? 'text-foreground' : 'text-foreground/50')}>
-                                                                {option.label}
+                                                                {t(option.label)}
                                                             </span>
                                                         </div>
                                                     );
@@ -1025,10 +1025,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                             <Radio
                                                                 checked={selected}
                                                                 onChange={() => handleMermaidRenderingModeChange(option.id)}
-                                                                ariaLabel={`Mermaid rendering: ${option.label}`}
+                                                                ariaLabel={`${t('Mermaid rendering')}: ${t(option.label)}`}
                                                             />
                                                             <span className={cn('typography-ui-label font-normal', selected ? 'text-foreground' : 'text-foreground/50')}>
-                                                                {option.label}
+                                                                {t(option.label)}
                                                             </span>
                                                         </div>
                                                     );
@@ -1061,10 +1061,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                             <Radio
                                                                 checked={selected}
                                                                 onChange={() => setDiffLayoutPreference(option.id)}
-                                                                ariaLabel={`Diff layout: ${option.label}`}
+                                                                ariaLabel={`${t('Diff layout')}: ${t(option.label)}`}
                                                             />
                                                             <span className={cn('typography-ui-label font-normal', selected ? 'text-foreground' : 'text-foreground/50')}>
-                                                                {option.label}
+                                                                {t(option.label)}
                                                             </span>
                                                         </div>
                                                     );
@@ -1097,10 +1097,10 @@ export const OpenChamberVisualSettings: React.FC<OpenChamberVisualSettingsProps>
                                                             <Radio
                                                                 checked={selected}
                                                                 onChange={() => setDiffViewMode(option.id)}
-                                                                ariaLabel={`Diff view mode: ${option.label}`}
+                                                                ariaLabel={`${t('Diff view mode')}: ${t(option.label)}`}
                                                             />
                                                             <span className={cn('typography-ui-label font-normal', selected ? 'text-foreground' : 'text-foreground/50')}>
-                                                                {option.label}
+                                                                {t(option.label)}
                                                             </span>
                                                         </div>
                                                     );

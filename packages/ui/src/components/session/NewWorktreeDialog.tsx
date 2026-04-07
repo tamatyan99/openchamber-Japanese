@@ -1109,7 +1109,7 @@ Nice-to-have:
           disabled={isCreating}
           className={cn(isMobile && 'flex-1')}
         >
-          Cancel
+          {t('Cancel')}
         </Button>
         <Button
           size="sm"
@@ -1118,7 +1118,7 @@ Nice-to-have:
           className={cn('gap-1.5', isMobile && 'flex-1')}
         >
           {isCreating && <RiLoader4Line className="h-3.5 w-3.5 animate-spin" />}
-          {isCreating ? 'Creating...' : 'Create Worktree'}
+          {isCreating ? t('Creating...') : t('Create Worktree')}
         </Button>
       </div>
     </div>
@@ -1338,7 +1338,7 @@ Nice-to-have:
                     }));
                   }}
                   onBlur={() => setValidation(prev => ({ ...prev, touched: true }))}
-                  placeholder="feature/my-awesome-feature"
+                  placeholder={t('feature/my-awesome-feature')}
                   disabled={!!newBranchState.linkedPr}
                   className={cn(
                     'h-8',
@@ -1412,7 +1412,7 @@ Nice-to-have:
                   }
                 }}
                 onBlur={() => setValidation(prev => ({ ...prev, touched: true }))}
-                placeholder="my-worktree-directory"
+                placeholder={t('my-worktree-directory')}
                 className={cn(
                   'h-8',
                   validation.touched && validation.worktreeError && 'border-destructive'
@@ -1424,7 +1424,7 @@ Nice-to-have:
             {mode === 'new-branch' && !newBranchState.linkedPr && (
               <div className="space-y-1.5">
                 <label className="typography-ui-label text-foreground block font-semibold">
-                  Source Branch
+                  {t('Source Branch')}
                 </label>
                 <Button
                   variant="outline"
@@ -1433,20 +1433,20 @@ Nice-to-have:
                   className="w-full justify-between h-9"
                 >
                   <span className={newBranchState.sourceBranch ? 'text-foreground' : 'text-muted-foreground'}>
-                    {newBranchState.sourceBranch || 'Select source branch...'}
+                    {newBranchState.sourceBranch || t('Select source branch...')}
                   </span>
                   <RiGitBranchLine className="h-4 w-4 text-muted-foreground" />
                 </Button>
                 {newBranchState.sourceBranch && (
                   <div className="typography-micro text-muted-foreground">
-                    New branch will be created from {newBranchState.sourceBranch}
+                    {t('New branch will be created from {{branch}}', { branch: newBranchState.sourceBranch })}
                   </div>
                 )}
                 
                 {/* Mobile Source Branch Picker Overlay */}
                 <MobileOverlayPanel
                   open={sourceBranchPickerOpen}
-                  title="Select Source Branch"
+                  title={t('Select Source Branch')}
                   onClose={() => setSourceBranchPickerOpen(false)}
                 >
                   <div className="space-y-4" ref={sourceBranchMobileListWrapperRef}>
@@ -1568,12 +1568,12 @@ Nice-to-have:
                   
                   {newBranchState.linkedIssue && (
                     <span className="typography-micro text-muted-foreground shrink-0">
-                      Issue #{newBranchState.linkedIssue.number}
+                      {t('Issue #{{number}}', { number: newBranchState.linkedIssue.number })}
                     </span>
                   )}
                   {newBranchState.linkedPr && (
                     <span className="typography-micro text-muted-foreground shrink-0">
-                      PR #{newBranchState.linkedPr.number}
+                      {t('PR #{{number}}', { number: newBranchState.linkedPr.number })}
                     </span>
                   )}
                   
@@ -1803,7 +1803,7 @@ Nice-to-have:
                       }));
                     }}
                     onBlur={() => setValidation(prev => ({ ...prev, touched: true }))}
-                    placeholder="feature/my-awesome-feature"
+                    placeholder={t('feature/my-awesome-feature')}
                     disabled={!!newBranchState.linkedPr}
                     className={cn(
                       'h-8',
@@ -1877,7 +1877,7 @@ Nice-to-have:
                     }
                   }}
                   onBlur={() => setValidation(prev => ({ ...prev, touched: true }))}
-                  placeholder="my-worktree-directory"
+                  placeholder={t('my-worktree-directory')}
                   className={cn(
                     'h-8',
                     validation.touched && validation.worktreeError && 'border-destructive'
@@ -1895,7 +1895,7 @@ Nice-to-have:
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="sm" className="h-9 min-w-[220px] max-w-full justify-between gap-2">
                         <span className={cn('truncate', newBranchState.sourceBranch ? 'text-foreground' : 'text-muted-foreground')}>
-                          {newBranchState.sourceBranch || 'Select source branch...'}
+                          {newBranchState.sourceBranch || t('Select source branch...')}
                         </span>
                         <RiArrowDownSLine className="h-4 w-4 shrink-0 text-muted-foreground" />
                       </Button>
@@ -1988,7 +1988,7 @@ Nice-to-have:
                   </DropdownMenu>
                   {newBranchState.sourceBranch && (
                     <div className="typography-micro text-muted-foreground">
-                      New branch will be created from {newBranchState.sourceBranch}
+                      {t('New branch will be created from {{branch}}', { branch: newBranchState.sourceBranch })}
                     </div>
                   )}
                 </div>
@@ -2003,12 +2003,12 @@ Nice-to-have:
                     
                     {newBranchState.linkedIssue && (
                       <span className="typography-micro text-muted-foreground shrink-0">
-                        Issue #{newBranchState.linkedIssue.number}
+                        {t('Issue #{{number}}', { number: newBranchState.linkedIssue.number })}
                       </span>
                     )}
                     {newBranchState.linkedPr && (
                       <span className="typography-micro text-muted-foreground shrink-0">
-                        PR #{newBranchState.linkedPr.number}
+                        {t('PR #{{number}}', { number: newBranchState.linkedPr.number })}
                       </span>
                     )}
                     
@@ -2072,7 +2072,7 @@ Nice-to-have:
                   onClick={() => onOpenChange(false)}
                   disabled={isCreating}
                 >
-                  Cancel
+                  {t('Cancel')}
                 </Button>
                 <Button
                   size="sm"
@@ -2081,7 +2081,7 @@ Nice-to-have:
                   className="gap-1.5"
                 >
                   {isCreating && <RiLoader4Line className="h-3.5 w-3.5 animate-spin" />}
-                  {isCreating ? 'Creating...' : 'Create Worktree'}
+                  {isCreating ? t('Creating...') : t('Create Worktree')}
                 </Button>
               </div>
             </DialogFooter>
