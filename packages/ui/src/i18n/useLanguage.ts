@@ -4,6 +4,11 @@ import { LANGUAGE_STORAGE_KEY } from './index';
 
 export type Language = 'en' | 'ja';
 
+const VALID_LANGUAGES: readonly Language[] = ['en', 'ja'];
+
+const isValidLanguage = (value: unknown): value is Language =>
+  typeof value === 'string' && (VALID_LANGUAGES as string[]).includes(value);
+
 export const LANGUAGE_OPTIONS: { value: Language; label: string }[] = [
   { value: 'en', label: 'English' },
   { value: 'ja', label: '日本語' },
@@ -12,13 +17,21 @@ export const LANGUAGE_OPTIONS: { value: Language; label: string }[] = [
 export function useLanguage() {
   const { i18n } = useTranslation();
 
-  const currentLanguage = (i18n.language || 'en') as Language;
+  const currentLanguage: Language = isValidLanguage(i18n.language)
+    ? i18n.language
+    : 'en';
 
   const setLanguage = useCallback(
     (lang: Language) => {
-      void i18n.changeLanguage(lang);
+      i18n.changeLanguage(lang).catch((err: unknown) => {
+        console.error('[i18n] Failed to change language:', err);
+      });
       if (typeof window !== 'undefined') {
-        localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+        try {
+          localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
+        } catch {
+          // localStorage unavailable (e.g. private browsing with strict settings)
+        }
       }
     },
     [i18n],

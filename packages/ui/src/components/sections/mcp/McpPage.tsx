@@ -73,6 +73,7 @@ function parseShellCommand(raw: string): string[] {
 }
 
 const CommandTextarea: React.FC<CommandTextareaProps> = ({ value, onChange }) => {
+  const { t } = useTranslation();
   // Internal: one arg per line
   const [text, setText] = React.useState(() => value.join('\n'));
 
@@ -100,9 +101,9 @@ const CommandTextarea: React.FC<CommandTextareaProps> = ({ value, onChange }) =>
         : parseShellCommand(trimmed);
       setText(lines.join('\n'));
       onChange(lines);
-      toast.success(`Pasted ${lines.length} argument${lines.length !== 1 ? 's' : ''}`);
+      toast.success(`${t('Pasted')} ${lines.length} ${lines.length !== 1 ? t('arguments') : t('argument')}`);
     } catch {
-      toast.error('Cannot read clipboard');
+      toast.error(t('Cannot read clipboard'));
     }
   };
 
@@ -115,10 +116,10 @@ const CommandTextarea: React.FC<CommandTextareaProps> = ({ value, onChange }) =>
           className="!font-normal gap-1 text-muted-foreground"
           onClick={handlePasteFromClipboard}
           type="button"
-          title="Paste full command from clipboard and auto-split"
+          title={t('Paste full command from clipboard and auto-split')}
         >
           <RiClipboardLine className="h-3 w-3" />
-          Paste command
+          {t('Paste command')}
         </Button>
       </div>
 
@@ -149,7 +150,7 @@ const CommandTextarea: React.FC<CommandTextareaProps> = ({ value, onChange }) =>
       {value.length > 0 && (
         <details className="group">
           <summary className="typography-micro text-muted-foreground/60 cursor-pointer select-none hover:text-muted-foreground">
-            Preview ({value.length} args)
+            {t('Preview')} ({value.length} {t('args')})
           </summary>
           <div className="mt-1 rounded-md bg-[var(--surface-elevated)] px-3 py-2 overflow-x-auto">
             <code className="typography-micro text-foreground/80 whitespace-pre">
@@ -178,6 +179,7 @@ interface EnvEditorProps {
 }
 
 const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
+  const { t } = useTranslation();
   const [revealedKeys, setRevealedKeys] = React.useState<Set<number>>(new Set());
 
   const addRow = () => onChange([...value, { key: '', value: '' }]);
@@ -224,7 +226,7 @@ const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
         if (key) parsed.push({ key, value: val });
       }
       if (parsed.length === 0) {
-        toast.error('No KEY=VALUE pairs found in clipboard');
+        toast.error(t('No KEY=VALUE pairs found in clipboard'));
         return;
       }
       // Merge: update existing keys, append new ones
@@ -235,9 +237,9 @@ const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
         else merged.push(p);
       }
       onChange(merged);
-      toast.success(`Imported ${parsed.length} variable${parsed.length !== 1 ? 's' : ''}`);
+      toast.success(`${t('Imported')} ${parsed.length} ${parsed.length !== 1 ? t('variables') : t('variable')}`);
     } catch {
-      toast.error('Cannot read clipboard');
+      toast.error(t('Cannot read clipboard'));
     }
   };
 
@@ -248,8 +250,8 @@ const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
       {/* Header row */}
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-3">
-          <span className="typography-micro text-muted-foreground w-32 shrink-0">Key</span>
-          <span className="typography-micro text-muted-foreground">Value</span>
+          <span className="typography-micro text-muted-foreground w-32 shrink-0">{t('Key')}</span>
+          <span className="typography-micro text-muted-foreground">{t('Value')}</span>
         </div>
         <Button
           variant="ghost"
@@ -257,10 +259,10 @@ const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
           className="!font-normal gap-1 text-muted-foreground"
           onClick={handlePasteDotEnv}
           type="button"
-          title="Paste KEY=VALUE lines from clipboard"
+          title={t('Paste KEY=VALUE lines from clipboard')}
         >
           <RiClipboardLine className="h-3 w-3" />
-          Paste .env
+          {t('Paste .env')}
         </Button>
       </div>
 
@@ -290,7 +292,7 @@ const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
                 type="button"
                 onClick={() => toggleReveal(idx)}
                 className="absolute right-2 text-muted-foreground/60 hover:text-muted-foreground"
-                title={revealedKeys.has(idx) ? 'Hide' : 'Show'}
+                title={revealedKeys.has(idx) ? t('Hide') : t('Show')}
               >
                 {revealedKeys.has(idx)
                   ? <RiEyeOffLine className="h-3.5 w-3.5" />
@@ -317,12 +319,12 @@ const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
         type="button"
       >
         <RiAddLine className="h-3.5 w-3.5" />
-        Add variable
+        {t('Add variable')}
       </Button>
 
       {hasSensitiveValues && (
         <p className="typography-micro text-muted-foreground/60">
-          ⚠ Values are stored as plain text in opencode.json
+          {t('⚠ Values are stored as plain text in opencode.json')}
         </p>
       )}
     </div>
@@ -332,14 +334,8 @@ const EnvEditor: React.FC<EnvEditorProps> = ({ value, onChange }) => {
 // ─────────────────────────────────────────────────────────────
 // Status badge
 // ─────────────────────────────────────────────────────────────
-const STATUS_LABEL: Record<string, string> = {
-  connected: 'Connected',
-  failed: 'Failed',
-  needs_auth: 'Needs auth',
-  needs_client_registration: 'Needs registration',
-};
-
 const StatusBadge: React.FC<{ status: string | undefined; enabled: boolean }> = ({ status, enabled }) => {
+  const { t } = useTranslation();
   if (!enabled) return null;
   if (!status) return null;
 
@@ -350,9 +346,16 @@ const StatusBadge: React.FC<{ status: string | undefined; enabled: boolean }> = 
     needs_client_registration: 'text-[var(--status-warning)]',
   };
 
+  const statusLabel: Record<string, string> = {
+    connected: t('Connected'),
+    failed: t('Failed'),
+    needs_auth: t('Needs auth'),
+    needs_client_registration: t('Needs registration'),
+  };
+
   return (
     <span className={cn('typography-micro font-medium', colorMap[status] ?? 'text-muted-foreground')}>
-      ● {STATUS_LABEL[status] ?? status}
+      ● {statusLabel[status] ?? status}
     </span>
   );
 };
@@ -361,6 +364,7 @@ const StatusBadge: React.FC<{ status: string | undefined; enabled: boolean }> = 
 // McpPage
 // ─────────────────────────────────────────────────────────────
 export const McpPage: React.FC = () => {
+  const { t } = useTranslation();
   const {
     selectedMcpName,
     mcpServers,
@@ -419,11 +423,11 @@ export const McpPage: React.FC = () => {
     if (selectedServer) {
       setDraftScope(selectedServer.scope === 'project' ? 'project' : 'user');
       const envArr = envRecordToArray(selectedServer.environment);
-      const t = selectedServer.type;
-      const cmd = t === 'local' ? ((selectedServer as { command?: string[] }).command ?? []) : [];
-      const u = t === 'remote' ? ((selectedServer as { url?: string }).url ?? '') : '';
-      setMcpType(t); setCommand(cmd); setUrl(u); setEnvEntries(envArr); setEnabled(selectedServer.enabled);
-      initialRef.current = { mcpType: t, command: cmd, url: u, envEntries: envArr, enabled: selectedServer.enabled };
+      const serverType = selectedServer.type;
+      const cmd = serverType === 'local' ? ((selectedServer as { command?: string[] }).command ?? []) : [];
+      const u = serverType === 'remote' ? ((selectedServer as { url?: string }).url ?? '') : '';
+      setMcpType(serverType); setCommand(cmd); setUrl(u); setEnvEntries(envArr); setEnabled(selectedServer.enabled);
+      initialRef.current = { mcpType: serverType, command: cmd, url: u, envEntries: envArr, enabled: selectedServer.enabled };
     }
   }, [selectedServer, isNewServer, mcpDraft]);
 
@@ -441,15 +445,15 @@ export const McpPage: React.FC = () => {
 
   const handleSave = async () => {
     const name = isNewServer ? draftName.trim() : selectedMcpName ?? '';
-    if (!name) { toast.error('Name is required'); return; }
+    if (!name) { toast.error(t('Name is required')); return; }
     if (isNewServer && mcpServers.some((s) => s.name === name)) {
-      toast.error('A server with this name already exists'); return;
+      toast.error(t('A server with this name already exists')); return;
     }
     if (mcpType === 'local' && command.filter(Boolean).length === 0) {
-      toast.error('Command cannot be empty for a local server'); return;
+      toast.error(t('Command cannot be empty for a local server')); return;
     }
     if (mcpType === 'remote' && !url.trim()) {
-      toast.error('URL cannot be empty for a remote server'); return;
+      toast.error(t('URL cannot be empty for a remote server')); return;
     }
 
     const draft: McpDraft = { name, scope: draftScope, type: mcpType, command, url, environment: envEntries, enabled };
@@ -458,12 +462,12 @@ export const McpPage: React.FC = () => {
       const success = isNewServer ? await createMcp(draft) : await updateMcp(name, draft);
       if (success) {
         if (isNewServer) { setMcpDraft(null); setSelectedMcp(name); }
-        toast.success(isNewServer ? 'MCP server created. OpenCode reloading…' : 'Saved. OpenCode reloading…');
+        toast.success(isNewServer ? t('MCP server created. OpenCode reloading…') : t('Saved. OpenCode reloading…'));
       } else {
-        toast.error('Failed to save');
+        toast.error(t('Failed to save'));
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'An error occurred');
+      toast.error(err instanceof Error ? err.message : t('An error occurred'));
     } finally {
       setIsSaving(false);
     }
@@ -473,8 +477,8 @@ export const McpPage: React.FC = () => {
     if (!selectedMcpName) return;
     setIsDeleting(true);
     const ok = await deleteMcp(selectedMcpName);
-    if (ok) { toast.success(`"${selectedMcpName}" deleted`); setShowDeleteConfirm(false); }
-    else toast.error('Failed to delete');
+    if (ok) { toast.success(`"${selectedMcpName}" ${t('deleted')}`); setShowDeleteConfirm(false); }
+    else toast.error(t('Failed to delete'));
     setIsDeleting(false);
   };
 
@@ -485,14 +489,14 @@ export const McpPage: React.FC = () => {
       const isConnected = mcpStatus[selectedMcpName]?.status === 'connected';
       if (isConnected) {
         await disconnectMcp(selectedMcpName, currentDirectory);
-        toast.success('Disconnected');
+        toast.success(t('Disconnected'));
       } else {
         await connectMcp(selectedMcpName, currentDirectory);
-        toast.success('Connected');
+        toast.success(t('Connected'));
       }
       await refreshStatus({ directory: currentDirectory, silent: true });
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : 'Connection failed');
+      toast.error(err instanceof Error ? err.message : t('Connection failed'));
     } finally {
       setIsConnecting(false);
     }
@@ -504,8 +508,8 @@ export const McpPage: React.FC = () => {
       <div className="flex h-full items-center justify-center">
         <div className="text-center text-muted-foreground">
           <RiPlugLine className="mx-auto mb-3 h-12 w-12 opacity-50" />
-          <p className="typography-body">Select an MCP server from the sidebar</p>
-          <p className="typography-meta mt-1 opacity-75">or add a new one</p>
+          <p className="typography-body">{t('Select an MCP server from the sidebar')}</p>
+          <p className="typography-meta mt-1 opacity-75">{t('or add a new one')}</p>
         </div>
       </div>
     );
@@ -522,7 +526,7 @@ export const McpPage: React.FC = () => {
         <div className="mb-4">
           <div className="min-w-0">
             {isNewServer ? (
-              <h2 className="typography-ui-header font-semibold text-foreground truncate">New MCP Server</h2>
+              <h2 className="typography-ui-header font-semibold text-foreground truncate">{t('New MCP Server')}</h2>
             ) : (
               <div className="flex items-center gap-2 min-w-0">
                 <h2 className="typography-ui-header font-semibold text-foreground truncate">{selectedMcpName}</h2>
@@ -531,7 +535,7 @@ export const McpPage: React.FC = () => {
             )}
             <div className="flex items-center gap-2 mt-0.5">
               <p className="typography-meta text-muted-foreground truncate">
-                {isNewServer ? 'Configure a new MCP server' : `${mcpType === 'local' ? 'Local · stdio' : 'Remote · SSE'} transport`}
+                {isNewServer ? t('Configure a new MCP server') : `${mcpType === 'local' ? t('Local · stdio') : t('Remote · SSE')} ${t('transport')}`}
               </p>
               {!isNewServer && (
                 <Button
@@ -541,7 +545,7 @@ export const McpPage: React.FC = () => {
                   onClick={handleToggleConnect}
                   disabled={isConnecting || !enabled}
                 >
-                  {isConnecting ? 'Working...' : isConnected ? 'Disconnect' : 'Connect'}
+                  {isConnecting ? t('Working...') : isConnected ? t('Disconnect') : t('Connect')}
                 </Button>
               )}
             </div>
@@ -551,7 +555,7 @@ export const McpPage: React.FC = () => {
         {/* Server Identity */}
         <div className="mb-8">
           <div className="mb-1 px-1">
-            <h3 className="typography-ui-header font-medium text-foreground">Server</h3>
+            <h3 className="typography-ui-header font-medium text-foreground">{t('Server')}</h3>
           </div>
 
           <section className="px-2 pb-2 pt-0 space-y-0">
@@ -559,7 +563,7 @@ export const McpPage: React.FC = () => {
             {isNewServer && (
               <div className="flex flex-col gap-2 py-1.5 sm:flex-row sm:items-center sm:gap-8">
                 <div className="flex min-w-0 flex-col sm:w-56 shrink-0">
-                  <span className="typography-ui-label text-foreground">Server Name</span>
+                  <span className="typography-ui-label text-foreground">{t('Server Name')}</span>
                 </div>
                 <div className="flex min-w-0 flex-1 items-center gap-2 sm:w-fit sm:flex-initial">
                   <Input
@@ -570,20 +574,20 @@ export const McpPage: React.FC = () => {
                     autoFocus
                   />
                   <Select value={draftScope} onValueChange={(value) => setDraftScope(value as McpScope)}>
-                    <SelectTrigger className="!h-7 !w-7 !min-w-0 !px-0 !py-0 justify-center [&>svg:last-child]:hidden" title={draftScope === 'user' ? 'User scope' : 'Project scope'}>
+                    <SelectTrigger className="!h-7 !w-7 !min-w-0 !px-0 !py-0 justify-center [&>svg:last-child]:hidden" title={draftScope === 'user' ? t('User scope') : t('Project scope')}>
                       {draftScope === 'user' ? <RiUser3Line className="h-3.5 w-3.5" /> : <RiFolderLine className="h-3.5 w-3.5" />}
                     </SelectTrigger>
                     <SelectContent align="end">
                       <SelectItem value="user">
                         <div className="flex items-center gap-2">
                           <RiUser3Line className="h-3.5 w-3.5" />
-                          <span>User</span>
+                          <span>{t('User')}</span>
                         </div>
                       </SelectItem>
                       <SelectItem value="project">
                         <div className="flex items-center gap-2">
                           <RiFolderLine className="h-3.5 w-3.5" />
-                          <span>Project</span>
+                          <span>{t('Project')}</span>
                         </div>
                       </SelectItem>
                     </SelectContent>
@@ -610,12 +614,12 @@ export const McpPage: React.FC = () => {
                 onChange={setEnabled}
                 ariaLabel="Enable server"
               />
-              <span className="typography-ui-label text-foreground">Enable Server</span>
+              <span className="typography-ui-label text-foreground">{t('Enable Server')}</span>
             </div>
 
             <div className="pb-1.5 pt-0.5">
               <div className="flex min-w-0 flex-col gap-1.5">
-                <span className="typography-ui-label text-foreground">Transport Mode</span>
+                <span className="typography-ui-label text-foreground">{t('Transport Mode')}</span>
                 <div className="flex flex-wrap items-center gap-1">
                   <Button
                     variant="outline"
@@ -628,7 +632,7 @@ export const McpPage: React.FC = () => {
                         : 'text-foreground'
                     )}
                   >
-                    Local · stdio
+                    {t('Local · stdio')}
                   </Button>
                   <Button
                     variant="outline"
@@ -641,7 +645,7 @@ export const McpPage: React.FC = () => {
                         : 'text-foreground'
                     )}
                   >
-                    Remote · SSE
+                    {t('Remote · SSE')}
                   </Button>
                 </div>
               </div>
@@ -654,7 +658,7 @@ export const McpPage: React.FC = () => {
         <div className="mb-8">
           <div className="mb-1 px-1">
             <h3 className="typography-ui-header font-medium text-foreground">
-              {mcpType === 'local' ? 'Command' : 'Server URL'}
+              {mcpType === 'local' ? t('Command') : t('Server URL')}
             </h3>
           </div>
 
@@ -676,7 +680,7 @@ export const McpPage: React.FC = () => {
         <div className="mb-2">
           <div className="mb-1 px-1">
             <h3 className="typography-ui-header font-medium text-foreground">
-              Environment Variables
+              {t('Environment Variables')}
               {envEntries.length > 0 && (
                 <span className="ml-1.5 typography-micro text-muted-foreground font-normal">
                   ({envEntries.length})
@@ -698,7 +702,7 @@ export const McpPage: React.FC = () => {
             size="xs"
             className="!font-normal"
           >
-            {isSaving ? 'Saving...' : isNewServer ? 'Create' : 'Save Changes'}
+            {isSaving ? t('Saving...') : isNewServer ? t('Create') : t('Save Changes')}
           </Button>
           {!isNewServer && (
             <Button
@@ -707,7 +711,7 @@ export const McpPage: React.FC = () => {
               className="!font-normal text-[var(--status-error)] hover:text-[var(--status-error)]"
               onClick={() => setShowDeleteConfirm(true)}
             >
-              Delete
+              {t('Delete')}
             </Button>
           )}
         </div>
@@ -720,10 +724,10 @@ export const McpPage: React.FC = () => {
       >
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete "{selectedMcpName}"?</DialogTitle>
+            <DialogTitle>{t('Delete')} "{selectedMcpName}"?</DialogTitle>
             <DialogDescription>
-              This removes the server from <code className="text-foreground">opencode.json</code>.
-              OpenCode will need to reload.
+              {t('This removes the server from')} <code className="text-foreground">opencode.json</code>.
+              {t('OpenCode will need to reload.')}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -733,10 +737,10 @@ export const McpPage: React.FC = () => {
               disabled={isDeleting}
               className="text-foreground hover:bg-interactive-hover hover:text-foreground"
             >
-              Cancel
+              {t('Cancel')}
             </Button>
             <Button size="sm" onClick={handleDelete} disabled={isDeleting}>
-              {isDeleting ? 'Deleting…' : 'Delete'}
+              {isDeleting ? t('Deleting…') : t('Delete')}
             </Button>
           </DialogFooter>
         </DialogContent>
