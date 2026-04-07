@@ -15,7 +15,6 @@
   "Projects": "プロジェクト",
   "OpenCode": "OpenCode",
   "Git": "Git",
-
   "Browse and manage chat sessions scoped to the current directory.": "現在のディレクトリに紐づくチャットセッションを閲覧・管理します。",
   "Configure OpenCode agents, prompts, and permissions.": "OpenCodeのエージェント、プロンプト、権限を設定します。",
   "Create and maintain custom slash commands for OpenCode.": "OpenCode用のカスタムスラッシュコマンドを作成・管理します。",
@@ -25,7 +24,6 @@
   "Monitor API quota and usage across providers.": "プロバイダー全体のAPIクォータと使用状況を監視します。",
   "Manage Git profiles with different credentials and SSH keys.": "異なる認証情報やSSHキーを持つGitプロファイルを管理します。",
   "OpenChamber app settings: themes, fonts, and preferences.": "OpenChamberアプリ設定：テーマ、フォント、各種設定。",
-
   "Remote Instances": "リモートインスタンス",
   "Skills Catalog": "スキルカタログ",
   "Chat": "チャット",
@@ -33,16 +31,13 @@
   "Notifications": "通知",
   "Voice": "音声",
   "Remote Tunnel": "リモートトンネル",
-
   "Search and jump to common pages.": "よく使うページを検索してジャンプします。",
-
   "New Session": "新規セッション",
   "Create New Session": "新規セッションを作成",
   "Create New Worktree Draft": "新規ワークツリー下書きを作成",
   "New Worktree": "新規ワークツリー",
   "New File": "新規ファイル",
   "New Folder": "新規フォルダ",
-
   "Search...": "検索...",
   "Search sessions": "セッションを検索",
   "Search sessions...": "セッションを検索...",
@@ -67,7 +62,6 @@
   "Clear search": "検索をクリア",
   "Find in file": "ファイル内検索",
   "Ask anything...": "何でも聞いてください...",
-
   "Add File": "ファイルを追加",
   "Add MCP server": "MCPサーバーを追加",
   "Add SSH instance": "SSHインスタンスを追加",
@@ -80,7 +74,6 @@
   "Add project": "プロジェクトを追加",
   "Add to current chat": "現在のチャットに追加",
   "Add to favorites": "お気に入りに追加",
-
   "Cancel": "キャンセル",
   "Cancel delete": "削除をキャンセル",
   "Cancel editing": "編集をキャンセル",
@@ -113,7 +106,6 @@
   "Save now": "今すぐ保存",
   "Close": "閉じる",
   "Close (Esc)": "閉じる (Esc)",
-
   "Open Agent Manager": "エージェントマネージャーを開く",
   "Open Command Palette": "コマンドパレットを開く",
   "Open Model Selector": "モデル選択を開く",
@@ -133,7 +125,6 @@
   "Open Right Sidebar Files": "右サイドバーのファイルを開く",
   "Open this file at first changed line": "最初の変更行でファイルを開く",
   "Open this file in editor at change": "変更箇所でエディターでファイルを開く",
-
   "Close tab": "タブを閉じる",
   "Close diagram preview": "ダイアグラムプレビューを閉じる",
   "Close drawer": "ドロワーを閉じる",
@@ -147,7 +138,6 @@
   "Back to sessions": "セッションに戻る",
   "Back": "戻る",
   "Return to parent session": "親セッションに戻る",
-
   "Activity default mode": "アクティビティデフォルトモード",
   "Chat render mode": "チャット描画モード",
   "Diff layout": "差分レイアウト",
@@ -188,7 +178,6 @@
   "Toggle window vibrancy": "ウィンドウの透過効果を切替",
   "User message rendering mode": "ユーザーメッセージ描画モード",
   "Mermaid rendering mode": "Mermaid描画モード",
-
   "Branch name": "ブランチ名",
   "Commit": "コミット",
   "Commit message": "コミットメッセージ",
@@ -213,7 +202,6 @@
   "Merge pull request": "プルリクエストをマージ",
   "Include PR diff in attached context": "PR差分を添付コンテキストに含める",
   "Include PR diff in session context": "PR差分をセッションコンテキストに含める",
-
   "Loading": "読み込み中",
   "Loading...": "読み込み中...",
   "Loading…": "読み込み中…",
@@ -227,7 +215,6 @@
   "Permission required": "権限が必要です",
   "Start a new chat": "新しいチャットを開始",
   "No UI streaming samples yet. Start a stream and keep this panel open.": "UIストリーミングのサンプルがまだありません。ストリームを開始してこのパネルを開いたままにしてください。",
-
   "Keyboard Shortcuts": "キーボードショートカット",
   "Show Keyboard Shortcuts (this dialog)": "キーボードショートカットを表示（このダイアログ）",
   "Toggle Session Sidebar": "セッションサイドバーを切替",
@@ -246,7 +233,6 @@
   "Open Git Panel": "Gitパネルを開く",
   "Open Skills Catalog": "スキルカタログを開く",
   "Switch Project": "プロジェクトを切替",
-
   "Enter password": "パスワードを入力",
   "Enter path or select from tree...": "パスを入力またはツリーから選択...",
   "Enter shell command...": "シェルコマンドを入力...",
@@ -263,13 +249,12 @@
   "New branch name": "新規ブランチ名",
   "New agent name...": "新規エージェント名...",
   "New command name...": "新規コマンド名...",
-  "New skill name...": "新規スキル名...",
+  "New skill name...": "新しいスキル名...",
   "Pattern (e.g. *)": "パターン（例: *）",
   "Work Profile, Personal, etc.": "仕事用、個人用 など",
   "Brief description of what this skill does...": "このスキルの簡単な説明...",
   "Step-by-step instructions, guidelines, or reference content...": "ステップごとの手順、ガイドライン、参考資料...",
   "Capture context, reminders, or links": "コンテキスト、リマインダー、リンクを記録",
-
   "About OpenChamber": "OpenChamberについて",
   "Command Palette": "コマンドパレット",
   "History": "履歴",
@@ -279,7 +264,6 @@
   "Confirm rename": "名前変更を確認",
   "Revert all changes?": "すべての変更を元に戻しますか？",
   "Uncommitted Changes": "未コミットの変更",
-
   "Context Usage": "コンテキスト使用状況",
   "Context usage": "コンテキスト使用状況",
   "Used tokens": "使用トークン数",
@@ -292,7 +276,6 @@
   "Last Update": "最終更新",
   "Metrics": "メトリクス",
   "Refresh rate limits": "レート制限を更新",
-
   "Select model": "モデルを選択",
   "Select provider": "プロバイダーを選択",
   "Select agent": "エージェントを選択",
@@ -306,7 +289,6 @@
   "Choose project action": "プロジェクトアクションを選択",
   "Select project": "プロジェクトを選択",
   "Edit Projects": "プロジェクトを編集",
-
   "Agent Manager": "エージェントマネージャー",
   "Start Agent Group": "エージェントグループを開始",
   "Create new agent": "新規エージェントを作成",
@@ -316,14 +298,12 @@
   "Agent questions": "エージェントからの質問",
   "Agent completion": "エージェント完了",
   "Subagent completion": "サブエージェント完了",
-
   "Files": "ファイル",
   "Select file": "ファイルを選択",
   "No files": "ファイルなし",
   "File content...": "ファイル内容...",
   "Pin directory": "ディレクトリを固定",
   "Unpin directory": "ディレクトリの固定を解除",
-
   "Terminal": "ターミナル",
   "Terminal input": "ターミナル入力",
   "Terminal quick keys": "ターミナルクイックキー",
@@ -331,12 +311,10 @@
   "Toggle terminal panel": "ターミナルパネルを切替",
   "New tab": "新規タブ",
   "Stop generating": "生成を停止",
-
   "Message read aloud button": "メッセージ読み上げボタン",
   "Select voice": "音声を選択",
   "Summarize voice mode responses": "音声モードの応答を要約",
   "Voice mode": "音声モード",
-
   "Recent Sessions": "最近のセッション",
   "Select or create a session to start chatting": "セッションを選択または作成してチャットを開始",
   "Untitled Session": "無題のセッション",
@@ -344,19 +322,15 @@
   "Pinned session": "固定されたセッション",
   "Session display mode": "セッション表示モード",
   "Conversation mode active": "会話モードがアクティブ",
-
   "OpenChamber logo": "OpenChamberロゴ",
   "General Settings": "一般設定",
-
   "Path copied to clipboard": "パスをクリップボードにコピーしました",
   "SSH instance connected": "SSHインスタンスに接続しました",
   "SSH instance failed to connect": "SSHインスタンスの接続に失敗しました",
   "Failed to connect the default SSH instance": "デフォルトSSHインスタンスの接続に失敗しました",
   "Copied to clipboard": "クリップボードにコピーしました",
-
   "Language": "言語",
   "Select language": "言語を選択",
-
   "No": "いいえ",
   "Yes": "はい",
   "OK": "OK",
@@ -376,29 +350,24 @@
   "Continue": "続行",
   "Previous": "前へ",
   "Next": "次へ",
-
   "today": "今日",
   "yesterday": "昨日",
   "last 7 days": "過去7日間",
   "last 30 days": "過去30日間",
   "older": "それ以前",
-
   "Favorite": "お気に入り",
   "Unfavorite": "お気に入り解除",
   "New multi-run": "新規マルチ実行",
   "New session": "新規セッション",
   "New sub-folder": "新規サブフォルダ",
-
   "Select from GitHub": "GitHubから選択",
   "Create directory": "ディレクトリを作成",
   "Create new directory": "新規ディレクトリを作成",
   "Create worktree": "ワークツリーを作成",
-
   "Interface": "インターフェース",
   "Panels": "パネル",
   "Navigation & Commands": "ナビゲーション & コマンド",
   "Session Management": "セッション管理",
-
   "Jump to common pages.": "よく使うページにジャンプ。",
   "Connect models + credentials": "モデルと認証情報を接続",
   "Prompts, tools, permissions": "プロンプト、ツール、権限",
@@ -410,14 +379,11 @@
   "Not available": "利用できません",
   "This settings page is not available in this runtime.": "この設定ページはこのランタイムでは利用できません。",
   "Back to Settings": "設定に戻る",
-  "Close settings": "設定を閉じる",
   "Resize settings navigation": "設定ナビゲーションのサイズを変更",
   "beta": "ベータ",
-
   "Actions": "アクション",
   "Open Session List": "セッション一覧を開く",
   "New Worktree Draft": "新規ワークツリー下書き",
-
   "Color Mode": "カラーモード",
   "System": "システム",
   "Light": "ライト",
@@ -448,7 +414,6 @@
   "Expanded": "展開",
   "Keep Activity collapsed by default.": "アクティビティをデフォルトで折りたたみ。",
   "Expand Activity by default.": "アクティビティをデフォルトで展開。",
-
   "Spacing & Layout": "間隔 & レイアウト",
   "Interface Font Size": "インターフェースフォントサイズ",
   "Terminal Font Size": "ターミナルフォントサイズ",
@@ -458,7 +423,6 @@
   "Navigation": "ナビゲーション",
   "Terminal Quick Keys": "ターミナルクイックキー",
   "Show Esc, Ctrl, Arrows in terminal view": "ターミナルビューにEsc、Ctrl、矢印を表示",
-
   "Window vibrancy": "ウィンドウの透過",
   "Translucent window background. Disabling may reduce energy usage.": "半透明のウィンドウ背景。無効にするとエネルギー消費を抑えられます。",
   "Install App Name": "アプリインストール名",
@@ -466,7 +430,6 @@
   "Reload themes": "テーマを再読み込み",
   "Reloading themes...": "テーマを再読み込み中...",
   "Import custom themes from ~/.config/openchamber/themes/": "~/.config/openchamber/themes/ からカスタムテーマをインポート",
-
   "Chat Render Mode": "チャット描画モード",
   "Activity Default": "アクティビティデフォルト",
   "User Message Rendering": "ユーザーメッセージ描画",
@@ -476,18 +439,8 @@
   "Show file icons in tool cards": "ツールカードにファイルアイコンを表示",
   "Diff Layout": "差分レイアウト",
   "Diff View Mode": "差分表示モード",
-  "Show dotfiles": "ドットファイルを表示",
-  "Show reasoning traces": "推論トレースを表示",
-  "Queue messages by default": "デフォルトでメッセージをキューに入れる",
-  "Persist draft messages": "下書きメッセージを保持",
-  "Enable spellcheck in text inputs": "テキスト入力でスペルチェックを有効化",
-  "Sticky user header": "ユーザーヘッダーを固定",
-  "Show mobile status bar": "モバイルステータスバーを表示",
   "Show mobile status bar for running sessions": "実行中のセッションのモバイルステータスバーを表示",
-  "Show remaining quota": "残りクォータを表示",
-  "Show used quota": "使用済みクォータを表示",
   "Report usage": "使用状況を報告",
-
   "Default Agent": "デフォルトエージェント",
   "Default Model": "デフォルトモデル",
   "Default Thinking": "デフォルト思考",
@@ -496,55 +449,25 @@
   "Session auto-cleanup": "セッション自動クリーンアップ",
   "Session retention": "セッション保持",
   "Automatically delete sessions older than": "次の期間より古いセッションを自動削除:",
-
-  "About OpenChamber": "OpenChamberについて",
   "Version": "バージョン",
   "Check for updates": "アップデートを確認",
-
-  "Agent errors": "エージェントエラー",
-  "Agent questions": "エージェントからの質問",
-  "Agent completion": "エージェント完了",
-  "Subagent completion": "サブエージェント完了",
   "Send notification for:": "次の場合に通知を送信:",
   "Summarize notification text": "通知テキストを要約",
-
   "Commit message model": "コミットメッセージモデル",
   "Enable Gitmoji": "Gitmojiを有効化",
   "Auto-create worktree for new sessions": "新しいセッションでワークツリーを自動作成",
-
-  "Select voice": "音声を選択",
-  "Summarize voice mode responses": "音声モードの応答を要約",
-  "Voice mode": "音声モード",
-  "Enable voice mode": "音声モードを有効化",
   "Continuous mode": "連続モード",
-
-  "Remote Tunnel": "リモートトンネル",
   "Enable tunnel": "トンネルを有効化",
   "Tunnel URL": "トンネルURL",
-
   "OpenCode CLI": "OpenCode CLI",
   "CLI Path": "CLIパス",
   "Restart OpenCode": "OpenCodeを再起動",
-
-  "Keyboard Shortcuts": "キーボードショートカット",
   "Reset all shortcuts": "すべてのショートカットをリセット",
-  "Reset": "リセット",
-
-  "Add project": "プロジェクトを追加",
-  "Add project directory": "プロジェクトディレクトリを追加",
   "Remove project": "プロジェクトを削除",
-  "Pin directory": "ディレクトリを固定",
-  "Unpin directory": "ディレクトリの固定を解除",
-  "Select project": "プロジェクトを選択",
-
-  "Add SSH instance": "SSHインスタンスを追加",
   "Remove instance": "インスタンスを削除",
-  "Connect": "接続",
-  "Disconnect": "切断",
   "Connected": "接続済み",
   "Disconnected": "切断済み",
   "Connecting...": "接続中...",
-
   "No agents found": "エージェントが見つかりません",
   "No commands found": "コマンドが見つかりません",
   "No skills found": "スキルが見つかりません",
@@ -555,24 +478,13 @@
   "No results": "結果なし",
   "No items": "アイテムなし",
   "Empty": "空",
-
-  "Create new agent": "新規エージェントを作成",
   "Create new command": "新規コマンドを作成",
   "Create new skill": "新規スキルを作成",
-  "Install": "インストール",
-  "Uninstall": "アンインストール",
   "Installed": "インストール済み",
-
-  "Start a new chat": "新しいチャットを開始",
-  "Select or create a session to start chatting": "セッションを選択または作成してチャットを開始",
   "Send message": "メッセージを送信",
-  "Stop generating": "生成を停止",
   "Abort": "中断",
   "Thinking...": "思考中...",
   "Generating...": "生成中...",
-
-  "Commit": "コミット",
-  "Push": "プッシュ",
   "Pull": "プル",
   "Stash": "スタッシュ",
   "Stage": "ステージ",
@@ -587,37 +499,28 @@
   "No changes": "変更なし",
   "Create Pull Request": "プルリクエストを作成",
   "Draft": "下書き",
-
   "Copy path": "パスをコピー",
   "Open in editor": "エディターで開く",
   "Reveal in file tree": "ファイルツリーで表示",
   "Collapse all": "すべて折りたたむ",
   "Expand all": "すべて展開",
-
   "Error": "エラー",
   "Warning": "警告",
   "Info": "情報",
   "Success": "成功",
-
   "days": "日",
   "hours": "時間",
   "minutes": "分",
   "seconds": "秒",
   "ago": "前",
   "just now": "たった今",
-
   "We couldn't verify the UI session. Check that the service is running and try again.": "UIセッションを検証できませんでした。サービスが実行中であることを確認して再試行してください。",
   "If the problem persists, try refreshing the page.": "問題が解決しない場合は、ページを更新してみてください。",
   "Session expired": "セッションが期限切れです",
   "Connection lost": "接続が切断されました",
   "Reconnecting...": "再接続中...",
-
   "Select agent...": "エージェントを選択...",
-
   "Built-in commands cannot be deleted": "組み込みコマンドは削除できません",
-  "Command": "コマンド",
-  "deleted successfully": "を削除しました",
-  "reset to default": "をデフォルトにリセットしました",
   "Failed to delete command": "コマンドの削除に失敗しました",
   "Failed to reset command": "コマンドのリセットに失敗しました",
   "Command name is required": "コマンド名は必須です",
@@ -631,16 +534,11 @@
   "Custom Commands": "カスタムコマンド",
   "Delete Command": "コマンドを削除",
   "Reset Command": "コマンドをリセット",
-  "Are you sure you want to delete command": "コマンドを削除してもよろしいですか",
-  "Are you sure you want to reset command": "コマンドをリセットしてもよろしいですか",
-  "to its default configuration": "をデフォルト設定に戻しますか？",
   "Rename Command": "コマンド名を変更",
   "Enter a new name for the command": "コマンドの新しい名前を入力してください",
   "Duplicate": "複製",
-
   "Save Changes": "変更を保存",
   "Saving...": "保存中...",
-
   "Command template is required": "コマンドテンプレートは必須です",
   "Command created successfully": "コマンドを作成しました",
   "Command updated successfully": "コマンドを更新しました",
@@ -661,7 +559,6 @@
   "Override Model": "モデルを上書き",
   "Command Template": "コマンドテンプレート",
   "Your command template here...\n\nUse $ARGUMENTS to reference user input.\nUse !`shell command` to inject shell output.\nUse @filename to include file contents.": "コマンドテンプレートをここに入力...\n\n$ARGUMENTS でユーザー入力を参照。\n!`シェルコマンド` でシェル出力を挿入。\n@ファイル名 でファイル内容を含める。",
-
   "Name is required": "名前は必須です",
   "A server with this name already exists": "この名前のサーバーは既に存在します",
   "Command cannot be empty for a local server": "ローカルサーバーのコマンドは空にできません",
@@ -670,7 +567,6 @@
   "Saved. OpenCode reloading…": "保存しました。OpenCode を再読み込み中…",
   "Failed to save": "保存に失敗しました",
   "An error occurred": "エラーが発生しました",
-  "deleted": "を削除しました",
   "Failed to delete": "削除に失敗しました",
   "Connection failed": "接続に失敗しました",
   "Working...": "処理中...",
@@ -722,12 +618,10 @@
   "Failed to rename skill": "スキルの名前変更に失敗しました",
   "Delete Skill": "スキルを削除",
   "Rename Skill": "スキルの名前変更",
-  "New skill name...": "新しいスキル名...",
   "Are you sure you want to delete skill \"{{name}}\"?": "スキル「{{name}}」を削除してもよろしいですか？",
   "Enter a new name for the skill \"{{name}}\"": "スキル「{{name}}」の新しい名前を入力してください",
   "Skill \"{{name}}\" deleted successfully": "スキル「{{name}}」を削除しました",
   "Failed to load skill details": "スキルの詳細の読み込みに失敗しました",
-
   "MCP Servers": "MCPサーバー",
   "No MCP servers configured": "MCPサーバーが設定されていません",
   "Use the + button above to add one": "上の + ボタンで追加してください",
@@ -736,14 +630,11 @@
   "Delete MCP Server": "MCPサーバーを削除",
   "Are you sure you want to delete": "削除してもよろしいですか",
   "This will remove it from": "これにより",
-  "MCP server": "MCPサーバー",
   "Failed to delete MCP server": "MCPサーバーの削除に失敗しました",
-
   "Connect provider": "プロバイダーに接続",
   "Check your OpenCode configuration": "OpenCodeの設定を確認してください",
   "User Providers": "ユーザープロバイダー",
   "Project Providers": "プロジェクトプロバイダー",
-
   "Select a skill from the sidebar": "サイドバーからスキルを選択してください",
   "Loading skill details...": "スキルの詳細を読み込み中...",
   "New Skill": "新規スキル",
@@ -770,11 +661,6 @@
   "Create File": "ファイルを作成",
   "Failed to load file content": "ファイルの内容の読み込みに失敗しました",
   "File name is required": "ファイル名は必須です",
-  "File": "ファイル",
-  "updated": "を更新しました",
-  "added": "を追加しました",
-  "created": "を作成しました",
-  "removed": "を削除しました",
   "Failed to update file": "ファイルの更新に失敗しました",
   "Failed to create file": "ファイルの作成に失敗しました",
   "Failed to delete file": "ファイルの削除に失敗しました",
@@ -784,5 +670,21 @@
   "Failed to update skill": "スキルの更新に失敗しました",
   "No skill selected": "スキルが選択されていません",
   "Skill name must be 1-64 lowercase alphanumeric characters with hyphens, cannot start or end with hyphen": "スキル名は1〜64文字の小文字英数字とハイフンで指定し、ハイフンで始まったり終わったりすることはできません",
-  "Description is required": "説明は必須です"
+  "Description is required": "説明は必須です",
+  "Command \"{{name}}\" deleted successfully": "コマンド「{{name}}」を削除しました",
+  "Command \"{{name}}\" reset to default": "コマンド「{{name}}」をデフォルトにリセットしました",
+  "Are you sure you want to delete command \"{{name}}\"?": "コマンド「{{name}}」を削除してもよろしいですか？",
+  "Are you sure you want to reset command \"{{name}}\" to its default configuration?": "コマンド「{{name}}」をデフォルト設定にリセットしてもよろしいですか？",
+  "MCP server \"{{name}}\" deleted": "MCPサーバー「{{name}}」を削除しました",
+  "File \"{{path}}\" updated": "ファイル「{{path}}」を更新しました",
+  "File \"{{path}}\" added": "ファイル「{{path}}」を追加しました",
+  "File \"{{path}}\" created": "ファイル「{{path}}」を作成しました",
+  "File \"{{path}}\" removed": "ファイル「{{path}}」を除去しました",
+  "File \"{{path}}\" deleted": "ファイル「{{path}}」を削除しました",
+  "Deleted {{n}} sessions": "{{n}}件のセッションを削除しました",
+  "Failed to delete {{n}} sessions": "{{n}}件のセッションの削除に失敗しました",
+  "{{n}} sessions could not be deleted.": "{{n}}件のセッションを削除できませんでした。",
+  "{{n}} sessions could not be archived.": "{{n}}件のセッションをアーカイブできませんでした。",
+  "Archived {{n}} sessions": "{{n}}件のセッションをアーカイブしました",
+  "Failed to archive {{n}} sessions": "{{n}}件のセッションのアーカイブに失敗しました"
 }

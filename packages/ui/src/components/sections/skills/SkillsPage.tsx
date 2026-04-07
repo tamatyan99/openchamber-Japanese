@@ -247,14 +247,14 @@ const SkillsInstalledPage: React.FC = () => {
         setPendingFiles(prev => prev.map(f => 
           f.path === editingFilePath ? { path: filePath, content: newFileContent } : f
         ));
-        toast.success(`${t('File')} "${filePath}" ${t('updated')}`);
+        toast.success(t('File "{{path}}" updated', { path: filePath }));
       } else {
         if (pendingFiles.some(f => f.path === filePath)) {
           toast.error(t('A file with this name already exists'));
           return;
         }
         setPendingFiles(prev => [...prev, { path: filePath, content: newFileContent }]);
-        toast.success(`${t('File')} "${filePath}" ${t('added')}`);
+        toast.success(t('File "{{path}}" added', { path: filePath }));
       }
       setIsFileDialogOpen(false);
       setEditingFilePath(null);
@@ -270,7 +270,7 @@ const SkillsInstalledPage: React.FC = () => {
     const success = await writeSupportingFile(selectedSkillName, filePath, newFileContent);
 
     if (success) {
-      toast.success(isEditing ? `${t('File')} "${filePath}" ${t('updated')}` : `${t('File')} "${filePath}" ${t('created')}`);
+      toast.success(isEditing ? t('File "{{path}}" updated', { path: filePath }) : t('File "{{path}}" created', { path: filePath }));
       setIsFileDialogOpen(false);
       setEditingFilePath(null);
       const detail = await getSkillDetail(selectedSkillName);
@@ -285,7 +285,7 @@ const SkillsInstalledPage: React.FC = () => {
   const handleDeleteFile = (filePath: string) => {
     if (isNewSkill) {
       setPendingFiles(prev => prev.filter(f => f.path !== filePath));
-      toast.success(`${t('File')} "${filePath}" ${t('removed')}`);
+      toast.success(t('File "{{path}}" removed', { path: filePath }));
       return;
     }
 
@@ -306,7 +306,7 @@ const SkillsInstalledPage: React.FC = () => {
     const success = await deleteSupportingFile(selectedSkillName, deleteFilePath);
 
     if (success) {
-      toast.success(`${t('File')} "${deleteFilePath}" ${t('deleted')}`);
+      toast.success(t('File "{{path}}" deleted', { path: deleteFilePath }));
       const detail = await getSkillDetail(selectedSkillName);
       if (detail) {
         setSupportingFiles(detail.sources.md.supportingFiles || []);

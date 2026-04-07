@@ -206,17 +206,17 @@ export const SessionDialogs: React.FC = () => {
 
         if (deletedIds.length > 0) {
             const successDescription = failedIds.length > 0
-                ? t('{{n}} session{{s}} could not be deleted.', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' })
+                ? t('{{n}} sessions could not be deleted.', { n: failedIds.length })
                 : payload.dateLabel
                     ? t('Removed all sessions from {{dateLabel}}.', { dateLabel: payload.dateLabel })
                     : undefined;
-            toast.success(t('Deleted {{n}} session{{s}}', { n: deletedIds.length, s: deletedIds.length === 1 ? '' : 's' }), {
+            toast.success(t('Deleted {{n}} sessions', { n: deletedIds.length }), {
                 description: renderToastDescription(successDescription),
             });
         }
 
         if (failedIds.length > 0) {
-            toast.error(t('Failed to delete {{n}} session{{s}}', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' }), {
+            toast.error(t('Failed to delete {{n}} sessions', { n: failedIds.length }), {
                 description: renderToastDescription(t('Please try again in a moment.')),
             });
         }
@@ -492,15 +492,15 @@ export const SessionDialogs: React.FC = () => {
                     const successDescription =
                         failedIds.length > 0
                             ? isWorktreeDelete
-                                ? t('{{n}} session{{s}} could not be archived.', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' })
-                                : t('{{n}} session{{s}} could not be deleted.', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' })
+                                ? t('{{n}} sessions could not be archived.', { n: failedIds.length })
+                                : t('{{n}} sessions could not be deleted.', { n: failedIds.length })
                             : deleteDialog.dateLabel
                                 ? t('Removed all sessions from {{dateLabel}}.', { dateLabel: deleteDialog.dateLabel })
                                 : undefined;
                     const combinedDescription = [successDescription, archiveNote].filter(Boolean).join(' ');
                     toast.success(isWorktreeDelete
-                        ? t('Archived {{n}} session{{s}}', { n: deletedIds.length, s: deletedIds.length === 1 ? '' : 's' })
-                        : t('Deleted {{n}} session{{s}}', { n: deletedIds.length, s: deletedIds.length === 1 ? '' : 's' }), {
+                        ? t('Archived {{n}} sessions', { n: deletedIds.length })
+                        : t('Deleted {{n}} sessions', { n: deletedIds.length }), {
                         description: renderToastDescription(combinedDescription || undefined),
                         action: {
                             label: t('OK'),
@@ -511,8 +511,8 @@ export const SessionDialogs: React.FC = () => {
 
                 if (failedIds.length > 0) {
                     toast.error(isWorktreeDelete
-                        ? t('Failed to archive {{n}} session{{s}}', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' })
-                        : t('Failed to delete {{n}} session{{s}}', { n: failedIds.length, s: failedIds.length === 1 ? '' : 's' }), {
+                        ? t('Failed to archive {{n}} sessions', { n: failedIds.length })
+                        : t('Failed to delete {{n}} sessions', { n: failedIds.length }), {
                         description: renderToastDescription(t('Please try again in a moment.')),
                     });
                     if (deletedIds.length === 0) {
