@@ -53,6 +53,11 @@ packages/intellij/
 # OS
 Thumbs.db
 
+# Google Apps Script (clasp)
+packages/gas/dist/
+packages/gas/.clasp.json
+.clasprc.json
+
 # Local runtime state (docker/dev)
 data/
 workspaces/

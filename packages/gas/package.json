@@ -1,0 +1,30 @@
+{
+  "name": "@openchamber/gas",
+  "version": "1.9.3",
+  "private": true,
+  "description": "OpenChamber Google Apps Script integration package",
+  "scripts": {
+    "build": "node build.mjs",
+    "build:watch": "node build.mjs --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "clasp:login": "clasp login",
+    "clasp:logout": "clasp logout",
+    "clasp:create": "clasp create --type standalone --rootDir ./dist",
+    "clasp:clone": "clasp clone --rootDir ./dist",
+    "clasp:pull": "clasp pull",
+    "clasp:push": "bun run build && clasp push",
+    "clasp:push:watch": "concurrently -n \"build,push\" -c \"cyan,magenta\" \"bun run build:watch\" \"clasp push --watch\"",
+    "clasp:open": "clasp open",
+    "clasp:deploy": "bun run build && clasp push && clasp deploy",
+    "clasp:versions": "clasp versions",
+    "clasp:logs": "clasp logs"
+  },
+  "devDependencies": {
+    "@google/clasp": "^2.4.2",
+    "@types/google-apps-script": "^1.0.97",
+    "concurrently": "^9.2.1",
+    "esbuild": "^0.24.2",
+    "typescript": "~5.8.3"
+  }
+}
